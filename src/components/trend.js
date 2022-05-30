@@ -8,7 +8,7 @@ const Trend = props => {
         id: null,
         title: "",
         description: "",
-        published: false
+        xpos: 0,
     };
     const [currentTrend, setCurrentTrend] = useState(initialTrendState);
     const [message, setMessage] = useState("");

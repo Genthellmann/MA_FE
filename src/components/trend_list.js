@@ -3,7 +3,7 @@ import TrendDataService from "../services/trend_service";
 import { Link } from "react-router-dom";
 import SeparatingLines from "../components/SeparatingLines";
 import TrendRadar from "../components/trendRadar";
-
+import Button from 'react-bootstrap/Button';
 
 const TrendList = () => {
     let radius = {radius1: 80 , radius2: 60, radius3: 40}
@@ -11,6 +11,11 @@ const TrendList = () => {
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
+
+    //array for all trends from db
+    const count = 6;
+    const data = Array.from({length:count}, (_,index)=> index);
+
     useEffect(() => {
         retrieveTrends();
     }, []);
@@ -84,17 +89,52 @@ const TrendList = () => {
                 <TrendRadar radius={radius.radius2} color={"#b8b8b8"} position={1}/>
                 <TrendRadar radius={radius.radius3} color={"#999797"} position={2}/>
 
-                <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', 'zIndex': 155,} }>
+
+
+                <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', 'zIndex': 155, "position": "absolute"} }>
                     <div style={{'position':'absolute', 'zIndex':160,}}>
                         <SeparatingLines length={radius.radius1/2} angle={0}/>
                         <SeparatingLines length={radius.radius1/2} angle={120}/>
                         <SeparatingLines length={radius.radius1/2} angle={240}/>
+
+                    {/*Elements inside Trend Radar    */}
+
                     </div>
-                    {/*<TrendFC position={3} color={"red"} radius={5} left={100} bottom={100} />*/}
-                    {/*<TrendFC position={3} color={"red"} radius={5} left={100} bottom={-100} />*/}
+
+
+                </div>
+
+                <div style={{"display": "flex", "height":`${Math.max(radius.radius1)}vw`, "width": `${Math.max(radius.radius1)}vw`, "zIndex": 2, "position": "absolute"}}>
+                    {trends &&
+                        trends.map((trend, index) => (
+                            <div style={{'position':'relative',
+                                'zIndex':`${trend.id}`,
+                                'left': `${trend.xpos}px`,
+                                'top': `${trend.ypos}px`,}}>
+                                <Button variant="primary"
+                                        checked={index === currentIndex ? "active" : ""}
+                                        onClick={() => setActiveTrend(trend, index)}
+                                        key={index}
+                                        style={{
+                                            'position': 'absolute',
+                                            'width': `30px`,
+                                            'height': `30px`,
+                                            'borderRadius': '100%',
+                                            'display': 'flex',
+                                            'color': 'white',
+                                            //'position': 'relative',
+                                            // 'left': `${trend.xpos}px`,
+                                            // 'bottom': `${trend.ypos}px`,
+                                            'padding':'0',}}
+                                ></Button>
+                            </div>
+                        ))}
                 </div>
 
             </div>
+
+            {/*Trends List*/}
+
             <div className="col-md-6">
                 <h4>Trends List</h4>
                 <ul className="list-group">
