@@ -93,9 +93,9 @@ const TrendList = () => {
 
                 <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', 'zIndex': 155, "position": "absolute"} }>
                     <div style={{'position':'absolute', 'zIndex':160,}}>
-                        <SeparatingLines length={radius.radius1/2} angle={0}/>
-                        <SeparatingLines length={radius.radius1/2} angle={120}/>
-                        <SeparatingLines length={radius.radius1/2} angle={240}/>
+                        <SeparatingLines length={radius.radius1/2} angle={60}/>
+                        <SeparatingLines length={radius.radius1/2} angle={180}/>
+                        <SeparatingLines length={radius.radius1/2} angle={300}/>
 
                     {/*Elements inside Trend Radar    */}
 
@@ -104,13 +104,13 @@ const TrendList = () => {
 
                 </div>
 
-                <div style={{"display": "flex", "height":`${Math.max(radius.radius1)}vw`, "width": `${Math.max(radius.radius1)}vw`, "zIndex": 2, "position": "absolute"}}>
+                <div style={{ "zIndex": 2, "position": "absolute"}}>
                     {trends &&
                         trends.map((trend, index) => (
                             <div style={{'position':'relative',
                                 'zIndex':`${trend.id}`,
-                                'left': `${trend.xpos}px`,
-                                'top': `${trend.ypos}px`,}}>
+                                'left': `${trend.xpos}vw`,
+                                'bottom': `${trend.ypos}vw`,}}>
                                 <Button variant="primary"
                                         checked={index === currentIndex ? "active" : ""}
                                         onClick={() => setActiveTrend(trend, index)}
