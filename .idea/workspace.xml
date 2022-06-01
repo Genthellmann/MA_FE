@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f852563-529e-4b22-9930-d015b1ea7dab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/trendbutton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/add_trend.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/add_trend.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/trend.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trend.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/trend_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/trend_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/trend_service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/trend_service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,11 @@
       <workItem from="1652854687583" duration="19461000" />
       <workItem from="1653030594524" duration="519000" />
       <workItem from="1653039971830" duration="4632000" />
-      <workItem from="1653887907296" duration="15332000" />
+      <workItem from="1653887907296" duration="15650000" />
+      <workItem from="1653978287438" duration="931000" />
+      <workItem from="1653982152345" duration="3858000" />
+      <workItem from="1654061211903" duration="4349000" />
+      <workItem from="1654066984550" duration="14288000" />
     </task>
     <servers />
   </component>

@@ -6,7 +6,7 @@ import TrendRadar from "../components/trendRadar";
 import Button from 'react-bootstrap/Button';
 
 const TrendList = () => {
-    let radius = {radius1: 80 , radius2: 60, radius3: 40}
+    let radius = {radius1: 90 , radius2: 60, radius3: 30}
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
+import {Form} from "react-bootstrap";
 const Trend = props => {
     const { id }= useParams();
     let navigate = useNavigate();
@@ -26,10 +27,36 @@ const Trend = props => {
         if (id)
             getTrend(id);
     }, [id]);
+
+    //=======================
+    //Input Changes
+
     const handleInputChange = event => {
         const { name, value } = event.target;
         setCurrentTrend({ ...currentTrend, [name]: value });
+        console.log(currentTrend.probability)
     };
+
+    const handleDropChange = event => {
+        const {name,value} = event.target;
+        setCurrentTrend({...currentTrend,["category"]:value});
+        console.log({...currentTrend,["category"]:value})
+    }
+
+    const handleProbChange = event => {
+        const {name,value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["probability"]:id});
+    }
+
+    const handleMatChange = event => {
+        const {name,value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["maturity"]:id});
+    }
+
+    const handleImpactChange = event => {
+        const {name,value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["impact"]:id});
+    }
     // const updatePublished = status => {
     //     var data = {
     //         id: currentTutorial.id,
@@ -92,9 +119,140 @@ const Trend = props => {
                                 name="description"
                                 value={currentTrend.description}
                                 onChange={handleInputChange}
+
                             />
                         </div>
                     </form>
+                    <br/>
+                    <label htmlFor="title">Category</label>
+                    <Form.Select
+                        aria-label="Default select example"
+                        onChange={handleDropChange}
+                    >
+                        <option value="user">Customer / User</option>
+                        <option value="technology">Technology</option>
+                        <option value="menv">Market Environment</option>
+                    </Form.Select>
+                    <br/>
+                    <label htmlFor="title">Probability of Occurence</label>
+                    <Form>
+                        {['radio'].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                                <Form.Check
+                                    inline
+                                    label="low"
+                                    name="prob_radio"
+                                    type={type}
+                                    id={"low"}
+                                    value={currentTrend.probability}
+                                    onChange={handleProbChange}
+                                    checked={"low" === currentTrend.probability}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="medium"
+                                    name="prob_radio"
+                                    type={type}
+                                    id={"medium"}
+                                    // value={currentTrend.probability}
+                                    value={currentTrend.probability}
+                                    onChange={handleProbChange}
+                                    checked={"medium" === currentTrend.probability}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="high"
+                                    name="prob_radio"
+                                    type={type}
+                                    id={"high"}
+                                    value={currentTrend.probability}
+                                    onChange={handleProbChange}
+                                    checked={"high" === currentTrend.probability}
+                                />
+                            </div>
+                        ))}
+                    </Form>
+                    <br/>
+                    <label htmlFor="title">Maturity</label>
+                    <Form>
+                        {['radio'].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                                <Form.Check
+                                    inline
+                                    label="low"
+                                    name="mat_radio"
+                                    type={type}
+                                    id={"low"}
+                                    value={currentTrend.maturity}
+                                    onChange={handleMatChange}
+                                    checked={"low" === currentTrend.maturity}
+
+                                />
+                                <Form.Check
+                                    inline
+                                    label="medium"
+                                    name="mat_radio"
+                                    type={type}
+                                    id={"medium"}
+                                    value={currentTrend.maturity}
+                                    onChange={handleMatChange}
+                                    checked={"medium" === currentTrend.maturity}
+
+                                />
+                                <Form.Check
+                                    inline
+                                    label="high"
+                                    name="mat_radio"
+                                    type={type}
+                                    id={"high"}
+                                    value={currentTrend.maturity}
+                                    onChange={handleMatChange}
+                                    checked={"high" === currentTrend.maturity}
+                                />
+                            </div>
+                        ))}
+                    </Form>
+                    <br/>
+                    <label htmlFor="title">Impact on System Generation</label>
+                    <Form>
+                        {['radio'].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                                <Form.Check
+                                    inline
+                                    label="low"
+                                    name="impact_radio"
+                                    type={type}
+                                    id={"low"}
+                                    value={currentTrend.impact}
+                                    onChange={handleImpactChange}
+                                    checked={"low" === currentTrend.impact}
+
+                                />
+                                <Form.Check
+                                    inline
+                                    label="medium"
+                                    name="impact_radio"
+                                    type={type}
+                                    id={"medium"}
+                                    value={currentTrend.impact}
+                                    onChange={handleImpactChange}
+                                    checked={"medium" === currentTrend.impact}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="high"
+                                    name="impact_radio"
+                                    type={type}
+                                    id={"high"}
+                                    value={currentTrend.impact}
+                                    onChange={handleImpactChange}
+                                    checked={"high" === currentTrend.impact}
+
+                                />
+                            </div>
+                        ))}
+                    </Form>
+                    <br/>
                     <button type="button"
                             class="btn btn-dark"
                             onClick={deleteTrend}>

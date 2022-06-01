@@ -7,6 +7,7 @@ const get = id => {
     return http.get(`/crud/${id}`);
 };
 const create = data => {
+    console.log(data)
     return http.post("/crud", data);
 };
 const update = (id, data) => {
