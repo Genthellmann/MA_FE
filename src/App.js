@@ -8,7 +8,6 @@ import AddTrend from "./components/add_trend"
 import TrendList from "./components/trend_list"
 
 
-
 function App() {
   return (
     <div className="App">

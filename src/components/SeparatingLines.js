@@ -4,12 +4,10 @@ import React from 'react';
 import '../index.css';
 
 function SeparatingLines ({angle, length}){
-
     return(
         <div  className="vl"
               style={{'height':`${length}vw`,
-                  'width':'2px', 'zIndex': '100',
-                  'transform': `rotate(${angle}deg) translateX(-1px)`}}>
+                  'width':'0.2vw','transform': `rotate(${angle}deg) translateX(-0.1vw)`}}>
         </div>
     )
 }

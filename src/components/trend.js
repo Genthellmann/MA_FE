@@ -9,7 +9,9 @@ const Trend = props => {
         id: null,
         title: "",
         description: "",
+        category: "",
         xpos: 0,
+        ypos:0,
     };
     const [currentTrend, setCurrentTrend] = useState(initialTrendState);
     const [message, setMessage] = useState("");
@@ -129,9 +131,12 @@ const Trend = props => {
                         aria-label="Default select example"
                         onChange={handleDropChange}
                     >
-                        <option value="user">Customer / User</option>
-                        <option value="technology">Technology</option>
-                        <option value="menv">Market Environment</option>
+                        <option value="user"
+                                selected={"user" === currentTrend.category}>Customer / User</option>
+                        <option value="technology"
+                                selected={"technology" === currentTrend.category}>Technology</option>
+                        <option value="menv"
+                                selected={"menv" === currentTrend.category}>Market Environment</option>
                     </Form.Select>
                     <br/>
                     <label htmlFor="title">Probability of Occurence</label>

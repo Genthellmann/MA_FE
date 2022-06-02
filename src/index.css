@@ -22,3 +22,13 @@ code {
 .trendCard{
   border-color: crimson!important;
 }
+
+.btn-dark {
+  color: #fff;
+  background-color: #212529;
+  border-color: #fff!important;
+}
+
+.btn{
+  border: 1px solid!important;
+}

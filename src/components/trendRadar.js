@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TrendRadar({radius,color="blue",position}){
+export default function TrendRadar({radius,color,position}){
     console.log(radius,color);
     return (
         <div style={{
@@ -14,6 +14,7 @@ export default function TrendRadar({radius,color="blue",position}){
             'color': 'white',
             'position': 'absolute',
             'zIndex' : `${position}`,
+            'border': '0.3vw solid black'
         }}>
             <div >
                 <h2>

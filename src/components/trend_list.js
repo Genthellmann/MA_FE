@@ -6,7 +6,18 @@ import TrendRadar from "../components/trendRadar";
 import Button from 'react-bootstrap/Button';
 
 const TrendList = () => {
+    //radius of trend radar
     let radius = {radius1: 90 , radius2: 60, radius3: 30}
+
+    //radius of trend depending on maturity
+    let radius_trend = {low: radius.radius1/24, medium:radius.radius1/18, high:radius.radius1/12}
+
+    //zIndex depending on maturity
+    let zIndex_trend = {low: 3, medium: 2, high: 1}
+
+    //color depending on impact
+    let color_impact = {low: "#15CDCA", medium:"#4F80E2", high:"#3E54D3"}
+
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
@@ -15,6 +26,9 @@ const TrendList = () => {
     //array for all trends from db
     const count = 6;
     const data = Array.from({length:count}, (_,index)=> index);
+
+    //helper function to convert maturity category to radius
+
 
     useEffect(() => {
         retrieveTrends();
@@ -90,9 +104,8 @@ const TrendList = () => {
                 <TrendRadar radius={radius.radius3} color={"#999797"} position={2}/>
 
 
-
-                <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', 'zIndex': 155, "position": "absolute"} }>
-                    <div style={{'position':'absolute', 'zIndex':160,}}>
+                <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', "position": "absolute"} }>
+                    <div style={{'position':'absolute', 'zIndex':3,}}>
                         <SeparatingLines length={radius.radius1/2} angle={60}/>
                         <SeparatingLines length={radius.radius1/2} angle={180}/>
                         <SeparatingLines length={radius.radius1/2} angle={300}/>
@@ -100,28 +113,27 @@ const TrendList = () => {
                     {/*Elements inside Trend Radar    */}
 
                     </div>
-
-
                 </div>
 
-                <div style={{ "zIndex": 2, "position": "absolute"}}>
+                <div style={{ "zIndex": 3, "position": "absolute"}}>
                     {trends &&
                         trends.map((trend, index) => (
-                            <div style={{'position':'relative',
-                                'zIndex':`${trend.id}`,
+                            <div style={{'position':'relative', 'display':'flex','justifyContent':'center', 'alignItems':'center',
+                                'zIndex':`${zIndex_trend[trend.maturity]}`,
                                 'left': `${trend.xpos}vw`,
-                                'bottom': `${trend.ypos}vw`,}}>
+                                'bottom': `${trend.ypos}vw` }}>
                                 <Button variant="primary"
                                         checked={index === currentIndex ? "active" : ""}
                                         onClick={() => setActiveTrend(trend, index)}
                                         key={index}
                                         style={{
                                             'position': 'absolute',
-                                            'width': `30px`,
-                                            'height': `30px`,
+                                            'width': `${radius_trend[trend.maturity]}vw`,
+                                            'height': `${radius_trend[trend.maturity]}vw`,
                                             'borderRadius': '100%',
                                             'display': 'flex',
-                                            'color': 'white',
+                                            'background': `${color_impact[trend.impact]}`,
+                                            'border-color':'black',
                                             //'position': 'relative',
                                             // 'left': `${trend.xpos}px`,
                                             // 'bottom': `${trend.ypos}px`,
