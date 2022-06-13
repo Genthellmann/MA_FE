@@ -1,29 +1,19 @@
 import React from 'react';
 
-export default function TrendRadar({radius,color,position}){
+export default function TrendRadar({radius,color,pos}){
     console.log(radius,color);
     return (
-        <div style={{
+        <div className="border-dark"
+            style={{
+            'width': `${radius}%`,
             'background': `${color}`,
-            'width': `${radius}vw`,
-            'height': `${radius}vw`,
+            'aspectRatio':1,
             'borderRadius': '100%',
-            'display': 'flex',
-            'alignItems': 'center',
-            'justifyContent': 'center',
-            'color': 'white',
-            'position': 'absolute',
-            'zIndex' : `${position}`,
-            'border': '0.3vw solid black'
+            'zIndex' : `${pos}`,
+            'position':'absolute',
+            'borderStyle':'solid'
+
         }}>
-            <div >
-                <h2>
-
-                </h2>
-                <h3>
-
-                </h3>
-            </div>
         </div>
     )
 }

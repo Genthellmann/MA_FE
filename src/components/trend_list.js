@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SeparatingLines from "../components/SeparatingLines";
 import TrendRadar from "../components/trendRadar";
 import Button from 'react-bootstrap/Button';
+import {Row} from "react-bootstrap";
 
 const TrendList = () => {
     //radius of trend radar
@@ -77,61 +78,78 @@ const TrendList = () => {
             });
     };
     return (
-        <div className="list row">
-            <div className="col-md-8">
-                <div className="input-group mb-3">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search Trend by title"
-                        value={searchTitle}
-                        onChange={onChangeSearchTitle}
-                    />
-                    <div className="input-group-append">
-                        <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={findByTitle}
-                        >
-                            Search
-                        </button>
+        <div style={{'position':'relative'}}>
+            <Row>
+                <div>
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search Trend by title"
+                            value={searchTitle}
+                            onChange={onChangeSearchTitle}
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={findByTitle}
+                            >
+                                Search
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div style={{'display':'flex', 'justifyContent':'center', "alignItems": "center", 'overflow':'hidden', "height" : `${Math.max(radius.radius1)}vw`}}>
+            </Row>
+            <Row style={{'position':'relative','display':'flex', 'justifyContent':'center', "alignItems": "center", "aspectRatio":1}}>
                 <TrendRadar radius={radius.radius1} color={"#d2d2d5"} position={0}/>
                 <TrendRadar radius={radius.radius2} color={"#b8b8b8"} position={1}/>
                 <TrendRadar radius={radius.radius3} color={"#999797"} position={2}/>
+                <div style={{'position':'absolute', 'marginTop':'-100%'}}>User</div>
+                <div style={{'position':'absolute', 'marginTop':'30%','marginLeft':'-100%'}}>Technology</div>
+                <div style={{'position':'absolute', 'marginTop':'30%','marginLeft':'100%'}}>M-Env</div>
 
 
-                <div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', "position": "absolute"} }>
-                    <div style={{'position':'absolute', 'zIndex':3,}}>
-                        <SeparatingLines length={radius.radius1/2} angle={60}/>
-                        <SeparatingLines length={radius.radius1/2} angle={180}/>
-                        <SeparatingLines length={radius.radius1/2} angle={300}/>
+                {/*<div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', "position": "absolute"} }>*/}
+                {/*    <div style={{'position':'absolute', 'zIndex':3,}}>*/}
+                        <SeparatingLines length={radius.radius1/2} angle={90}/>
+                        <SeparatingLines length={radius.radius1/2} angle={210}/>
+                        <SeparatingLines length={radius.radius1/2} angle={330}/>
 
-                    {/*Elements inside Trend Radar    */}
+                        {/*Elements inside Trend Radar    */}
+                {/*    </div>*/}
+                {/*</div>*/}
 
-                    </div>
-                </div>
+                {/*<div style={{'display':'flex', 'justifyContent':'center', 'alignItems': 'center', "position": "absolute"} }>*/}
+                {/*    <div style={{'position':'absolute', 'zIndex':3,}}>*/}
+                {/*        <SeparatingLines length={radius.radius1/2} angle={60}/>*/}
+                {/*        <SeparatingLines length={radius.radius1/2} angle={180}/>*/}
+                {/*        <SeparatingLines length={radius.radius1/2} angle={300}/>*/}
 
-                <div style={{ "zIndex": 3, "position": "absolute"}}>
+                {/*    /!*Elements inside Trend Radar    *!/*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/*<div style={{ "zIndex": 3, "position": "absolute"}}>*/}
                     {trends &&
                         trends.map((trend, index) => (
-                            <div style={{'position':'relative', 'display':'flex','justifyContent':'center', 'alignItems':'center',
-                                'zIndex':`${zIndex_trend[trend.maturity]}`,
-                                'left': `${trend.xpos}vw`,
-                                'bottom': `${trend.ypos}vw` }}>
+                            // <div style={{'position':'relative', 'display':'flex','justifyContent':'center', 'alignItems':'center',
+                            //     'zIndex':`${zIndex_trend[trend.maturity]}`,
+                            //     'left': `${trend.xpos}vw`,
+                            //     'bottom': `${trend.ypos}vw` }}>
                                 <Button variant="primary"
                                         checked={index === currentIndex ? "active" : ""}
                                         onClick={() => setActiveTrend(trend, index)}
                                         key={index}
                                         style={{
                                             'position': 'absolute',
-                                            'width': `${radius_trend[trend.maturity]}vw`,
-                                            'height': `${radius_trend[trend.maturity]}vw`,
+                                            'zIndex':`${zIndex_trend[trend.maturity]}`,
+                                            // 'margin-left':'50px',
+                                            'margin-left': `${trend.xpos}%`,
+                                            'margin-bottom': `${trend.ypos}%`,
+                                            'width': `${radius_trend[trend.maturity]}%`,
+                                            'height': `${radius_trend[trend.maturity]}%`,
                                             'borderRadius': '100%',
-                                            'display': 'flex',
+                                            //'display': 'flex',
                                             'background': `${color_impact[trend.impact]}`,
                                             'border-color':'black',
                                             //'position': 'relative',
@@ -139,14 +157,33 @@ const TrendList = () => {
                                             // 'bottom': `${trend.ypos}px`,
                                             'padding':'0',}}
                                 ></Button>
-                            </div>
+                            // </div>
+                            // <div style={{'position':'absolute', 'display':'flex','justifyContent':'center', 'alignItems':'center',
+                            //     'zIndex':`${zIndex_trend[trend.maturity]}`,
+                            //     'margin-left': `${trend.xpos}%`,
+                            //     'margin-bottom': `${trend.ypos}%` }}>
+                            //     <Button variant="primary"
+                            //             checked={index === currentIndex ? "active" : ""}
+                            //             onClick={() => setActiveTrend(trend, index)}
+                            //             key={index}
+                            //             style={{
+                            //                 'position': 'absolute',
+                            //                 'width': `${radius_trend[trend.maturity]}%`,
+                            //                 'height': `${radius_trend[trend.maturity]}%`,
+                            //                 'borderRadius': '100%',
+                            //                 'display': 'flex',
+                            //                 'background': `${color_impact[trend.impact]}`,
+                            //                 'border-color':'black',
+                            //                 //'position': 'relative',
+                            //                 // 'left': `${trend.xpos}px`,
+                            //                 // 'bottom': `${trend.ypos}px`,
+                            //                 'padding':'0',}}
+                            //     ></Button>
+                            // </div>
                         ))}
-                </div>
-
-            </div>
-
+                {/*</div>*/}
+            </Row>
             {/*Trends List*/}
-
             <div className="col-md-6">
                 <h4>Trends List</h4>
                 <ul className="list-group">

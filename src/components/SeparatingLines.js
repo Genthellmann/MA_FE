@@ -6,8 +6,13 @@ import '../index.css';
 function SeparatingLines ({angle, length}){
     return(
         <div  className="vl"
-              style={{'height':`${length}vw`,
-                  'width':'0.2vw','transform': `rotate(${angle}deg) translateX(-0.1vw)`}}>
+              style={{
+                  'width':`${length}%`,
+                  'height':'0.4%',
+                  'left':'50%',
+                  // 'transform-origin': '0%0%',
+                  'transform': `rotate(${angle}deg)`,
+                  'position':'absolute'}}>
         </div>
     )
 }
