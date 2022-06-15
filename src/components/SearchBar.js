@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import TrendDataService from "../services/trend_service";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import TrendList from "./trend_list";
+import TrendList from "../unused/trend_list";
 
-const SearchBar = () =>{
-    const [trends, setTrends] = useState([]);
-    const [searchTitle, setSearchTitle] = useState("");
+const SearchBar = ({trends, setTrends, searchTitle, setSearchTitle}) =>{
 
     //array for all trends from db
     const count = 6;

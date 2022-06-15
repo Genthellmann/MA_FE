@@ -1,0 +1,148 @@
+h1 span {
+    /*font: 26px Monaco, MonoSpace;*/
+    font: 8px Avenir, MonoSpace;
+    height: 50%;
+    position: absolute;
+    width: 5%;
+    /*left: 0;*/
+    top: 0%;
+    /*transform-origin: bottom center;*/
+}
+/*User*/
+.char1 {
+    transform: translateX(-50%)rotate(354deg);
+    transform-origin: 50%100%;
+
+}
+.char2 {
+    transform: translateX(-50%)rotate(358deg);
+    transform-origin: 50%100%;
+
+}
+.char3 {
+    transform: translateX(-50%)rotate(2deg);
+    transform-origin: 50%100%;
+}
+
+.char4 {
+    transform: translateX(-50%)rotate(6deg);
+    transform-origin: 50%100%;
+}
+
+/*Market Environment*/
+.char5 {
+    transform: translateX(-50%)rotate(88deg);
+    transform-origin: 50%100%;
+}
+.char6 {
+    transform: translateX(-50%)rotate(92deg);
+    transform-origin: 50%100%;
+}
+.char7 {
+    transform: translateX(-50%)rotate(96deg);
+    transform-origin: 50%100%;
+}
+.char8 {
+    transform: translateX(-50%)rotate(100deg);
+    transform-origin: 50%100%;
+}
+.char9 {
+    transform: translateX(-50%)rotate(104deg);
+    transform-origin: 50%100%;
+}
+.char10 {
+    transform: translateX(-50%)rotate(108deg);
+    transform-origin: 50%100%;
+}
+.char11 {
+    transform: translateX(-50%)rotate(112deg);
+    transform-origin: 50%100%;
+}
+.char12 {
+     transform: translateX(-50%)rotate(116deg);
+     transform-origin: 50%100%;
+ }
+.char13 {
+    transform: translateX(-50%)rotate(120deg);
+    transform-origin: 50%100%;
+}
+.char14 {
+    transform: translateX(-50%)rotate(124deg);
+    transform-origin: 50%100%;
+}
+.char15 {
+    transform: translateX(-50%)rotate(128deg);
+    transform-origin: 50%100%;
+}
+.char16 {
+    transform: translateX(-50%)rotate(132deg);
+    transform-origin: 50%100%;
+}
+.char17 {
+    transform: translateX(-50%)rotate(136deg);
+    transform-origin: 50%100%;
+}
+.char18 {
+    transform: translateX(-50%)rotate(140deg);
+    transform-origin: 50%100%;
+}
+.char19 {
+    transform: translateX(-50%)rotate(144deg);
+    transform-origin: 50%100%;
+}
+.char20 {
+    transform: translateX(-50%)rotate(148deg);
+    transform-origin: 50%100%;
+}
+
+.char21 {
+    transform: translateX(-50%)rotate(152deg);
+    transform-origin: 50%100%;
+}
+.char22 {
+    transform: translateX(-50%)rotate(156deg);
+    transform-origin: 50%100%;
+}
+
+/*Technology*/
+.char23 {
+    transform: translateX(-50%)rotate(224deg);
+    transform-origin: 50%100%;
+}
+.char24 {
+    transform: translateX(-50%)rotate(228deg);
+    transform-origin: 50%100%;
+}
+.char25 {
+    transform: translateX(-50%)rotate(232deg);
+    transform-origin: 50%100%;
+}
+.char26 {
+    transform: translateX(-50%)rotate(236deg);
+    transform-origin: 50%100%;
+}
+.char27 {
+    transform: translateX(-50%)rotate(240deg);
+    transform-origin: 50%100%;
+}
+.char28 {
+    transform: translateX(-50%)rotate(244deg);
+    transform-origin: 50%100%;
+}
+.char29 {
+    transform: translateX(-50%)rotate(248deg);
+    transform-origin: 50%100%;
+}
+.char30 {
+    transform: translateX(-50%)rotate(252deg);
+    transform-origin: 50%100%;
+}
+.char31 {
+    transform: translateX(-50%)rotate(256deg);
+    transform-origin: 50%100%;
+}
+.char32 {
+    transform: translateX(-50%) rotate(260deg);
+    transform-origin: 50% 100%;
+}
+

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TrendRadar({radius,color,pos}){
+export default function TrendCircle({radius,color,pos}){
     console.log(radius,color);
     return (
         <div className="border-dark"
