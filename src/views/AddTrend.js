@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import TrendDataService from "../services/trend_service";
 import {ButtonGroup, Form, ToggleButton} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import UploadPicture from "../components/UploadPicture";
+import FileUp from "../components/FileUp";
 
 const AddTrend=()=>{
     const initialTrendState={
@@ -16,9 +19,11 @@ const AddTrend=()=>{
     }
     const [trend, setTrend] = useState(initialTrendState);
     const [submitted, setSubmitted] = useState(false);
+    const[id,setID] = useState(1);
 
     const handleInputChange = event => {
         const {name,value} = event.target;
+        console.log("trend.target: " + event.target.data)
         setTrend({...trend, [name]:value});
     };
 
@@ -56,7 +61,9 @@ const AddTrend=()=>{
         //     maturity: trend.maturity,
         //     category: trend.category,
         // };
+        console.log("im saveTrend")
         console.log(trend)
+
         //console.log(data)
 
         TrendDataService.create(trend)
@@ -65,7 +72,7 @@ const AddTrend=()=>{
                     id: response.data.id,
                     title: response.data.title,
                     description: response.data.description,
-                    implication: response.data.impact,
+                    implication: response.data.implication,
                     picture: response.data.picture,
                     probability: response.data.probability,
                     impact: response.data.impact,
@@ -73,24 +80,36 @@ const AddTrend=()=>{
                     category: response.data.category
                 });
                 setSubmitted(true);
-                console.log(response.data);
+                setID(response.data.id);
             })
             .catch(e=>{
                 console.log(e);
             });
+        setID()
     };
+
     const newTrend = () =>{
         setTrend(initialTrendState);
         setSubmitted(false);
     };
+
+    // const newPicture = () =>{
+    //     TrendDataService.createUpload()
+    //         .catch(e=>{
+    //             console.log(e);
+    //         })
+    // }
+
     return(
         <div className="submit-form">
             {submitted ? (
                 <div>
                     <h4>You submitted successfully!</h4>
-                    <button className="btn btn-success" onClick={newTrend}>
+                    <h4>{trend.id}</h4>
+                    <FileUp ID={trend.id}>Upload Picture</FileUp>
+                    <Button className="btn btn-success" onClick={newTrend}>
                         Add
-                    </button>
+                    </Button>
                 </div>
             ) : (
                 <div>
@@ -117,6 +136,19 @@ const AddTrend=()=>{
                             value={trend.description}
                             onChange={handleInputChange}
                             name="description"
+                        />
+                    </div>
+                    <br/>
+                    <div className="form-group">
+                        <label htmlFor="implication">Implication</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="implication"
+                            required
+                            value={trend.implication}
+                            onChange={handleInputChange}
+                            name="implication"
                         />
                     </div>
                     <br/>
@@ -234,6 +266,7 @@ const AddTrend=()=>{
                             </div>
                         ))}
                     </Form>
+
                     <button onClick={saveTrend} className="btn btn-success">
                         Submit
                     </button>

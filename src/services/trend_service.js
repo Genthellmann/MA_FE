@@ -22,6 +22,25 @@ const removeAll = () => {
 const findByTitle = title => {
     return http.get(`/crud?title=${title}`);
 };
+
+// //upload mask for picture
+// const createUpload = () =>{
+//     return http.get("/web/home");
+// }
+
+const getPicture = id => {
+    return http.get(`/web/upload?id=${id}`)
+}
+
+//transfer uploaded picture to db
+const submitUpload = file =>{
+    return http.post("/web/upload");
+}
+
+const editUpload = () =>{
+    return http.get("web/home");
+}
+
 const TrendService = {
     getAll,
     get,
@@ -29,6 +48,9 @@ const TrendService = {
     update,
     remove,
     removeAll,
-    findByTitle
+    findByTitle,
+    // createUpload,
+    submitUpload,
+    editUpload
 };
 export default TrendService;

@@ -6,7 +6,7 @@ import TrendRadar from "../components/TrendRadar";
 import TrendList from "../components/TrendList";
 import TrendDetails from "../components/TrendDetails";
 
-export default  function TrendsView (){
+export default function TrendsView (){
 
 
     const [trends, setTrends] = useState([]);
@@ -70,18 +70,23 @@ export default  function TrendsView (){
                     </div>
                 </Row>
                 <Row>
-                    <div style={ {width: "50%"}}>
-                       <TrendRadar trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
-                   </div>
+                    <Col>
+                        <div >
+                           <TrendRadar trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
+                        </div>
+                    </Col>
+                    <Col>
+                        <div >
+                           <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex} removeAllTrends={removeAllTrends}
+                           style={{width: '45%'}}/>
+                        </div>
+                    </Col>
                 </Row>
-                <Col>
-                    <div style={ {width: "50%"}}>
-                       <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex} removeAllTrends={removeAllTrends}/>
+                <Row>
+                    <div>
+                        <TrendDetails currentTrend={currentTrend} />
                     </div>
-                </Col>
-                <div>
-                    <TrendDetails currentTrend={currentTrend} />
-                </div>
+                </Row>
             </div>
         </div>
     )

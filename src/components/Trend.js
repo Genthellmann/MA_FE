@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
+import FileUpload from "./FileUpload";
 const Trend = props => {
     const { id }= useParams();
     let navigate = useNavigate();
@@ -9,7 +10,9 @@ const Trend = props => {
         id: null,
         title: "",
         description: "",
+        implication: "",
         category: "",
+        picture: "",
         xpos: 0,
         ypos:0,
     };
@@ -36,7 +39,7 @@ const Trend = props => {
     const handleInputChange = event => {
         const { name, value } = event.target;
         setCurrentTrend({ ...currentTrend, [name]: value });
-        console.log(currentTrend.probability)
+        console.log(currentTrend.implication)
     };
 
     const handleDropChange = event => {
@@ -120,6 +123,18 @@ const Trend = props => {
                                 id="description"
                                 name="description"
                                 value={currentTrend.description}
+                                onChange={handleInputChange}
+
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="implication">Implication</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="implication"
+                                name="implication"
+                                value={currentTrend.implication}
                                 onChange={handleInputChange}
 
                             />
@@ -257,7 +272,10 @@ const Trend = props => {
                             </div>
                         ))}
                     </Form>
-                    <br/>
+                    <div>
+                        <FileUpload currentTrend={currentTrend} setCurrentTrend={setCurrentTrend}>FileUpload</FileUpload>
+                    </div>
+                        <br/>
                     <button type="button"
                             class="btn btn-dark"
                             onClick={deleteTrend}>
