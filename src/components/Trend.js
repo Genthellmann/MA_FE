@@ -3,6 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
 import FileUpload from "./FileUpload";
+import FileReturn from "./FileReturn";
+import FileEdit from "./FileEdit";
+import FileUp from "./FileUp";
+
 const Trend = props => {
     const { id }= useParams();
     let navigate = useNavigate();
@@ -269,12 +273,15 @@ const Trend = props => {
                                     checked={"high" === currentTrend.impact}
 
                                 />
+                                <br/>
+                                <label htmlFor="title">Picture</label>
+                                <div>
+                                <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
+                            </div>
                             </div>
                         ))}
                     </Form>
-                    <div>
-                        <FileUpload currentTrend={currentTrend} setCurrentTrend={setCurrentTrend}>FileUpload</FileUpload>
-                    </div>
+
                         <br/>
                     <button type="button"
                             class="btn btn-dark"

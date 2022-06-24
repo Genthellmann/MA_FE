@@ -2,6 +2,7 @@ import React, {useEffect,useState} from "react";
 import {Link} from "react-router-dom";
 import {Card} from "react-bootstrap";
 import ExpendableText from "./ExpendableText";
+import FileReturn from "./FileReturn";
 
 export default function TrendDetails({currentTrend}){
 
@@ -32,10 +33,8 @@ export default function TrendDetails({currentTrend}){
                     <Card style={{width:'50%'}}>
                         <Card.Body>
                             <Card.Title>Picture</Card.Title>
-                            <ExpendableText maxHeight={maxHeight}>
-                                {currentTrend.picture}
-                            </ExpendableText>
-                        </Card.Body>
+                                <FileReturn id={currentTrend.id}></FileReturn>
+                            </Card.Body>
                     </Card>
                     <Card style={{width:'50%'}}>
                         <Card.Body>
@@ -48,11 +47,6 @@ export default function TrendDetails({currentTrend}){
                             </ExpendableText>
                         </Card.Body>
                     </Card>
-
-
-
-
-
                     <button className={"m-3 btn btn-sm variant=link"}>
                         <Link
                             to={"/trend/" + currentTrend.id}

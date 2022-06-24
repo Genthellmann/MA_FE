@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import TrendDataService from "../services/trend_service";
 
-export default function TrendList({trends, setActiveTrend, currentIndex,removeAllTrends}){
+export default function TrendList({trends, setActiveTrend, currentIndex, removeAllTrends}){
 
 
     return(

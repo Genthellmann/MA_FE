@@ -37,6 +37,7 @@ export default function TrendsView (){
     };
 
     const removeAllTrends = () => {
+        TrendDataService.deleteAllPictures();
         TrendDataService.removeAll()
             .then(response => {
                 console.log(response.data);

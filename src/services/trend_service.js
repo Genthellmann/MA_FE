@@ -29,7 +29,7 @@ const findByTitle = title => {
 // }
 
 const getPicture = id => {
-    return http.get(`/web/upload?id=${id}`)
+    return http.get(`/web/upload?trendID=${id}`)
 }
 
 //transfer uploaded picture to db
@@ -37,8 +37,12 @@ const submitUpload = file =>{
     return http.post("/web/upload");
 }
 
-const editUpload = () =>{
-    return http.get("web/home");
+const deletePicture = id =>{
+    return http.delete(`/web/upload?trendID=${id}`)
+}
+
+const deleteAllPictures =() =>{
+    return http.delete("web/")
 }
 
 const TrendService = {
@@ -49,8 +53,10 @@ const TrendService = {
     remove,
     removeAll,
     findByTitle,
+    getPicture,
     // createUpload,
     submitUpload,
-    editUpload
+    deletePicture,
+    deleteAllPictures,
 };
 export default TrendService;
