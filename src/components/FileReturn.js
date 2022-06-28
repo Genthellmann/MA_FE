@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, memo} from 'react';
 import TrendDataService from "../services/trend_service";
 import {Image} from "react-bootstrap";
 
-function FileReturn(id) {
+const FileReturn = memo((id) => {
     console.log("FileReturn ID")
     console.log(id)
 
@@ -40,6 +40,6 @@ function FileReturn(id) {
                    className='rounded'
             style={{'width':'100%'}}></Image>
     );
-}
+})
 
 export default FileReturn;

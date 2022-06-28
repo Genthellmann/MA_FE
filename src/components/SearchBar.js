@@ -3,6 +3,9 @@ import TrendDataService from "../services/trend_service";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import TrendList from "../unused/trend_list";
+import {Search} from "react-bootstrap-icons";
+import Form from 'react-bootstrap/Form';
+
 
 const SearchBar = ({trends, setTrends, searchTitle, setSearchTitle}) =>{
 
@@ -42,9 +45,10 @@ const SearchBar = ({trends, setTrends, searchTitle, setSearchTitle}) =>{
     };
 
     return (
-        <div className="col-md-8">
+        <div>
             <div className="input-group mb-3">
-                <input
+                <Form.Control
+                    variant="outline-dark"
                     type="text"
                     className="form-control"
                     placeholder="Search Trend by title"
@@ -52,13 +56,13 @@ const SearchBar = ({trends, setTrends, searchTitle, setSearchTitle}) =>{
                     onChange={onChangeSearchTitle}
                 />
                 <div className="input-group-append">
-                    <button
-                        className="btn btn-outline-dark"
+                    <Button
+                        variant="outline-dark"
                         type="button"
                         onClick={findByTitle}
-                    >
-                        Search
-                    </button>
+                        style={styles.searchButton}                    >
+                        <Search></Search>
+                    </Button>
                 </div>
             </div>
         </div>
@@ -66,3 +70,10 @@ const SearchBar = ({trends, setTrends, searchTitle, setSearchTitle}) =>{
 };
 
 export default SearchBar;
+
+const styles = {
+    searchButton:{
+        aspectRatio: 1,
+    }
+
+}

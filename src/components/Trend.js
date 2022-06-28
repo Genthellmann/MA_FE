@@ -6,6 +6,8 @@ import FileUpload from "./FileUpload";
 import FileReturn from "./FileReturn";
 import FileEdit from "./FileEdit";
 import FileUp from "./FileUp";
+import ExpendableText from "./ExpendableText";
+import RichText from "../temp_comps/richText";
 
 const Trend = props => {
     const { id }= useParams();
@@ -32,13 +34,17 @@ const Trend = props => {
                 console.log(e);
             });
     };
+
     useEffect(() => {
         if (id)
             getTrend(id);
     }, [id]);
 
+
     //=======================
     //Input Changes
+
+    const type = "radio"
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -66,22 +72,7 @@ const Trend = props => {
         const {name,value, id} = event.target;
         setCurrentTrend({...currentTrend, ["impact"]:id});
     }
-    // const updatePublished = status => {
-    //     var data = {
-    //         id: currentTutorial.id,
-    //         title: currentTutorial.title,
-    //         description: currentTutorial.description,
-    //         published: status
-    //     };
-    //     TutorialDataService.update(currentTutorial.id, data)
-    //         .then(response => {
-    //             setCurrentTutorial({ ...currentTutorial, published: status });
-    //             console.log(response.data);
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // };
+
     const updateTrend = () => {
         TrendDataService.update(currentTrend.id, currentTrend)
             .then(response => {
@@ -110,6 +101,7 @@ const Trend = props => {
                     <form>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
+                            <ExpendableText>
                             <input
                                 type="text"
                                 className="form-control"
@@ -118,6 +110,7 @@ const Trend = props => {
                                 value={currentTrend.title}
                                 onChange={handleInputChange}
                             />
+                            </ExpendableText>
                         </div>
                         <div className="form-group">
                             <label htmlFor="description">Description</label>
@@ -126,7 +119,7 @@ const Trend = props => {
                                 className="form-control"
                                 id="description"
                                 name="description"
-                                value={currentTrend.description}
+                                value={<ExpendableText>currentTrend.description</ExpendableText>}
                                 onChange={handleInputChange}
 
                             />
@@ -239,7 +232,6 @@ const Trend = props => {
                     <br/>
                     <label htmlFor="title">Impact on System Generation</label>
                     <Form>
-                        {['radio'].map((type) => (
                             <div key={`inline-${type}`} className="mb-3">
                                 <Form.Check
                                     inline
@@ -274,13 +266,13 @@ const Trend = props => {
 
                                 />
                                 <br/>
-                                <label htmlFor="title">Picture</label>
-                                <div>
-                                <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
                             </div>
-                            </div>
-                        ))}
                     </Form>
+                    <RichText></RichText>
+                    <label htmlFor="title">Picture</label>
+                    <div>
+                        <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
+                    </div>
 
                         <br/>
                     <button type="button"

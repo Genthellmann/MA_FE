@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import FileReturn from "./FileReturn";
 import TrendDataService from "../services/trend_service";
 import FileUp from "./FileUp";
+import {useParams} from "react-router-dom";
 
 
 function FileEdit({props, ID}){
@@ -17,8 +18,8 @@ function FileEdit({props, ID}){
         console.log(edit);
     }
 
-    // React.useEffect(()=>{
-    // }, [])
+    React.useEffect(()=>{
+    }, [])
 
     return (<div>
         {edit ? (

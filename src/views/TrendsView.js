@@ -63,33 +63,38 @@ export default function TrendsView (){
     }, []);
 
     return (
-        <div style={styles.backgroundContainer}>
-            <div style={styles.mainContainer}>
+        // <div style={styles.backgroundContainer}>
+        //     <div style={styles.mainContainer}>
+        <div>
                 <Row>
-                    <div style={{width: "45%"}}>
-                        <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle} setSearchTitle={setSearchTitle} />
-                    </div>
+                    <Col lg={8}></Col>
+                    <Col lg={4} >
+                            <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle} setSearchTitle={setSearchTitle} />
+                    </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col lg={8} >
                         <div >
                            <TrendRadar trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
                         </div>
                     </Col>
-                    <Col>
-                        <div >
+                    <Col lg={4} >
+                        <div>
                            <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex} removeAllTrends={removeAllTrends}
                            style={{width: '45%'}}/>
                         </div>
                     </Col>
                 </Row>
                 <Row>
-                    <div>
-                        <TrendDetails currentTrend={currentTrend} />
-                    </div>
+                    <Col lg={8} >
+                        <div>
+                            <TrendDetails currentTrend={currentTrend} />
+                        </div>
+                    </Col>
                 </Row>
             </div>
-        </div>
+
+        // </div>
     )
 }
 

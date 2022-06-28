@@ -9,31 +9,44 @@ import '../index.css'
 
 const Sidebar = props => {
     return (
-        <>
-            <Nav className="bg-dark sidebar" style={{'height':'60vw','width':'15vw','left':'1vw',
-            'borderRadius':'15px', 'marginTop':'15px'}}>
-                <div style={{'width':'15vw','justifyContent':'center'}}>
+        <div>
+            <Nav className="bg-dark sidebar" style={styles.sidebarBG}>
+                <div style={{'width':'100px','height':'300px'}}>
                     {/*<Nav>*/}
-                        <Navbar.Brand href="/trend" style={{'margin':'0vw'}}>Porsche</Navbar.Brand>
+                        <Navbar.Brand className='navbar-brand' href="/trend" style={styles.sidebarBrand}>Porsche</Navbar.Brand>
                     {/*</Nav>*/}
                     <Nav.Item>
-                        <Nav.Link href="/trend">Trends</Nav.Link>
+                        <Nav.Link href="/trend"  style={styles.sidebarItem}>Trends</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/add" >Add</Nav.Link>
+                        <Nav.Link href="/add"  style={styles.sidebarItem}>Add</Nav.Link>
                     </Nav.Item>
                 </div>
             </Nav>
-            {/*<div className={"container mt-3"}>*/}
-            {/*    <Routes>*/}
-            {/*        <Route path="/" element={<TrendList/>} />*/}
-            {/*        <Route path="/trend" element={<TrendList/>} />*/}
-            {/*        <Route path="/add" element={<AddTrend/>} />*/}
-            {/*        <Route path="/trend/:id" element={<Trend/>} />*/}
-            {/*    </Routes>*/}
-            {/*</div>*/}
-        </>
+        </div>
     );
 };
+
+const styles = {
+    sidebarBG: {
+        position: 'absolute',
+        justifyItems: 'center',
+        height:'300px',
+        width:'100px',
+        left:'1vw',
+        borderRadius:'15px',
+        marginTop:'15px',
+    },
+    sidebarBrand: {
+        color: 'white',
+        position: 'relative',
+        marginLeft: '10px',
+        marginTop: '20px'
+    },
+    sidebarItem:{
+        color: "white"
+    }
+
+}
 // const Sidebar = withRouter(Side);
 export default Sidebar

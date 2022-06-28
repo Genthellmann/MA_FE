@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import TrendDataService from "../services/trend_service";
+import Button from "react-bootstrap/Button";
 
 export default function TrendList({trends, setActiveTrend, currentIndex, removeAllTrends}){
 
@@ -21,12 +22,11 @@ export default function TrendList({trends, setActiveTrend, currentIndex, removeA
                         </li>
                     ))}
             </ul>
-            <button
-                className="m-3 btn btn-sm btn-danger"
+            <Button variant="danger"
                 onClick={removeAllTrends}
             >
                 Remove All
-            </button>
+            </Button>
         </div>
     );
 }
