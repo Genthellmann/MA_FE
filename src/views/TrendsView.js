@@ -5,6 +5,7 @@ import TrendDataService from "../services/trend_service";
 import TrendRadar from "../components/TrendRadar";
 import TrendList from "../components/TrendList";
 import TrendDetails from "../components/TrendDetails";
+import TrendCircle from "../components/TrendCircle";
 
 export default function TrendsView (){
 
@@ -62,6 +63,7 @@ export default function TrendsView (){
         retrieveTrends();
     }, []);
 
+
     return (
         // <div style={styles.backgroundContainer}>
         //     <div style={styles.mainContainer}>
@@ -75,7 +77,7 @@ export default function TrendsView (){
                 <Row>
                     <Col lg={8} >
                         <div >
-                           <TrendRadar trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
+                           <TrendRadar trends={trends} setTrends={setTrends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
                         </div>
                     </Col>
                     <Col lg={4} >

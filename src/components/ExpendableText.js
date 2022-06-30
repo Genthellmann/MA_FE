@@ -19,7 +19,7 @@ function ExpendableText({maxHeight, children, MAX_POSSIBLE_HEIGHT}) {
     return (
         <Card.Text style={styles.cardText} ref={ref}>
             <div
-                class="inner"
+                className="inner"
                 style={{ maxHeight: expanded ? MAX_POSSIBLE_HEIGHT : maxHeight }}
             >
                 {children}
@@ -27,7 +27,7 @@ function ExpendableText({maxHeight, children, MAX_POSSIBLE_HEIGHT}) {
             {shouldShowExpand && (
                 <Button onClick={() => setExpanded(!expanded)}
                 style={styles.cardButton}>
-                    <div style={styles.buttonText}>More</div>
+                    <div style={styles.buttonText}>{( expanded) ? (<div>less</div>) : (<div>more</div>)}</div>
                 </Button>
             )}
         </Card.Text>    );

@@ -4,6 +4,7 @@ h1 span {
     height: 50%;
     position: absolute;
     width: 5%;
+    z-index: 1;
     /*left: 0;*/
     top: 0%;
     /*transform-origin: bottom center;*/
@@ -12,7 +13,6 @@ h1 span {
 .char1 {
     transform: translateX(-50%)rotate(354deg);
     transform-origin: 50%100%;
-
 }
 .char2 {
     transform: translateX(-50%)rotate(358deg);

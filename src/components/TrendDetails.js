@@ -97,7 +97,6 @@ export default function TrendDetails({currentTrend}){
                         </Card>
                         <Button variant="primary" size="sm" >
                             <Link to={"/trend/" + currentTrend.id} style={{'color':'white'}}> Edit </Link>
-
                         </Button>
                         </Col>
                 </Row>

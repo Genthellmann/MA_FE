@@ -1,9 +1,21 @@
 import React from 'react';
 
 export default function TrendCircle({radius,color,pos}){
-    console.log(radius,color);
+
+    // const onDragOver=e=>{
+    //     console.log("drag")
+    //     e.preventDefault();
+    // }
+    //
+    // const onDrop=(e)=>{
+    //     let id = e.dataTransfer.getData("id")
+    //     console.log(e)
+    // }
+
     return (
         <div className="border-dark"
+             // onDragOver={(e)=>onDragOver(e)}
+             // onDrop={(e)=>onDrop(e)}
             style={{
             'width': `${radius}%`,
             'background': `${color}`,

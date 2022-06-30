@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
@@ -8,6 +8,7 @@ import FileEdit from "./FileEdit";
 import FileUp from "./FileUp";
 import ExpendableText from "./ExpendableText";
 import RichText from "../temp_comps/richText";
+import HelperPositioning from "../services/HelperPositioning";
 
 const Trend = props => {
     const { id }= useParams();
@@ -18,16 +19,22 @@ const Trend = props => {
         description: "",
         implication: "",
         category: "",
+        probability: "",
+        maturity: "",
+        impact: "",
         picture: "",
         xpos: 0,
         ypos:0,
     };
     const [currentTrend, setCurrentTrend] = useState(initialTrendState);
+    const [prevTrendConfig, setPrevTrendConfig] = useState(initialTrendState);
     const [message, setMessage] = useState("");
+
     const getTrend = id => {
         TrendDataService.get(id)
             .then(response => {
                 setCurrentTrend(response.data);
+                setPrevTrendConfig(response.data);
                 console.log(response.data);
             })
             .catch(e => {
@@ -73,16 +80,31 @@ const Trend = props => {
         setCurrentTrend({...currentTrend, ["impact"]:id});
     }
 
+
     const updateTrend = () => {
-        TrendDataService.update(currentTrend.id, currentTrend)
-            .then(response => {
-                console.log(response.data);
-                setMessage("The trend was updated successfully!");
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        if((currentTrend.category !== prevTrendConfig.category)||(currentTrend.probability !== prevTrendConfig.probability)){
+            let position = HelperPositioning(currentTrend.category,currentTrend.probability);
+            TrendDataService.update(currentTrend.id, {...currentTrend,["xpos"]: position[0],["ypos"]: position[1]}
+            )
+                .then(response => {
+                    console.log(response.data);
+                    setMessage("The trend was updated successfully!");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }else{
+            TrendDataService.update(currentTrend.id, currentTrend)
+                .then(response => {
+                    console.log(response.data);
+                    setMessage("The trend was updated successfully!");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     };
+
     const deleteTrend = () => {
         TrendDataService.remove(currentTrend.id)
             .then(response => {
@@ -171,7 +193,6 @@ const Trend = props => {
                                     name="prob_radio"
                                     type={type}
                                     id={"medium"}
-                                    // value={currentTrend.probability}
                                     value={currentTrend.probability}
                                     onChange={handleProbChange}
                                     checked={"medium" === currentTrend.probability}
@@ -184,7 +205,7 @@ const Trend = props => {
                                     id={"high"}
                                     value={currentTrend.probability}
                                     onChange={handleProbChange}
-                                    checked={"high" === currentTrend.probability}
+                                    checked={"high" === currentTrend.high}
                                 />
                             </div>
                         ))}
