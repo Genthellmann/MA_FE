@@ -46,24 +46,20 @@ export default function TrendRadar ({trends, setTrends, currentIndex, setActiveT
     const onDrop=e=>{
         e.preventDefault();
         const id = e.dataTransfer.getData("text")
-        console.log(id)
 
-        console.log("dropped at: ", ((e.nativeEvent.layerX-321)/321)*100, ((321-e.nativeEvent.layerY)/321)*100)
         setTrends(prev => {
             return prev.map(el=> {
                 if (el.id  != id) return el
                 else return {...el,
-                    xpos: ((e.nativeEvent.layerX-321)/321)*100,
-                    ypos: ((321-e.nativeEvent.layerY)/321)*100
+                    xpos: ((e.nativeEvent.layerX-e.target.clientHeight/2)/(e.target.clientHeight/2))*100,
+                    ypos: ((e.target.clientHeight/2-e.nativeEvent.layerY)/(e.target.clientHeight/2))*100
             }
             })
         })
 
-
         const draggedTrend = trends.find(el => {
             return  el.id == id
         })
-
 
         TrendDataService.update(draggedTrend.id, draggedTrend)
             .then(response => {
@@ -75,7 +71,6 @@ export default function TrendRadar ({trends, setTrends, currentIndex, setActiveT
                 console.log(e);
             });
     }
-
 
     return (
         <div>

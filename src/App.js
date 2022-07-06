@@ -8,6 +8,8 @@ import AddTrend from "./views/AddTrend"
 
 import Sidebar from "./components/Sidebar";
 import TrendsView from "./views/TrendsView";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
                       <Sidebar />
                       <div style={styles.mainContainer}>
                         <Routes>
+                            <Route path="/login" element={<Login/>}></Route>
+                            <Route path="/register" element={<Register/>}></Route>
                             <Route path="/" element={<TrendsView/>} />
                             <Route path="/trend" element={<TrendsView/>} />
                             <Route path="/add" element={<AddTrend/>} />

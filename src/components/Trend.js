@@ -141,7 +141,7 @@ const Trend = props => {
                                 className="form-control"
                                 id="description"
                                 name="description"
-                                value={<ExpendableText>currentTrend.description</ExpendableText>}
+                                value={currentTrend.description}
                                 onChange={handleInputChange}
 
                             />
@@ -289,7 +289,7 @@ const Trend = props => {
                                 <br/>
                             </div>
                     </Form>
-                    <RichText></RichText>
+                    {/*<RichText></RichText>*/}
                     <label htmlFor="title">Picture</label>
                     <div>
                         <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>

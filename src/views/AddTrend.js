@@ -4,6 +4,7 @@ import {ButtonGroup, Form, ToggleButton} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import UploadPicture from "../components/UploadPicture";
 import FileUp from "../components/FileUp";
+import {Link} from "react-router-dom";
 
 const AddTrend=()=>{
     const initialTrendState={
@@ -107,8 +108,11 @@ const AddTrend=()=>{
                     <h4>You submitted successfully!</h4>
                     <h4>{trend.id}</h4>
                     <FileUp ID={trend.id}>Upload Picture</FileUp>
+                    <Button><Link to={"/trend"} style={{'color':'white'}}> Skip  </Link></Button>
+                    <br/>
+                    <br/>
                     <Button className="btn btn-success" onClick={newTrend}>
-                        Add
+                        Add Next
                     </Button>
                 </div>
             ) : (
@@ -126,6 +130,7 @@ const AddTrend=()=>{
                         />
                     </div>
                     <br/>
+
                     <div className="form-group">
                         <label htmlFor="description">Description</label>
                         <input
