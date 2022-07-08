@@ -6,14 +6,19 @@ import TrendRadar from "../components/TrendRadar";
 import TrendList from "../components/TrendList";
 import TrendDetails from "../components/TrendDetails";
 import TrendCircle from "../components/TrendCircle";
+import {Navigate, useNavigate} from "react-router-dom";
+import LoginError from "../services/LoginError";
+import Account from "../components/Account";
+import Sidebar from "../components/Sidebar";
+
 
 export default function TrendsView (){
-
-
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
+
+    const navigate = useNavigate()
 
     const retrieveTrends = () => {
         TrendDataService.getAll()
@@ -21,7 +26,10 @@ export default function TrendsView (){
                 setTrends(response.data);
                 console.log(response.data);
             })
-            .catch(e => {
+            .catch((e,res) => {
+                console.log('error catch')
+                console.log(res)
+                LoginError(navigate, e)
                 console.log(e);
             });
     };
@@ -67,7 +75,9 @@ export default function TrendsView (){
     return (
         // <div style={styles.backgroundContainer}>
         //     <div style={styles.mainContainer}>
-        <div>
+        <div style={styles.mainContainer}>
+            <Account/>
+            <Sidebar />
                 <Row>
                     <Col lg={8}></Col>
                     <Col lg={4} >
@@ -101,19 +111,14 @@ export default function TrendsView (){
 }
 
 const styles = {
-    backgroundContainer: {
-        backgroundColor: "black",
-        width: "100%",
-        height: "100%",
-        padding: 10,
-        paddingLeft: 70,
-        marginTop:0
-    },
     mainContainer: {
         borderRadius: 10,
         width: "100%",
         // height: "100%",
         backgroundColor: "white",
-        paddingLeft: "10%"
+        paddingLeft: "10%",
+        paddingBottom: 5,
+        paddingTop: 5,
+        paddingRight: 5,
     }
 }

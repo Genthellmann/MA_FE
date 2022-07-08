@@ -1,15 +1,10 @@
 import React, { useState, useRef } from "react";
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
-import avatar from "../images/avatar.png"
-import Sidebar from "./Sidebar";
-import Register from "./Register";
-import TrendsView from "../views/TrendsView";
-import AddTrend from "../views/AddTrend";
-import Trend from "./Trend";
+import {AiOutlineUser} from "react-icons/ai";
 
 const required = (value) => {
     if (!value) {
@@ -63,13 +58,11 @@ const Login = () => {
         }
     };
     return (
-        <div className="col-md-12">
-            <div className="card card-container">
-                <img
-                    src={avatar}
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
+        <div style={styles.logMain}>
+        <div className="col-sm-6" style={styles.logForm}>
+            <div style={{'height':'100px',  justifyContent:'center',alignItems:'center',display:'flex', }}>
+                <AiOutlineUser size={'80%'}></AiOutlineUser>
+            </div>
                 <Form onSubmit={handleLogin} ref={form}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -93,14 +86,15 @@ const Login = () => {
                             validations={[required]}
                         />
                     </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary btn-block" disabled={loading}>
+                    <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
+                        <button className="btn btn-primary btn-block" disabled={loading} style={{margin:10}}>
                             {loading && (
                                 <span className="spinner-border spinner-border-sm"></span>
                             )}
                             <span>Login</span>
                         </button>
-                    </div>
+                        <Link to="/register">Register</Link>
+                    </div >
                     {message && (
                         <div className="form-group">
                             <div className="alert alert-danger" role="alert">
@@ -115,6 +109,20 @@ const Login = () => {
     );
 };
 export default Login;
+
+const styles = {
+    logMain:{
+        display:'flex',
+        paddingRight:'60px',
+        paddingTop:'60px',
+        justifyContent:'center'
+    },
+    logForm:{
+        backgroundColor:'white',
+        padding: '20px',
+        borderRadius:15
+    }
+}
 
 
 

@@ -13,6 +13,7 @@ import AuthService from "../services/auth.service";
 import {Image} from "react-bootstrap";
 import avatar from "../images/avatar.png"
 import {Link} from "react-router-dom";
+import {AiOutlineUser} from "react-icons/ai";
 
 const required = (value) => {
     if (!value) {
@@ -98,13 +99,11 @@ const Register = () => {
         }
     };
     return (
-        <div className="col-md-12">
-            <div className="card card-container">
-                <Image
-                    src={avatar}
-                    alt="profile-img"
-                    className="profile-img-card">
-                </Image>
+        <div style={styles.logMain}>
+            <div className="col-sm-6" style={styles.logForm}>
+                <div style={{'height':'100px',  justifyContent:'center',alignItems:'center',display:'flex', }}>
+                    <AiOutlineUser size={'80%'}></AiOutlineUser>
+                </div>
                 <Form onSubmit={handleRegister} ref={form}>
                     {!successful && (
                         <div>
@@ -141,13 +140,13 @@ const Register = () => {
                                     validations={[required, vpassword]}
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
                                 <button className="btn btn-primary btn-block">Sign Up</button>
                             </div>
                         </div>
                     )}
                     {message && (
-                        <div className="form-group">
+                        <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
                             <div
                                 className={ successful ? "alert alert-success" : "alert alert-danger" }
                                 role="alert"
@@ -161,8 +160,22 @@ const Register = () => {
                     )}
                     <CheckButton style={{ display: "none" }} ref={checkBtn} />
                 </Form>
+                </div>
             </div>
-        </div>
     );
 };
 export default Register;
+
+const styles = {
+    logMain:{
+        display:'flex',
+        paddingRight:'60px',
+        paddingTop:'60px',
+        justifyContent:'center'
+    },
+    logForm:{
+        backgroundColor:'white',
+        padding: '20px',
+        borderRadius:15
+    }
+}

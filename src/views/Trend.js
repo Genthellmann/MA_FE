@@ -2,13 +2,15 @@ import React, {useState, useEffect, useMemo} from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
-import FileUpload from "./FileUpload";
-import FileReturn from "./FileReturn";
-import FileEdit from "./FileEdit";
-import FileUp from "./FileUp";
-import ExpendableText from "./ExpendableText";
+import FileUpload from "../components/FileUpload";
+import FileReturn from "../components/FileReturn";
+import FileEdit from "../components/FileEdit";
+import FileUp from "../components/FileUp";
+import ExpendableText from "../components/ExpendableText";
 import RichText from "../temp_comps/richText";
 import HelperPositioning from "../services/HelperPositioning";
+import LoginError from "../services/LoginError";
+import Sidebar from "../components/Sidebar";
 
 const Trend = props => {
     const { id }= useParams();
@@ -39,7 +41,11 @@ const Trend = props => {
             })
             .catch(e => {
                 console.log(e);
-            });
+                LoginError()
+            })
+        //     .then(
+        //     LoginError()
+        // )
     };
 
     useEffect(() => {
@@ -98,6 +104,7 @@ const Trend = props => {
                 .then(response => {
                     console.log(response.data);
                     setMessage("The trend was updated successfully!");
+                    navigate("/trend")
                 })
                 .catch(e => {
                     console.log(e);
@@ -109,13 +116,15 @@ const Trend = props => {
         TrendDataService.remove(currentTrend.id)
             .then(response => {
                 console.log(response.data);
-                navigate("/crud");
+                navigate("/trend");
             })
             .catch(e => {
                 console.log(e);
             });
     };
     return (
+        <div style={styles.mainContainer}>
+        <Sidebar />
         <div>
             {currentTrend ? (
                 <div className="edit-form">
@@ -317,6 +326,20 @@ const Trend = props => {
                 </div>
             )}
         </div>
+        </div>
     );
 };
 export default Trend;
+
+const styles = {
+    mainContainer: {
+        borderRadius: 10,
+        width: "100%",
+        // height: "100%",
+        backgroundColor: "white",
+        paddingLeft: "10%",
+        paddingBottom: 5,
+        paddingTop: 5,
+        paddingRight: 5,
+    }
+}

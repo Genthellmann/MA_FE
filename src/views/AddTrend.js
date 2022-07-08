@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import UploadPicture from "../components/UploadPicture";
 import FileUp from "../components/FileUp";
 import {Link} from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import Account from "../components/Account";
 
 const AddTrend=()=>{
     const initialTrendState={
@@ -102,6 +104,9 @@ const AddTrend=()=>{
     // }
 
     return(
+        <div style={styles.mainContainer}>
+        <Sidebar />
+        <Account/>
         <div className="submit-form">
             {submitted ? (
                 <div>
@@ -278,6 +283,17 @@ const AddTrend=()=>{
                 </div>
             )}
         </div>
+        </div>
     );
 };
 export default AddTrend;
+
+const styles = {
+    mainContainer: {
+        borderRadius: 10,
+        width: "100%",
+        // height: "100%",
+        backgroundColor: "white",
+        paddingLeft: "10%"
+    }
+}

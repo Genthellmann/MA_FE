@@ -1,10 +1,5 @@
 import React from "react";
 import {Nav, Navbar} from "react-bootstrap";
-// import { withRouter } from "react-router";
-import { Routes, Route, Link } from "react-router-dom";
-import TrendList from "../unused/trend_list";
-import AddTrend from "../views/AddTrend";
-import Trend from "./Trend";
 import '../index.css'
 
 const Sidebar = props => {
@@ -29,7 +24,7 @@ const Sidebar = props => {
 
 const styles = {
     sidebarBG: {
-        position: 'absolute',
+        position: 'fixed',
         justifyItems: 'center',
         height:'300px',
         width:'100px',
