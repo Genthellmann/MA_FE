@@ -57,7 +57,7 @@ function App() {
                         <Route path="/login" element={<Login/>}></Route>
                         <Route path="/register" element={<Register/>}></Route>
                         <Route path="/profile" element={<Profile/>}></Route>
-                        <Route path="/" element={<TrendsView/>} />
+                        <Route path="/" element={<Login/>} />
                         <Route path="/trend" element={<TrendsView/>} />
                         <Route path="/add" element={<AddTrend/>} />
                         <Route path="/trend/:id" element={<Trend/>} />

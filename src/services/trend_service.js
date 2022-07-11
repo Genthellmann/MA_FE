@@ -23,6 +23,11 @@ const findByTitle = title => {
     return http.get(`/crud?title=${title}`);
 };
 
+const getAllCond = data => {
+    console.log(data)
+    return http.post("/crud/cond", data)
+}
+
 // //upload mask for picture
 // const createUpload = () =>{
 //     return http.get("/web/home");
@@ -58,5 +63,6 @@ const TrendService = {
     submitUpload,
     deletePicture,
     deleteAllPictures,
+    getAllCond
 };
 export default TrendService;

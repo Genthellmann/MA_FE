@@ -10,24 +10,49 @@ import {Navigate, useNavigate} from "react-router-dom";
 import LoginError from "../services/LoginError";
 import Account from "../components/Account";
 import Sidebar from "../components/Sidebar";
+import Filter from "../components/Filter";
 
 
 export default function TrendsView (){
+    //initial Filter State
+    const initialFilter ={
+        category : "",
+        probability: "",
+        impact: "",
+        maturity: ""
+    }
+
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
+    const [filter, setFilter] = useState(initialFilter)
 
     const navigate = useNavigate()
 
-    const retrieveTrends = () => {
-        TrendDataService.getAll()
+    // const retrieveTrends = () => {
+    //     TrendDataService.getAll()
+    //         .then(response => {
+    //             setTrends(response.data);
+    //             console.log(response.data);
+    //         })
+    //         .catch((e,res) => {
+    //             console.log('error catch')
+    //             console.log(res)
+    //             LoginError(navigate, e)
+    //             console.log(e);
+    //         });
+    // };
+
+
+
+    const retrieveTrends = (filter) => {
+        TrendDataService.getAllCond(filter)
             .then(response => {
                 setTrends(response.data);
                 console.log(response.data);
             })
             .catch((e,res) => {
-                console.log('error catch')
                 console.log(res)
                 LoginError(navigate, e)
                 console.log(e);
@@ -68,7 +93,7 @@ export default function TrendsView (){
     };
 
     useEffect(() => {
-        retrieveTrends();
+        retrieveTrends(filter);
     }, []);
 
 
@@ -79,7 +104,9 @@ export default function TrendsView (){
             <Account/>
             <Sidebar />
                 <Row>
-                    <Col lg={8}></Col>
+                    <Col lg={8}>
+                        <Filter filter={filter} setFilter={setFilter}></Filter>
+                    </Col>
                     <Col lg={4} >
                             <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle} setSearchTitle={setSearchTitle} />
                     </Col>

@@ -5,6 +5,8 @@ import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
+import {ButtonGroup, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import styles from '../views/trend.styles.css'
 
 export default function TrendRadar ({trends, setTrends, currentIndex, setActiveTrend}) {
 
@@ -21,7 +23,6 @@ export default function TrendRadar ({trends, setTrends, currentIndex, setActiveT
 
     // const[draggedTrend,setDraggedTrend] = useState(initialTrendState)
     const [message, setMessage] = useState("");
-
 
     let radius = {radius1: 90 , radius2: 60, radius3: 30}
     //radius of trend depending on maturity
@@ -42,6 +43,10 @@ export default function TrendRadar ({trends, setTrends, currentIndex, setActiveT
     const onDragOver=e=>{
         e.preventDefault();
     }
+
+    React.useEffect(()=> {
+        document.getElementById(`trend${currentIndex}`)?.focus();
+    }, [currentIndex])
 
     const onDrop=e=>{
         e.preventDefault();
@@ -94,12 +99,13 @@ export default function TrendRadar ({trends, setTrends, currentIndex, setActiveT
                     {trends &&
                     trends.map((trend, index) => (
                         <Button variant="primary"
-                                checked={index === currentIndex ? "active" : ""}
+                                aria-pressed={true}
                                 onClick={() => setActiveTrend(trend, index)}
                                 key={index}
                                 draggable
+                                id={`trend${index}`}
                                 onDragStart={(e)=>onDragStart(e,trend)}
-
+                                className={'btn-primary:focus'}
                                 style={{
                                     'position': 'absolute',
                                     // 'zIndex':`${zIndex_trend[trend.maturity]}+100`,

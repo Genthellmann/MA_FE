@@ -43,8 +43,6 @@ const logout = (navigate) =>{
 //return current user
 const getCurrentUser= () => {
     const user = JSON.parse(localStorage.getItem("user"))
-    console.log(user.accessToken)
-    if(user.accessToken){console.log("Ja hab ich")}
     return JSON.parse(localStorage.getItem("user"));
 };
 
