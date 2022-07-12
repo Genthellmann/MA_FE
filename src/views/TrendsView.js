@@ -13,22 +13,12 @@ import Sidebar from "../components/Sidebar";
 import Filter from "../components/Filter";
 
 
-export default function TrendsView (){
-    //initial Filter State
-    const initialFilter ={
-        category : "",
-        probability: "",
-        impact: "",
-        maturity: ""
-    }
-
+export default function TrendsView() {
+    const navigate = useNavigate()
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
-    const [filter, setFilter] = useState(initialFilter)
-
-    const navigate = useNavigate()
 
     // const retrieveTrends = () => {
     //     TrendDataService.getAll()
@@ -44,15 +34,13 @@ export default function TrendsView (){
     //         });
     // };
 
-
-
-    const retrieveTrends = (filter) => {
-        TrendDataService.getAllCond(filter)
+    const retrieveTrends = () => {
+        TrendDataService.getAll()
             .then(response => {
                 setTrends(response.data);
                 console.log(response.data);
             })
-            .catch((e,res) => {
+            .catch((e, res) => {
                 console.log(res)
                 LoginError(navigate, e)
                 console.log(e);
@@ -81,6 +69,7 @@ export default function TrendsView (){
                 console.log(e);
             });
     };
+
     const findByTitle = () => {
         TrendDataService.findByTitle(searchTitle)
             .then(response => {
@@ -92,9 +81,28 @@ export default function TrendsView (){
             });
     };
 
-    useEffect(() => {
-        retrieveTrends(filter);
-    }, []);
+    //Only show trends depending on Filter setting
+    //Retrieve all trends from db and only change view depending on filters set
+    //initially show all trends and set all filters checked
+    const initFilterMask = {
+        category: ["user", "technology", "menv"],
+        maturity: ["low", "medium", "high"],
+        probability: ["low", "medium", "high"],
+        impact: ["low", "medium", "high"],
+    }
+    const [filterMask, setFilterMask] = useState(initFilterMask);
+    const [filteredTrends, setFilteredTrends] = useState([]);
+
+    React.useEffect(() => {
+        console.log(filterMask)
+        console.log(trends)
+        const trendfilter = trends.filter(trend => filterMask.category.includes(trend.category))
+            .filter(trend => filterMask.probability.includes(trend.probability))
+            .filter(trend => filterMask.maturity.includes(trend.maturity))
+            .filter(trend => filterMask.impact.includes(trend.impact))
+        console.log(trendfilter)
+        setFilteredTrends(trendfilter)
+    }, [filterMask, trends]);
 
 
     return (
@@ -102,36 +110,40 @@ export default function TrendsView (){
         //     <div style={styles.mainContainer}>
         <div style={styles.mainContainer}>
             <Account/>
-            <Sidebar />
-                <Row>
-                    <Col lg={8}>
-                        <Filter filter={filter} setFilter={setFilter}></Filter>
-                    </Col>
-                    <Col lg={4} >
-                            <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle} setSearchTitle={setSearchTitle} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={8} >
-                        <div >
-                           <TrendRadar trends={trends} setTrends={setTrends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
-                        </div>
-                    </Col>
-                    <Col lg={4} >
-                        <div>
-                           <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex} removeAllTrends={removeAllTrends}
-                           style={{width: '45%'}}/>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={8} >
-                        <div>
-                            <TrendDetails currentTrend={currentTrend} />
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+            <Sidebar/>
+            <Row>
+                <Col lg={8}>
+                    <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
+                </Col>
+                <Col lg={4}>
+                    <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle}
+                               setSearchTitle={setSearchTitle}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col lg={8}>
+                    <div>
+                        <TrendRadar trends={trends} setTrends={setTrends}
+                                    filteredTrends={filteredTrends}
+                                    setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
+                    </div>
+                </Col>
+                <Col lg={4}>
+                    <div>
+                        <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}
+                                   removeAllTrends={removeAllTrends}
+                                   style={{width: '45%'}}/>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col lg={8}>
+                    <div>
+                        <TrendDetails currentTrend={currentTrend}/>
+                    </div>
+                </Col>
+            </Row>
+        </div>
 
         // </div>
     )
