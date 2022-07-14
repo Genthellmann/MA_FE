@@ -14,38 +14,26 @@ import Filter from "../components/Filter";
 
 
 export default function TrendsView() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
 
-    // const retrieveTrends = () => {
-    //     TrendDataService.getAll()
-    //         .then(response => {
-    //             setTrends(response.data);
-    //             console.log(response.data);
-    //         })
-    //         .catch((e,res) => {
-    //             console.log('error catch')
-    //             console.log(res)
-    //             LoginError(navigate, e)
-    //             console.log(e);
-    //         });
-    // };
-
     const retrieveTrends = () => {
         TrendDataService.getAll()
             .then(response => {
                 setTrends(response.data);
-                console.log(response.data);
             })
-            .catch((e, res) => {
-                console.log(res)
+            .catch(e => {
                 LoginError(navigate, e)
-                console.log(e);
             });
     };
+
+    useEffect(() => {
+        retrieveTrends()
+    }, [])
 
     const refreshList = () => {
         retrieveTrends();
@@ -62,24 +50,25 @@ export default function TrendsView() {
         TrendDataService.deleteAllPictures();
         TrendDataService.removeAll()
             .then(response => {
-                console.log(response.data);
                 refreshList();
             })
             .catch(e => {
                 console.log(e);
+                LoginError(navigate, e)
             });
     };
 
-    const findByTitle = () => {
-        TrendDataService.findByTitle(searchTitle)
-            .then(response => {
-                setTrends(response.data);
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
+    // const findByTitle = () => {
+    //     TrendDataService.findByTitle(searchTitle)
+    //         .then(response => {
+    //             setTrends(response.data);
+    //             console.log(response.data);
+    //         })
+    //         .catch(e => {
+    //             console.log(e);
+    //             LoginError(navigate, e)
+    //         });
+    // };
 
     //Only show trends depending on Filter setting
     //Retrieve all trends from db and only change view depending on filters set
@@ -96,14 +85,15 @@ export default function TrendsView() {
     React.useEffect(() => {
         console.log(filterMask)
         console.log(trends)
+        console.log("search title: " + searchTitle)
+        console.log(trends.filter(trend => searchTitle.includes(trend.title)))
         const trendfilter = trends.filter(trend => filterMask.category.includes(trend.category))
             .filter(trend => filterMask.probability.includes(trend.probability))
             .filter(trend => filterMask.maturity.includes(trend.maturity))
             .filter(trend => filterMask.impact.includes(trend.impact))
-        console.log(trendfilter)
+            .filter(trend => trend.title.toLowerCase().includes(searchTitle.toLowerCase()))
         setFilteredTrends(trendfilter)
-    }, [filterMask, trends]);
-
+    }, [filterMask, trends, searchTitle]);
 
     return (
         // <div style={styles.backgroundContainer}>
@@ -116,8 +106,7 @@ export default function TrendsView() {
                     <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
                 </Col>
                 <Col lg={4}>
-                    <SearchBar trends={trends} setTrends={setTrends} searchTitle={searchTitle}
-                               setSearchTitle={setSearchTitle}/>
+                    <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
                 </Col>
             </Row>
             <Row>
@@ -131,6 +120,7 @@ export default function TrendsView() {
                 <Col lg={4}>
                     <div>
                         <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}
+                                   filteredTrends={filteredTrends} setFilteredTrends={setFilteredTrends}
                                    removeAllTrends={removeAllTrends}
                                    style={{width: '45%'}}/>
                     </div>

@@ -7,8 +7,10 @@ import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
 import {ButtonGroup, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
 import styles from '../views/trend.styles.css'
+import LoginError from "../services/LoginError";
 
 export default function TrendRadar({trends, setTrends, filteredTrends, currentIndex, setActiveTrend}) {
+    const navigate = useNavigate;
 
     const initialTrendState = {
         id: null,
@@ -36,7 +38,6 @@ export default function TrendRadar({trends, setTrends, filteredTrends, currentIn
     //parameters: event 'e', respective trend 'trend'
     const onDragStart = (e, trend) => {
         e.dataTransfer.setData("text", JSON.stringify(trend.id))
-
         //setDraggedTrend(trend)
     }
 
@@ -75,6 +76,7 @@ export default function TrendRadar({trends, setTrends, filteredTrends, currentIn
             })
             .catch(e => {
                 console.log(e);
+
             });
     }
 

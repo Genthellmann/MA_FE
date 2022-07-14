@@ -3,15 +3,13 @@
 // email: required, email format
 // password: required, between 6 and 40 characters
 
-
-import React, { useState, useRef } from "react";
+import React, {useState, useRef} from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
+import {isEmail} from "validator";
 import AuthService from "../services/auth.service";
-import {Image} from "react-bootstrap";
-import avatar from "../images/avatar.png"
+
 import {Link} from "react-router-dom";
 import {AiOutlineUser} from "react-icons/ai";
 
@@ -101,7 +99,7 @@ const Register = () => {
     return (
         <div style={styles.logMain}>
             <div className="col-sm-6" style={styles.logForm}>
-                <div style={{'height':'100px',  justifyContent:'center',alignItems:'center',display:'flex', }}>
+                <div style={{'height': '100px', justifyContent: 'center', alignItems: 'center', display: 'flex',}}>
                     <AiOutlineUser size={'80%'}></AiOutlineUser>
                 </div>
                 <Form onSubmit={handleRegister} ref={form}>
@@ -140,42 +138,52 @@ const Register = () => {
                                     validations={[required, vpassword]}
                                 />
                             </div>
-                            <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
+                            <div className="form-group" style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'column'
+                            }}>
                                 <button className="btn btn-primary btn-block">Sign Up</button>
                             </div>
                         </div>
                     )}
                     {message && (
-                        <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
+                        <div className="form-group" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column'
+                        }}>
                             <div
-                                className={ successful ? "alert alert-success" : "alert alert-danger" }
+                                className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
                                 {message} {successful ? (
-                                    <Link to="/login"> Login </Link>
-                            ):(
+                                <Link to="/login"> Login </Link>
+                            ) : (
                                 <Link to="/register"> Try Again </Link>)}
                             </div>
                         </div>
                     )}
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
-                </div>
             </div>
+        </div>
     );
 };
 export default Register;
 
 const styles = {
-    logMain:{
-        display:'flex',
-        paddingRight:'60px',
-        paddingTop:'60px',
-        justifyContent:'center'
+    logMain: {
+        display: 'flex',
+        paddingRight: '60px',
+        paddingTop: '60px',
+        justifyContent: 'center'
     },
-    logForm:{
-        backgroundColor:'white',
+    logForm: {
+        backgroundColor: 'white',
         padding: '20px',
-        borderRadius:15
+        borderRadius: 15
     }
 }

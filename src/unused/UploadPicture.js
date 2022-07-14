@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import TrendDataService from "../services/trend_service";
 import Button from "react-bootstrap/Button";
 
@@ -24,8 +24,6 @@ function UploadPicture(props) {
     // });
 
 
-
-
     //select the file
     const [selectedFile, setselectedFile] = useState(null);
 
@@ -35,7 +33,6 @@ function UploadPicture(props) {
         setselectedFile(event.target.files[0]);
         console.log(selectedFile);
     }
-
 
     //On file upload (click upload button)
     const newPicture = () => {
@@ -87,60 +84,60 @@ function UploadPicture(props) {
 
 
 
-    //
-    // return (
-    //     <div className="container">
-    //         <div className="row">
-    //             <div className="col-sm-8 mt-3">
-    //                 <h4>Upload Image</h4>
-    //                 <form
-    //                     className="mt-4"
-    //                     action={newPicture}
-    //                     method="POST"
-    //                     encType="multipart/form-data"
-    //                 >
-    //                     <div className="form-group">
-    //                         <input
-    //                             type="file"
-    //                             name="file"
-    //                             id="input-files"
-    //                             className="form-control-file border"
-    //                         />
-    //                     </div>
-    //                     <button type="submit" className="btn btn-primary">Submit</button>
-    //                 </form>
-    //             </div>
-    //         </div>
-    //         <hr/>
-    //         <div className="row">
-    //             <div className="col-sm-12">
-    //                 <div className="preview-images"></div>
-    //             </div>
-    //         </div>
-    //     </div>
-    // <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    // <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    // <script>
-    //     $(document).ready(function() {
-    //     let imagesPreview = function(input, placeToInsertImagePreview) {
-    //     if (input.files) {
-    //     let filesAmount = input.files.length;
-    //     for (i = 0; i < filesAmount; i++) {
-    //     let reader = new FileReader();
-    //     reader.onload = function(event) {
-    //     $($.parseHTML("<img>"))
-    //     .attr("src", event.target.result)
-    //     .appendTo(placeToInsertImagePreview);
-    // };
-    //     reader.readAsDataURL(input.files[i]);
-    // }
-    // }
-    // };
-    //     $("#input-files").on("change", function() {
-    //     imagesPreview(this, "div.preview-images");
-    // });
-    // });
-    // </script>
+        //
+        // return (
+        //     <div className="container">
+        //         <div className="row">
+        //             <div className="col-sm-8 mt-3">
+        //                 <h4>Upload Image</h4>
+        //                 <form
+        //                     className="mt-4"
+        //                     action={newPicture}
+        //                     method="POST"
+        //                     encType="multipart/form-data"
+        //                 >
+        //                     <div className="form-group">
+        //                         <input
+        //                             type="file"
+        //                             name="file"
+        //                             id="input-files"
+        //                             className="form-control-file border"
+        //                         />
+        //                     </div>
+        //                     <button type="submit" className="btn btn-primary">Submit</button>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //         <hr/>
+        //         <div className="row">
+        //             <div className="col-sm-12">
+        //                 <div className="preview-images"></div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        // <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        // <script>
+        //     $(document).ready(function() {
+        //     let imagesPreview = function(input, placeToInsertImagePreview) {
+        //     if (input.files) {
+        //     let filesAmount = input.files.length;
+        //     for (i = 0; i < filesAmount; i++) {
+        //     let reader = new FileReader();
+        //     reader.onload = function(event) {
+        //     $($.parseHTML("<img>"))
+        //     .attr("src", event.target.result)
+        //     .appendTo(placeToInsertImagePreview);
+        // };
+        //     reader.readAsDataURL(input.files[i]);
+        // }
+        // }
+        // };
+        //     $("#input-files").on("change", function() {
+        //     imagesPreview(this, "div.preview-images");
+        // });
+        // });
+        // </script>
     );
 }
 

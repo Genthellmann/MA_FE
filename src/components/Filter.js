@@ -4,14 +4,6 @@ import Button from "react-bootstrap/Button";
 
 function Filter({filterMask, setFilterMask}) {
 
-    // const initFilterMask = {
-    //     category: ["user", "technology", "menv"],
-    //     maturity: ["low", "medium", "high"],
-    //     probability: ["low", "medium", "high"],
-    //     impact: ["low", "medium", "high"],
-    // }
-    // const [filterMask, setFilterMask] = useState(initFilterMask);
-
     const category = ["user", "technology", "menv"];
     const maturity = ["low", "medium", "high"];
     const probability = ["low", "medium", "high"];
@@ -26,24 +18,11 @@ function Filter({filterMask, setFilterMask}) {
                 [name]: prevState[name].filter(e => e !== value)
             } : {...prevState, [name]: [...prevState[name], value]}
         })
-        // const index = filterMask[name].indexOf(value);
-        // if (index > -1) {
-        //     setFilterMask({...filterMask, [name]: filterMask[`${name}`].splice(index, 1)})
-        // } else {
-        //     setFilterMask({...filterMask, [name]: filterMask[`${name}`].push(value)})
-        // }
-        // console.log(filterMask)
     }
 
     React.useEffect(() => {
         console.log(filterMask)
     }, [filterMask])
-
-
-    const handleSubmit = event => {
-        console.log(filterMask)
-    }
-
 
     return (
         <div>
@@ -86,7 +65,6 @@ function Filter({filterMask, setFilterMask}) {
                         />
                     ))}
                     <br/>
-                    {/*<Button onClick={handleSubmit}>Update</Button>*/}
                 </Form>
             </DropdownButton>
         </div>

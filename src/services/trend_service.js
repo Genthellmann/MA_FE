@@ -19,34 +19,34 @@ const remove = id => {
 const removeAll = () => {
     return http.delete(`/crud`);
 };
-const findByTitle = title => {
-    return http.get(`/crud?title=${title}`);
-};
+
+// const findByTitle = title => {
+//     return http.get(`/crud?title=${title}`);
+// };
 
 const getAllCond = data => {
     console.log(data)
     return http.post("/crud/cond", data)
 }
 
-// //upload mask for picture
-// const createUpload = () =>{
-//     return http.get("/web/home");
-// }
 
 const getPicture = id => {
     return http.get(`/web/upload?trendID=${id}`)
 }
 
 //transfer uploaded picture to db
-const submitUpload = file =>{
-    return http.post("/web/upload");
+const submitUpload = file => {
+    for (var pair of file.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+    return http.post("/web/upload", file);
 }
 
-const deletePicture = id =>{
+const deletePicture = id => {
     return http.delete(`/web/upload?trendID=${id}`)
 }
 
-const deleteAllPictures =() =>{
+const deleteAllPictures = () => {
     return http.delete("web/")
 }
 
@@ -57,7 +57,7 @@ const TrendService = {
     update,
     remove,
     removeAll,
-    findByTitle,
+    // findByTitle,
     getPicture,
     // createUpload,
     submitUpload,

@@ -10,17 +10,15 @@ const FileReturn = memo((id) => {
     const [picType, setPicType] = useState("");
     const reader = new FileReader();
 
-    const arrayBufferToBase64 = (buffer) =>{
+    const arrayBufferToBase64 = (buffer) => {
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(buffer));
         bytes.forEach((b) => binary += String.fromCharCode(b));
         return window.btoa(binary);
     };
 
-
-
     //useEffect renders component only once, when site is loaded if dependencies are empty
-    React.useEffect(()=>{
+    React.useEffect(() => {
         TrendDataService.getPicture(id.id)
             .then(response => {
                 console.log(response)
@@ -36,9 +34,9 @@ const FileReturn = memo((id) => {
     }, [id])
 
     return (
-            <Image src={`data:${picType}; base64,${imgUrl}`}
-                   className='rounded'
-            style={{'width':'100%'}}></Image>
+        <Image src={`data:${picType}; base64,${imgUrl}`}
+               className='rounded'
+               style={{'width': '100%'}}></Image>
     );
 })
 

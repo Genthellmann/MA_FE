@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useMemo} from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
-import FileUpload from "../components/FileUpload";
 import FileReturn from "../components/FileReturn";
 import FileEdit from "../components/FileEdit";
 import FileUp from "../components/FileUp";
@@ -13,8 +12,9 @@ import LoginError from "../services/LoginError";
 import Sidebar from "../components/Sidebar";
 
 const Trend = props => {
-    const { id }= useParams();
+    const {id} = useParams();
     let navigate = useNavigate();
+
     const initialTrendState = {
         id: null,
         title: "",
@@ -24,9 +24,8 @@ const Trend = props => {
         probability: "",
         maturity: "",
         impact: "",
-        picture: "",
         xpos: 0,
-        ypos:0,
+        ypos: 0,
     };
     const [currentTrend, setCurrentTrend] = useState(initialTrendState);
     const [prevTrendConfig, setPrevTrendConfig] = useState(initialTrendState);
@@ -41,11 +40,8 @@ const Trend = props => {
             })
             .catch(e => {
                 console.log(e);
-                LoginError()
+                LoginError(navigate, e)
             })
-        //     .then(
-        //     LoginError()
-        // )
     };
 
     useEffect(() => {
@@ -56,58 +52,56 @@ const Trend = props => {
 
     //=======================
     //Input Changes
-
     const type = "radio"
 
     const handleInputChange = event => {
-        const { name, value } = event.target;
-        setCurrentTrend({ ...currentTrend, [name]: value });
-        console.log(currentTrend.implication)
+        const {name, value} = event.target;
+        setCurrentTrend({...currentTrend, [name]: value});
     };
 
     const handleDropChange = event => {
-        const {name,value} = event.target;
-        setCurrentTrend({...currentTrend,["category"]:value});
-        console.log({...currentTrend,["category"]:value})
+        const {name, value} = event.target;
+        setCurrentTrend({...currentTrend, ["category"]: value});
     }
 
     const handleProbChange = event => {
-        const {name,value, id} = event.target;
-        setCurrentTrend({...currentTrend, ["probability"]:id});
+        const {name, value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["probability"]: id});
     }
 
     const handleMatChange = event => {
-        const {name,value, id} = event.target;
-        setCurrentTrend({...currentTrend, ["maturity"]:id});
+        const {name, value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["maturity"]: id});
     }
 
     const handleImpactChange = event => {
-        const {name,value, id} = event.target;
-        setCurrentTrend({...currentTrend, ["impact"]:id});
+        const {name, value, id} = event.target;
+        setCurrentTrend({...currentTrend, ["impact"]: id});
     }
 
-
     const updateTrend = () => {
-        if((currentTrend.category !== prevTrendConfig.category)||(currentTrend.probability !== prevTrendConfig.probability)){
-            let position = HelperPositioning(currentTrend.category,currentTrend.probability);
-            TrendDataService.update(currentTrend.id, {...currentTrend,["xpos"]: position[0],["ypos"]: position[1]}
+        if ((currentTrend.category !== prevTrendConfig.category) || (currentTrend.probability !== prevTrendConfig.probability)) {
+            let position = HelperPositioning(currentTrend.category, currentTrend.probability);
+            TrendDataService.update(currentTrend.id, {...currentTrend, ["xpos"]: position[0], ["ypos"]: position[1]}
             )
                 .then(response => {
-                    console.log(response.data);
                     setMessage("The trend was updated successfully!");
                 })
                 .catch(e => {
                     console.log(e);
+                    console.log("update trend " + e.response.status);
+                    LoginError(navigate, e)
                 });
-        }else{
+        } else {
             TrendDataService.update(currentTrend.id, currentTrend)
                 .then(response => {
-                    console.log(response.data);
                     setMessage("The trend was updated successfully!");
                     navigate("/trend")
                 })
                 .catch(e => {
                     console.log(e);
+                    console.log("update trend 2 " + e.response.status);
+                    LoginError(navigate, e)
                 });
         }
     };
@@ -115,153 +109,157 @@ const Trend = props => {
     const deleteTrend = () => {
         TrendDataService.remove(currentTrend.id)
             .then(response => {
-                console.log(response.data);
                 navigate("/trend");
             })
             .catch(e => {
                 console.log(e);
+                LoginError(navigate, e)
             });
     };
+
     return (
         <div style={styles.mainContainer}>
-        <Sidebar />
-        <div>
-            {currentTrend ? (
-                <div className="edit-form">
-                    <h4>Trend</h4>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <ExpendableText>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="title"
-                                name="title"
-                                value={currentTrend.title}
-                                onChange={handleInputChange}
-                            />
-                            </ExpendableText>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description">Description</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="description"
-                                name="description"
-                                value={currentTrend.description}
-                                onChange={handleInputChange}
+            <Sidebar/>
+            <div>
+                {currentTrend ? (
+                    <div className="edit-form">
+                        <h4>Trend</h4>
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="title">Title</label>
+                                <ExpendableText>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="title"
+                                        name="title"
+                                        value={currentTrend.title}
+                                        onChange={handleInputChange}
+                                    />
+                                </ExpendableText>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="description">Description</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="description"
+                                    name="description"
+                                    value={currentTrend.description}
+                                    onChange={handleInputChange}
 
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="implication">Implication</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="implication"
-                                name="implication"
-                                value={currentTrend.implication}
-                                onChange={handleInputChange}
-
-                            />
-                        </div>
-                    </form>
-                    <br/>
-                    <label htmlFor="title">Category</label>
-                    <Form.Select
-                        aria-label="Default select example"
-                        onChange={handleDropChange}
-                    >
-                        <option value="user"
-                                selected={"user" === currentTrend.category}>Customer / User</option>
-                        <option value="technology"
-                                selected={"technology" === currentTrend.category}>Technology</option>
-                        <option value="menv"
-                                selected={"menv" === currentTrend.category}>Market Environment</option>
-                    </Form.Select>
-                    <br/>
-                    <label htmlFor="title">Probability of Occurence</label>
-                    <Form>
-                        {['radio'].map((type) => (
-                            <div key={`inline-${type}`} className="mb-3">
-                                <Form.Check
-                                    inline
-                                    label="low"
-                                    name="prob_radio"
-                                    type={type}
-                                    id={"low"}
-                                    value={currentTrend.probability}
-                                    onChange={handleProbChange}
-                                    checked={"low" === currentTrend.probability}
-                                />
-                                <Form.Check
-                                    inline
-                                    label="medium"
-                                    name="prob_radio"
-                                    type={type}
-                                    id={"medium"}
-                                    value={currentTrend.probability}
-                                    onChange={handleProbChange}
-                                    checked={"medium" === currentTrend.probability}
-                                />
-                                <Form.Check
-                                    inline
-                                    label="high"
-                                    name="prob_radio"
-                                    type={type}
-                                    id={"high"}
-                                    value={currentTrend.probability}
-                                    onChange={handleProbChange}
-                                    checked={"high" === currentTrend.high}
                                 />
                             </div>
-                        ))}
-                    </Form>
-                    <br/>
-                    <label htmlFor="title">Maturity</label>
-                    <Form>
-                        {['radio'].map((type) => (
-                            <div key={`inline-${type}`} className="mb-3">
-                                <Form.Check
-                                    inline
-                                    label="low"
-                                    name="mat_radio"
-                                    type={type}
-                                    id={"low"}
-                                    value={currentTrend.maturity}
-                                    onChange={handleMatChange}
-                                    checked={"low" === currentTrend.maturity}
+                            <div className="form-group">
+                                <label htmlFor="implication">Implication</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="implication"
+                                    name="implication"
+                                    value={currentTrend.implication}
+                                    onChange={handleInputChange}
 
-                                />
-                                <Form.Check
-                                    inline
-                                    label="medium"
-                                    name="mat_radio"
-                                    type={type}
-                                    id={"medium"}
-                                    value={currentTrend.maturity}
-                                    onChange={handleMatChange}
-                                    checked={"medium" === currentTrend.maturity}
-
-                                />
-                                <Form.Check
-                                    inline
-                                    label="high"
-                                    name="mat_radio"
-                                    type={type}
-                                    id={"high"}
-                                    value={currentTrend.maturity}
-                                    onChange={handleMatChange}
-                                    checked={"high" === currentTrend.maturity}
                                 />
                             </div>
-                        ))}
-                    </Form>
-                    <br/>
-                    <label htmlFor="title">Impact on System Generation</label>
-                    <Form>
+                        </form>
+                        <br/>
+                        <label htmlFor="title">Category</label>
+                        <Form.Select
+                            aria-label="Default select example"
+                            onChange={handleDropChange}
+                        >
+                            <option value="user"
+                                    selected={"user" === currentTrend.category}>Customer / User
+                            </option>
+                            <option value="technology"
+                                    selected={"technology" === currentTrend.category}>Technology
+                            </option>
+                            <option value="menv"
+                                    selected={"menv" === currentTrend.category}>Market Environment
+                            </option>
+                        </Form.Select>
+                        <br/>
+                        <label htmlFor="title">Probability of Occurence</label>
+                        <Form>
+                            {['radio'].map((type) => (
+                                <div key={`inline-${type}`} className="mb-3">
+                                    <Form.Check
+                                        inline
+                                        label="low"
+                                        name="prob_radio"
+                                        type={type}
+                                        id={"low"}
+                                        value={currentTrend.probability}
+                                        onChange={handleProbChange}
+                                        checked={"low" === currentTrend.probability}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="medium"
+                                        name="prob_radio"
+                                        type={type}
+                                        id={"medium"}
+                                        value={currentTrend.probability}
+                                        onChange={handleProbChange}
+                                        checked={"medium" === currentTrend.probability}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="high"
+                                        name="prob_radio"
+                                        type={type}
+                                        id={"high"}
+                                        value={currentTrend.probability}
+                                        onChange={handleProbChange}
+                                        checked={"high" === currentTrend.probability}
+                                    />
+                                </div>
+                            ))}
+                        </Form>
+                        <br/>
+                        <label htmlFor="title">Maturity</label>
+                        <Form>
+                            {['radio'].map((type) => (
+                                <div key={`inline-${type}`} className="mb-3">
+                                    <Form.Check
+                                        inline
+                                        label="low"
+                                        name="mat_radio"
+                                        type={type}
+                                        id={"low"}
+                                        value={currentTrend.maturity}
+                                        onChange={handleMatChange}
+                                        checked={"low" === currentTrend.maturity}
+
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="medium"
+                                        name="mat_radio"
+                                        type={type}
+                                        id={"medium"}
+                                        value={currentTrend.maturity}
+                                        onChange={handleMatChange}
+                                        checked={"medium" === currentTrend.maturity}
+
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="high"
+                                        name="mat_radio"
+                                        type={type}
+                                        id={"high"}
+                                        value={currentTrend.maturity}
+                                        onChange={handleMatChange}
+                                        checked={"high" === currentTrend.maturity}
+                                    />
+                                </div>
+                            ))}
+                        </Form>
+                        <br/>
+                        <label htmlFor="title">Impact on System Generation</label>
+                        <Form>
                             <div key={`inline-${type}`} className="mb-3">
                                 <Form.Check
                                     inline
@@ -297,35 +295,35 @@ const Trend = props => {
                                 />
                                 <br/>
                             </div>
-                    </Form>
-                    {/*<RichText></RichText>*/}
-                    <label htmlFor="title">Picture</label>
-                    <div>
-                        <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
-                    </div>
+                        </Form>
+                        {/*<RichText></RichText>*/}
+                        <label htmlFor="title">Picture</label>
+                        <div>
+                            <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
+                        </div>
 
                         <br/>
-                    <button type="button"
+                        <button type="button"
+                                class="btn btn-dark"
+                                onClick={deleteTrend}>
+                            Delete
+                        </button>
+                        <button
+                            type="button"
                             class="btn btn-dark"
-                            onClick={deleteTrend}>
-                        Delete
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-dark"
-                        onClick={updateTrend}
-                    >
-                        Update
-                    </button>
-                    <p>{message}</p>
-                </div>
-            ) : (
-                <div>
-                    <br />
-                    <p>Please click on a Trend...</p>
-                </div>
-            )}
-        </div>
+                            onClick={updateTrend}
+                        >
+                            Update
+                        </button>
+                        <p>{message}</p>
+                    </div>
+                ) : (
+                    <div>
+                        <br/>
+                        <p>Please click on a Trend...</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
