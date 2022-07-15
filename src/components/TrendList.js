@@ -2,13 +2,13 @@ import React, {useState, useEffect} from "react";
 import TrendDataService from "../services/trend_service";
 import Button from "react-bootstrap/Button";
 import {DropdownButton, Form} from "react-bootstrap";
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 export default function TrendList({
-                                      trends,
                                       setActiveTrend,
                                       currentIndex,
                                       filteredTrends,
-                                      setFilteredTrends,
                                       removeAllTrends
                                   }) {
 
@@ -16,6 +16,12 @@ export default function TrendList({
         switch (type) {
             case "ByName":
                 return ByName(a, b);
+            case "AddedFirst":
+                return AddedFirst(a, b);
+            case "AddedLast":
+                return AddedLast(a, b);
+            case "UpdatedLast":
+                return UpdatedLast(a, b);
             default:
                 break;
         }
@@ -34,16 +40,17 @@ export default function TrendList({
         return 0;
     };
 
-    function AddedFirst() {
-        return
+    function AddedFirst(a, b) {
+        return new Date(a.createdAt) - new Date(b.createdAt)
     }
 
-    function AddedLast() {
-        return
+    function AddedLast(a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+
     }
 
-    function UpdatedLast() {
-        return
+    function UpdatedLast(a, b) {
+        return new Date(b.updatedAt) - new Date(a.updatedAt)
     }
 
     const [sorting, setSorting] = useState('ByName');
@@ -53,17 +60,27 @@ export default function TrendList({
     return (
         <div>
             <h4>Trends List</h4>
-            <Form.Select>
+            <DropdownButton id="dropdown-basic-button" title={sorting}>
                 {sortOptions.map((sortOptions) => (
-                    <option
-                        onChange={(e) => setSorting(e.target.value)}
-                        checked={sorting == sortOptions}
+                    <Dropdown.Item
+                        onClick={e => setSorting(e.target.text)}
                         value={sortOptions}
                         key={"sorting" + sortOptions}
-                        label={sortOptions}
-                    ></option>
+                    >{sortOptions}</Dropdown.Item>
                 ))}
-            </Form.Select>
+            </DropdownButton>
+            {/*<Form.Select >*/}
+            {/*    {sortOptions.map((sortOptions) => (*/}
+            {/*        <option*/}
+            {/*            // onChange={e => setSorting(e.target.value)}*/}
+            {/*            onChange={e => handleSelect(e)}*/}
+            {/*            checked={sorting == sortOptions}*/}
+            {/*            value={sortOptions}*/}
+            {/*            key={"sorting" + sortOptions}*/}
+            {/*            label={sortOptions}*/}
+            {/*        ></option>*/}
+            {/*    ))}*/}
+            {/*</Form.Select>*/}
             <br/>
             <ul className="list-group">
                 {filteredTrends &&
