@@ -7,8 +7,8 @@
 
 import axios from "axios";
 //User can sign up
-const register = (username, email, password) =>{
-    return axios.post("http://localhost:4000/login/signup",{
+const register = (username, email, password) => {
+    return axios.post("http://localhost:4000/login/signup", {
         username,
         email,
         password
@@ -16,13 +16,13 @@ const register = (username, email, password) =>{
 };
 
 //user can login
-const login = (username,password) => {
-    return axios.post("http://localhost:4000/login/signin",{
+const login = (username, password) => {
+    return axios.post("http://localhost:4000/login/signin", {
         username,
         password
     }).then((response) => {
         //write JWT to Browser localStorage
-        if(response.data.accessToken){
+        if (response.data.accessToken) {
             localStorage.setItem("user", JSON.stringify(response.data));
         }
         return response.data;
@@ -30,18 +30,17 @@ const login = (username,password) => {
 };
 
 //user can log out
-const logout = (navigate) =>{
+const logout = (navigate) => {
 
     //TO DO: Link to backend method logout
     localStorage.removeItem("user");
     navigate("/login");
     window.location.reload();
 
-
 }
 
 //return current user
-const getCurrentUser= () => {
+const getCurrentUser = () => {
     const user = JSON.parse(localStorage.getItem("user"))
     return JSON.parse(localStorage.getItem("user"));
 };

@@ -1,70 +1,46 @@
 import './App.css';
 import React, {useRef} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, Link } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import Trend from "./views/Trend"
 import AddTrend from "./views/AddTrend"
 import TrendsView from "./views/TrendsView";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Account from "./components/Account";
+import Login from "./views/Login";
+import Register from "./views/Register";
+import Account from "./views/Account";
 import Profile from "./components/Profile";
 import MainContainer from "./components/MainContainer";
 import Sidebar from "./components/Sidebar";
+import {ProjectContextProvider} from "./components/ProjectContextProvider";
+import Welcome from "./views/Welcome";
+import AddProject from "./views/AddProject";
 
 
 function App() {
 
-    // function RequireAuth({ children }) {
-    //     async function verifyToken() {
-    //         let token = localStorage.getItem('user');
-    //         if (token === null || token === undefined) return <Navigate to="../login" />
-    //         let header = AuthHeader;
-    //
-    //         return header;
-    //
-    //     return (verifyToken().then(res => { console.log(res); return res.ok; }) ? children : <Navigate to="../sign-in" />);
-    //
-    // }
-
 
     return (
 
-        // <div style={styles.backgroundContainer}>
-        //
-        //     <Routes>
-        //         <Route path="/login" element={<Login/>}></Route>
-        //         <Route path="/register" element={<Register/>}></Route>
-        //     </Routes>
-        //
-        //     <MainContainer>
-        //         <Sidebar></Sidebar>
-        //         <Account/>
-        //         <Routes>
-        //             {/*<Route path="/login" element={<Login/>}></Route>*/}
-        //             {/*<Route path="/register" element={<Register/>}></Route>*/}
-        //             <Route path="/profile" element={<Profile/>}></Route>
-        //             <Route path="/" element={<TrendsView/>} />
-        //             <Route path="/trend" element={<TrendsView/>} />
-        //             <Route path="/add" element={<AddTrend/>} />
-        //             <Route path="/trend/:id" element={<Trend/>} />
-        //         </Routes>
-        //     </MainContainer>
-        // </div>
-                  <div style={styles.backgroundContainer}>
-                      <Routes>
+        <div style={styles.backgroundContainer}>
+            <ProjectContextProvider>
+                <BrowserRouter>
+                    <Routes>
                         <Route path="/login" element={<Login/>}></Route>
                         <Route path="/register" element={<Register/>}></Route>
                         <Route path="/profile" element={<Profile/>}></Route>
-                        <Route path="/" element={<Login/>} />
-                        <Route path="/trend" element={<TrendsView/>} />
-                        <Route path="/add" element={<AddTrend/>} />
-                        <Route path="/trend/:id" element={<Trend/>} />
-                      </Routes>
-                  </div>
+                        <Route path="/" element={<Login/>}/>
+                        <Route path="/trend" element={<TrendsView/>}/>
+                        <Route path="/add" element={<AddTrend/>}/>
+                        <Route path="/trend/:id" element={<Trend/>}/>
+                        <Route path="/welcome" element={<Welcome/>}/>
+                        <Route path="/newproject" element={<AddProject/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </ProjectContextProvider>
+        </div>
 
-  );
+    );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useContext} from "react";
 import {useParams, useNavigate} from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
@@ -10,10 +10,12 @@ import RichText from "../temp_comps/richText";
 import HelperPositioning from "../services/HelperPositioning";
 import LoginError from "../services/LoginError";
 import Sidebar from "../components/Sidebar";
+import {ProjectContext} from "../components/ProjectContextProvider";
 
 const Trend = props => {
     const {id} = useParams();
     let navigate = useNavigate();
+    const currentProject = React.useContext(ProjectContext)
 
     const initialTrendState = {
         id: null,
@@ -24,6 +26,7 @@ const Trend = props => {
         probability: "",
         maturity: "",
         impact: "",
+        project: currentProject.id,
         xpos: 0,
         ypos: 0,
     };

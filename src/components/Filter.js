@@ -11,7 +11,6 @@ function Filter({filterMask, setFilterMask}) {
 
     const handleFilterChange = event => {
         const {name, value} = event.target;
-        console.log("name: " + name + ", value: " + value)
         setFilterMask(prevState => {
             return (prevState[name].includes(value)) ? {
                 ...prevState,
@@ -21,7 +20,6 @@ function Filter({filterMask, setFilterMask}) {
     }
 
     React.useEffect(() => {
-        console.log(filterMask)
     }, [filterMask])
 
     return (

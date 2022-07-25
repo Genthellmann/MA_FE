@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import FileUp from "../components/FileUp";
 import {Link, useNavigate} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import Account from "../components/Account";
+import Account from "./Account";
 import LoginError from "../services/LoginError";
+import {ProjectContext} from "../components/ProjectContextProvider";
 
 const AddTrend = () => {
     const navigate = useNavigate();
+
+    const currentProject = React.useContext(ProjectContext);
 
     const initialTrendState = {
         id: null,
@@ -22,9 +25,11 @@ const AddTrend = () => {
         maturity: "",
         category: "user",
     }
+
+    console.log(initialTrendState)
     const [trend, setTrend] = useState(initialTrendState);
     const [submitted, setSubmitted] = useState(false);
-    const [id, setID] = useState(1);
+    // const [id, setID] = useState(1);
 
     const handleInputChange = event => {
         const {name, value} = event.target;
@@ -33,7 +38,7 @@ const AddTrend = () => {
 
     const handleDropChange = event => {
         const {name, value} = event.target;
-        setTrend({...trend, ["category"]: value});
+        setTrend({...trend, category: value});
     }
 
     const handleProbChange = event => {
@@ -51,9 +56,24 @@ const AddTrend = () => {
         setTrend({...trend, ["impact"]: id});
     }
 
+    useEffect(() => {
+        console.log("initial trend state")
+        console.log(initialTrendState)
+        setTrend(prev => {
+            return {...prev, project: currentProject.project}
+        })
+    }, []);
+
+    useEffect(() => {
+        console.log("trebd changed")
+        console.log(trend)
+    }, [trend])
+
 
     const saveTrend = () => {
-        TrendDataService.create(trend)
+        console.log("Context Provider")
+        console.log(currentProject.project)
+        TrendDataService.create(trend, currentProject.project)
             .then(response => {
                 setTrend({
                     id: response.data.id,
@@ -64,17 +84,18 @@ const AddTrend = () => {
                     probability: response.data.probability,
                     impact: response.data.impact,
                     maturity: response.data.maturity,
-                    category: response.data.category
+                    category: response.data.category,
+                    project: response.data.project,
                 });
                 setSubmitted(true);
-                setID(response.data.id);
+                // setID(response.data.id);
             })
             .catch(e => {
                 console.log(e);
                 console.log("add trend: " + e.response.status);
                 LoginError(navigate, e)
             });
-        setID()
+        // setID()
     };
 
     const newTrend = () => {
@@ -100,6 +121,7 @@ const AddTrend = () => {
                     </div>
                 ) : (
                     <div>
+                        <h1>{currentProject.project}</h1>
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
                             <input
@@ -254,6 +276,12 @@ const AddTrend = () => {
                                 </div>
                             ))}
                         </Form>
+                        <button onClick={() => console.log(currentProject.project)}>
+                            log1
+                        </button>
+                        <button onClick={() => console.log(trend)}>
+                            log
+                        </button>
 
                         <button onClick={saveTrend} className="btn btn-success">
                             Submit

@@ -5,24 +5,25 @@ import TrendDataService from "../services/trend_service";
 import TrendRadar from "../components/TrendRadar";
 import TrendList from "../components/TrendList";
 import TrendDetails from "../components/TrendDetails";
-import TrendCircle from "../components/TrendCircle";
 import {Navigate, useNavigate} from "react-router-dom";
 import LoginError from "../services/LoginError";
-import Account from "../components/Account";
+import Account from "./Account";
 import Sidebar from "../components/Sidebar";
-import Filter from "../components/Filter";
+import {ProjectContext} from "../components/ProjectContextProvider";
 
 
 export default function TrendsView() {
     const navigate = useNavigate();
+    //set global project state for entire app component
+    const currentProject = React.useContext(ProjectContext);
 
     const [trends, setTrends] = useState([]);
     const [currentTrend, setCurrentTrend] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
 
-    const retrieveTrends = () => {
-        TrendDataService.getAll()
+    const retrieveTrends = cp => {
+        TrendDataService.getAll(cp)
             .then(response => {
                 setTrends(response.data);
             })
@@ -32,11 +33,11 @@ export default function TrendsView() {
     };
 
     useEffect(() => {
-        retrieveTrends()
+        retrieveTrends(currentProject.project)
     }, [])
 
     const refreshList = () => {
-        retrieveTrends();
+        retrieveTrends(currentProject.project);
         setCurrentTrend(null);
         setCurrentIndex(-1);
     };
@@ -47,8 +48,8 @@ export default function TrendsView() {
     };
 
     const removeAllTrends = () => {
-        TrendDataService.deleteAllPictures();
-        TrendDataService.removeAll()
+        //TrendDataService.deleteAllPictures();
+        TrendDataService.removeAll(currentProject.project)
             .then(response => {
                 refreshList();
             })
@@ -58,17 +59,6 @@ export default function TrendsView() {
             });
     };
 
-    // const findByTitle = () => {
-    //     TrendDataService.findByTitle(searchTitle)
-    //         .then(response => {
-    //             setTrends(response.data);
-    //             console.log(response.data);
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //             LoginError(navigate, e)
-    //         });
-    // };
 
     //Only show trends depending on Filter setting
     //Retrieve all trends from db and only change view depending on filters set
@@ -83,10 +73,6 @@ export default function TrendsView() {
     const [filteredTrends, setFilteredTrends] = useState([]);
 
     React.useEffect(() => {
-        console.log(filterMask)
-        console.log(trends)
-        console.log("search title: " + searchTitle)
-        console.log(trends.filter(trend => searchTitle.includes(trend.title)))
         const trendfilter = trends.filter(trend => filterMask.category.includes(trend.category))
             .filter(trend => filterMask.probability.includes(trend.probability))
             .filter(trend => filterMask.maturity.includes(trend.maturity))
@@ -103,7 +89,6 @@ export default function TrendsView() {
             <Sidebar/>
             <Row>
                 <Col lg={8}>
-                    <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
                 </Col>
                 <Col lg={4}>
                     <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
@@ -121,7 +106,8 @@ export default function TrendsView() {
                     <div>
                         <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}
                                    filteredTrends={filteredTrends} setFilteredTrends={setFilteredTrends}
-                                   removeAllTrends={removeAllTrends}
+                                   removeAllTrends={removeAllTrends} filterMask={filterMask}
+                                   setFilterMask={setFilterMask}
                                    style={{width: '45%'}}/>
                     </div>
                 </Col>

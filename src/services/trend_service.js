@@ -1,14 +1,21 @@
 import http from "../http-common";
 
-const getAll = () => {
-    return http.get("/crud");
+//============================
+//Trends
+//============================
+
+//get all trends from all projects
+const getAll = cp => {
+    return http.get(`/crud?project=${cp}`);
 };
+
 const get = id => {
     return http.get(`/crud/${id}`);
 };
-const create = data => {
-    console.log(data)
-    return http.post("/crud", data);
+const create = (data, project) => {
+    let newData = {...data, project: project}
+    console.log(newData)
+    return http.post("/crud", newData);
 };
 const update = (id, data) => {
     return http.put(`/crud/${id}`, data);
@@ -16,8 +23,8 @@ const update = (id, data) => {
 const remove = id => {
     return http.delete(`/crud/${id}`);
 };
-const removeAll = () => {
-    return http.delete(`/crud`);
+const removeAll = cp => {
+    return http.delete(`/crud?project=${cp}`);
 };
 
 // const findByTitle = title => {
@@ -29,6 +36,9 @@ const getAllCond = data => {
     return http.post("/crud/cond", data)
 }
 
+//============================
+//Pictures
+//============================
 
 const getPicture = id => {
     return http.get(`/web/upload?trendID=${id}`)
@@ -50,6 +60,25 @@ const deleteAllPictures = () => {
     return http.delete("web/")
 }
 
+//============================
+//Projects
+//============================
+
+const createProject = data => {
+    return http.post("/projects", data);
+}
+
+const getAllProjects = id => {
+    return http.get(`/projects/${id}`);
+}
+
+
+//edit Project properties,i.e. users with access rights
+const updateProject = data => {
+    return http.put("/projects", data);
+}
+
+
 const TrendService = {
     getAll,
     get,
@@ -63,6 +92,9 @@ const TrendService = {
     submitUpload,
     deletePicture,
     deleteAllPictures,
-    getAllCond
+    getAllCond,
+    createProject,
+    getAllProjects,
+    updateProject,
 };
 export default TrendService;

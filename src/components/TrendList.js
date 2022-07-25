@@ -3,14 +3,21 @@ import TrendDataService from "../services/trend_service";
 import Button from "react-bootstrap/Button";
 import {DropdownButton, Form} from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Filter from "./Filter";
+import {ProjectContext} from "./ProjectContextProvider";
+import {useNavigate} from "react-router-dom";
 
 
 export default function TrendList({
                                       setActiveTrend,
                                       currentIndex,
                                       filteredTrends,
-                                      removeAllTrends
+                                      removeAllTrends,
+                                      filterMask,
+                                      setFilterMask
                                   }) {
+    let navigate = useNavigate();
+    const currentProject = React.useContext(ProjectContext);
 
     function sortHandler(a, b, type) {
         switch (type) {
@@ -54,11 +61,11 @@ export default function TrendList({
     }
 
     const [sorting, setSorting] = useState('ByName');
-
     const sortOptions = ["ByName", "AddedFirst", "AddedLast", "UpdatedLast"]
 
+
     return (
-        <div>
+        <div display="flex">
             <h4>Trends List</h4>
             <DropdownButton id="dropdown-basic-button" title={sorting}>
                 {sortOptions.map((sortOptions) => (
@@ -69,18 +76,7 @@ export default function TrendList({
                     >{sortOptions}</Dropdown.Item>
                 ))}
             </DropdownButton>
-            {/*<Form.Select >*/}
-            {/*    {sortOptions.map((sortOptions) => (*/}
-            {/*        <option*/}
-            {/*            // onChange={e => setSorting(e.target.value)}*/}
-            {/*            onChange={e => handleSelect(e)}*/}
-            {/*            checked={sorting == sortOptions}*/}
-            {/*            value={sortOptions}*/}
-            {/*            key={"sorting" + sortOptions}*/}
-            {/*            label={sortOptions}*/}
-            {/*        ></option>*/}
-            {/*    ))}*/}
-            {/*</Form.Select>*/}
+            <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
             <br/>
             <ul className="list-group">
                 {filteredTrends &&
@@ -97,7 +93,7 @@ export default function TrendList({
                     ))}
             </ul>
             <Button variant="danger"
-                    onClick={removeAllTrends}
+                    onClick={() => removeAllTrends()}
             >
                 Remove All
             </Button>
