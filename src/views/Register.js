@@ -99,6 +99,7 @@ const Register = () => {
     return (
         <div style={styles.logMain}>
             <div className="col-sm-6" style={styles.logForm}>
+                <Link to="/Login">Login</Link>
                 <div style={{'height': '100px', justifyContent: 'center', alignItems: 'center', display: 'flex',}}>
                     <AiOutlineUser size={'80%'}></AiOutlineUser>
                 </div>

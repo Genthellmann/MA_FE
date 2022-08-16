@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, {useState, useRef} from "react";
 import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -39,7 +39,7 @@ const Login = () => {
         if (checkBtn.current.context._errors.length === 0) {
             AuthService.login(username, password).then(
                 () => {
-                    navigate("/trend");
+                    navigate("/welcome");
                     window.location.reload();
                 },
                 (error) => {
@@ -59,10 +59,10 @@ const Login = () => {
     };
     return (
         <div style={styles.logMain}>
-        <div className="col-sm-6" style={styles.logForm}>
-            <div style={{'height':'100px',  justifyContent:'center',alignItems:'center',display:'flex', }}>
-                <AiOutlineUser size={'80%'}></AiOutlineUser>
-            </div>
+            <div className="col-sm-6" style={styles.logForm}>
+                <div style={{'height': '100px', justifyContent: 'center', alignItems: 'center', display: 'flex',}}>
+                    <AiOutlineUser size={'80%'}></AiOutlineUser>
+                </div>
                 <Form onSubmit={handleLogin} ref={form}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
@@ -86,15 +86,20 @@ const Login = () => {
                             validations={[required]}
                         />
                     </div>
-                    <div className="form-group" style={{display:'flex', justifyContent: 'center', alignItems:'center',flexDirection:'column'}}>
-                        <button className="btn btn-primary btn-block" disabled={loading} style={{margin:10}}>
+                    <div className="form-group" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column'
+                    }}>
+                        <button className="btn btn-primary btn-block" disabled={loading} style={{margin: 10}}>
                             {loading && (
                                 <span className="spinner-border spinner-border-sm"></span>
                             )}
                             <span>Login</span>
                         </button>
                         <Link to="/register">Register</Link>
-                    </div >
+                    </div>
                     {message && (
                         <div className="form-group">
                             <div className="alert alert-danger" role="alert">
@@ -102,7 +107,7 @@ const Login = () => {
                             </div>
                         </div>
                     )}
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                    <CheckButton style={{display: "none"}} ref={checkBtn}/>
                 </Form>
             </div>
         </div>
@@ -111,16 +116,16 @@ const Login = () => {
 export default Login;
 
 const styles = {
-    logMain:{
-        display:'flex',
-        paddingRight:'60px',
-        paddingTop:'60px',
-        justifyContent:'center'
+    logMain: {
+        display: 'flex',
+        paddingRight: '60px',
+        paddingTop: '60px',
+        justifyContent: 'center'
     },
-    logForm:{
-        backgroundColor:'white',
+    logForm: {
+        backgroundColor: 'white',
         padding: '20px',
-        borderRadius:15
+        borderRadius: 15
     }
 }
 

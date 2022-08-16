@@ -121,7 +121,7 @@ const AddTrend = () => {
                     </div>
                 ) : (
                     <div>
-                        <h1>{currentProject.project}</h1>
+                        {/*<h1>{currentProject.project}</h1>*/}
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
                             <input
@@ -276,13 +276,7 @@ const AddTrend = () => {
                                 </div>
                             ))}
                         </Form>
-                        <button onClick={() => console.log(currentProject.project)}>
-                            log1
-                        </button>
-                        <button onClick={() => console.log(trend)}>
-                            log
-                        </button>
-
+                        
                         <button onClick={saveTrend} className="btn btn-success">
                             Submit
                         </button>

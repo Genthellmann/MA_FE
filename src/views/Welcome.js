@@ -67,9 +67,9 @@ function Welcome(props) {
     return (
         <div style={styles.mainContainer}>
             <Account></Account>
-            <span>Welcome! To continue select your project:</span>
-            <br/>
-
+            <span>Welcome! Currently Selected Project:</span>
+            <h2>Project ID: {currentProject?.project}</h2>
+            <Button onClick={() => navigate("/trend")}>Continue</Button>
             <Button variant="success" onClick={handleAddNew}>Add new</Button>
             {
                 projects.map((project, index) => (
@@ -86,11 +86,6 @@ function Welcome(props) {
                     </ul>
                 ))
             }
-            <div>{currentProject?.project}</div>
-            <button onClick={() => navigate("/trend")}>
-                Continue
-            </button>
-
         </div>
     );
 }

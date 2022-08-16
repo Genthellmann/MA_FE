@@ -15,6 +15,8 @@ import Sidebar from "./components/Sidebar";
 import {ProjectContextProvider} from "./components/ProjectContextProvider";
 import Welcome from "./views/Welcome";
 import AddProject from "./views/AddProject";
+import ReferenceSystem from "./views/ReferenceSystem";
+import AddReference from "./views/AddReference";
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
                         <Route path="/trend/:id" element={<Trend/>}/>
                         <Route path="/welcome" element={<Welcome/>}/>
                         <Route path="/newproject" element={<AddProject/>}/>
+                        <Route path="/RS/:id" element={<ReferenceSystem/>}/>
+                        <Route path="/RS/add/:id" element={<AddReference/>}/>
                     </Routes>
                 </BrowserRouter>
             </ProjectContextProvider>

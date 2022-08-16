@@ -5,11 +5,12 @@ import TrendDataService from "../services/trend_service";
 import TrendRadar from "../components/TrendRadar";
 import TrendList from "../components/TrendList";
 import TrendDetails from "../components/TrendDetails";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import LoginError from "../services/LoginError";
 import Account from "./Account";
 import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
+import Button from "react-bootstrap/Button";
 
 
 export default function TrendsView() {

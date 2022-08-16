@@ -44,15 +44,24 @@ export default function TrendDetails({currentTrend}) {
                                 <Card.Body>
                                     <Card.Title>Evaluation</Card.Title>
                                     <ExpendableText maxHeight={maxHeight}>
-                                        Category: <strong>{currentTrend.category}</strong>{'\n'}
-                                        Probability of Occurence: <strong>{currentTrend.probability}</strong>{'\n'}
-                                        Impact on System Generation: <strong>{currentTrend.impact}</strong>{'\n'}
-                                        Maturity: <strong>{currentTrend.maturity}</strong>
+                                        <ul>
+                                            <li>Category: <strong>{currentTrend.category}</strong>{'\n'}</li>
+                                            <li>Probability of
+                                                Occurence: <strong>{currentTrend.probability}</strong>{'\n'}</li>
+                                            <li>Impact on System
+                                                Generation: <strong>{currentTrend.impact}</strong>{'\n'}</li>
+                                            <li>Maturity: <strong>{currentTrend.maturity}</strong></li>
+                                        </ul>
                                     </ExpendableText>
                                 </Card.Body>
                             </Card>
                             <Button variant="primary" size="sm">
-                                <Link to={"/trend/" + currentTrend.id} style={{'color': 'white'}}> Edit </Link>
+                                <Link to={"/trend/" + currentTrend.id}
+                                      style={{'color': 'white', textDecoration: 'none'}}> Edit </Link>
+                            </Button>
+                            <Button variant="primary" size="sm">
+                                <Link to={"/RS/" + currentTrend.id} style={{'color': 'white', textDecoration: 'none'}}>Reference
+                                    System </Link>
                             </Button>
                         </Col>
                     </Row>

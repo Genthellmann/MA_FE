@@ -6,15 +6,19 @@ const Sidebar = props => {
     return (
         <div>
             <Nav className="bg-dark sidebar" style={styles.sidebarBG}>
-                <div style={{'width':'100px','height':'300px'}}>
+                <div style={{'width': '100px', 'height': '300px'}}>
                     {/*<Nav>*/}
-                        <Navbar.Brand className='navbar-brand' href="/trend" style={styles.sidebarBrand}>Porsche</Navbar.Brand>
+                    <Navbar.Brand className='navbar-brand' href="/trend"
+                                  style={styles.sidebarBrand}>Porsche</Navbar.Brand>
                     {/*</Nav>*/}
                     <Nav.Item>
-                        <Nav.Link href="/trend"  style={styles.sidebarItem}>Trends</Nav.Link>
+                        <Nav.Link href="/trend" style={styles.sidebarItem}>Trends</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/add"  style={styles.sidebarItem}>Add</Nav.Link>
+                        <Nav.Link href="/add" style={styles.sidebarItem}>Add</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/welcome" style={styles.sidebarItem}>Projects</Nav.Link>
                     </Nav.Item>
                 </div>
             </Nav>
@@ -26,11 +30,11 @@ const styles = {
     sidebarBG: {
         position: 'fixed',
         justifyItems: 'center',
-        height:'300px',
-        width:'100px',
-        left:'1vw',
-        borderRadius:'15px',
-        marginTop:'15px',
+        height: '300px',
+        width: '100px',
+        left: '1vw',
+        borderRadius: '15px',
+        marginTop: '15px',
     },
     sidebarBrand: {
         color: 'white',
@@ -38,7 +42,7 @@ const styles = {
         marginLeft: '10px',
         marginTop: '20px'
     },
-    sidebarItem:{
+    sidebarItem: {
         color: "white"
     }
 
