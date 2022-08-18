@@ -37,8 +37,8 @@ function App() {
                         <Route path="/trend/:id" element={<Trend/>}/>
                         <Route path="/welcome" element={<Welcome/>}/>
                         <Route path="/newproject" element={<AddProject/>}/>
-                        <Route path="/RS/:id" element={<ReferenceSystem/>}/>
-                        <Route path="/RS/add/:id" element={<AddReference/>}/>
+                        <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
+                        <Route path="/RS/add/:trendID" element={<AddReference/>}/>
                     </Routes>
                 </BrowserRouter>
             </ProjectContextProvider>

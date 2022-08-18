@@ -112,7 +112,7 @@ const AddTrend = () => {
                     <div>
                         <h4>You submitted successfully!</h4>
                         {/*<h4>{trend.id}</h4>*/}
-                        <FileUp ID={trend.id}>Upload Picture</FileUp>
+                        <FileUp link="web/upload?trendID=" ID={trend.id} submitted={submitted}>Upload Picture</FileUp>
                         <Button><Link to={"/trend"} style={{'color': 'white'}}> Skip </Link></Button>
                         <br/>
                         <br/>
@@ -276,7 +276,7 @@ const AddTrend = () => {
                                 </div>
                             ))}
                         </Form>
-                        
+
                         <button onClick={saveTrend} className="btn btn-success">
                             Submit
                         </button>

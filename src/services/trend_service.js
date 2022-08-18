@@ -44,13 +44,13 @@ const getPicture = id => {
     return http.get(`/web/upload?trendID=${id}`)
 }
 
-//transfer uploaded picture to db
-const submitUpload = file => {
-    for (var pair of file.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-    return http.post("/web/upload", file);
-}
+// //transfer uploaded picture to db
+// const submitUpload = file => {
+//     for (var pair of file.entries()) {
+//         console.log(pair[0] + ', ' + pair[1]);
+//     }
+//     return http.post("/web/upload", file);
+// }
 
 const deletePicture = id => {
     return http.delete(`/web/upload?trendID=${id}`)
@@ -87,6 +87,7 @@ const getReference = id => {
 }
 
 const createReference = data => {
+    console.log(data)
     return http.post("/reference", data);
 }
 
@@ -109,7 +110,7 @@ const TrendService = {
     // findByTitle,
     getPicture,
     // createUpload,
-    submitUpload,
+    //submitUpload,
     deletePicture,
     deleteAllPictures,
     getAllCond,
