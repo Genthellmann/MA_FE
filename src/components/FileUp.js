@@ -3,7 +3,7 @@ import LoginError from "../services/LoginError";
 import {useNavigate} from "react-router-dom";
 
 
-function FileUp({link, ID, submitted}) {
+function FileUp({link, submitted}) {
     const navigate = useNavigate();
 
     const [picture, setPicture] = useState(null);
@@ -75,7 +75,7 @@ function FileUp({link, ID, submitted}) {
                     >
                         <div className="form-group">
                             <input
-                                disabled={!submitted || uploaded}
+                                disabled={!submitted}
                                 // id={ID}
                                 type="file"
                                 // name={ID}
@@ -85,14 +85,14 @@ function FileUp({link, ID, submitted}) {
                                 onChange={onChangePicture}
                             />
                         </div>
+                        <button type="submit" className="btn btn-primary"
+                                disabled={!submitted}
+                        >Upload
+                        </button>
                         <div>
                             <img className="preview-images" src={imgData}></img>
                         </div>
                         <iframe name="file_upload"></iframe>
-                        <button type="submit" className="btn btn-primary"
-                                disabled={!submitted || uploaded}
-                        >Submit
-                        </button>
                     </form>
                 </div>
             </div>

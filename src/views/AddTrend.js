@@ -26,7 +26,6 @@ const AddTrend = () => {
         category: "user",
     }
 
-    console.log(initialTrendState)
     const [trend, setTrend] = useState(initialTrendState);
     const [submitted, setSubmitted] = useState(false);
     // const [id, setID] = useState(1);
@@ -57,22 +56,16 @@ const AddTrend = () => {
     }
 
     useEffect(() => {
-        console.log("initial trend state")
-        console.log(initialTrendState)
         setTrend(prev => {
             return {...prev, project: currentProject.project}
         })
     }, []);
 
     useEffect(() => {
-        console.log("trebd changed")
-        console.log(trend)
     }, [trend])
 
 
     const saveTrend = () => {
-        console.log("Context Provider")
-        console.log(currentProject.project)
         TrendDataService.create(trend, currentProject.project)
             .then(response => {
                 setTrend({
@@ -91,8 +84,6 @@ const AddTrend = () => {
                 // setID(response.data.id);
             })
             .catch(e => {
-                console.log(e);
-                console.log("add trend: " + e.response.status);
                 LoginError(navigate, e)
             });
         // setID()
@@ -112,7 +103,8 @@ const AddTrend = () => {
                     <div>
                         <h4>You submitted successfully!</h4>
                         {/*<h4>{trend.id}</h4>*/}
-                        <FileUp link="web/upload?trendID=" ID={trend.id} submitted={submitted}>Upload Picture</FileUp>
+                        <FileUp link={`http://localhost:3001/web/upload?trendID=&${trend.id}`} ID={trend.id}
+                                submitted={submitted}>Upload Picture</FileUp>
                         <Button><Link to={"/trend"} style={{'color': 'white'}}> Skip </Link></Button>
                         <br/>
                         <br/>

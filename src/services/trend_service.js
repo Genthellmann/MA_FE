@@ -86,17 +86,22 @@ const getReference = id => {
     return http.get(`/reference/all/${id}`);
 }
 
-const createReference = data => {
+const getOneReference = id => {
+    return http.get(`/reference/${id}`);
+}
+
+const createReference = (id, data) => {
     console.log(data)
     return http.post("/reference", data);
 }
 
-const updateReference = (id, data) => {
-    return http.put(`/reference/${id}`, data);
+const updateReference = data => {
+    console.log(data.id)
+    return http.put(`/reference/${data.id}`, data);
 }
 
 const deleteReference = id => {
-    return http.delete(`/reference/{id}`);
+    return http.delete(`/reference/${id}`);
 }
 
 
@@ -118,6 +123,7 @@ const TrendService = {
     getAllProjects,
     updateProject,
     getReference,
+    getOneReference,
     createReference,
     updateReference,
     deleteReference

@@ -17,6 +17,7 @@ import Welcome from "./views/Welcome";
 import AddProject from "./views/AddProject";
 import ReferenceSystem from "./views/ReferenceSystem";
 import AddReference from "./views/AddReference";
+import EditReference from "./views/ReferenceEdit";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                         <Route path="/newproject" element={<AddProject/>}/>
                         <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
                         <Route path="/RS/add/:trendID" element={<AddReference/>}/>
+                        <Route path="RS/edit/:refID" element={<EditReference/>}/>
                     </Routes>
                 </BrowserRouter>
             </ProjectContextProvider>

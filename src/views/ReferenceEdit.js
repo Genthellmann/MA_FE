@@ -11,55 +11,58 @@ import {Route} from "react-router-dom";
 import ExplPicFileUp from "../components/ExplPicFileUp";
 import RpPicFileUp from "../components/RpPicFileUp";
 import FileUp_2 from "../components/FileUp_2";
+import FileEdit2 from "../components/FileEdit2";
 
 
-const AddReference = () => {
+const ReferenceEdit = () => {
     const navigate = useNavigate();
 
-    let {trendID} = useParams();
+    let {refID} = useParams();
 
 
     const initialReferenceState = {
         id: null,
-        trendID: null,
+        trendID: "",
         rproduct: "",
         rsystemelements: "",
         usabilityattributes: "",
     }
 
-    const [reference, setReference] = useState(initialReferenceState);
-    const [submitted, setSubmitted] = useState(false);
-    const [created, setCreated] = useState(false);
+    const [currentReference, setCurrentReference] = useState(initialReferenceState);
+    const [prevReferenceConfig, setPrevReferenceConfig] = useState(initialReferenceState);
 
-
-    const handleInputChange = event => {
-        const {name, value} = event.target;
-        setReference({...reference, [name]: value, trendID: trendID});
-    };
-
-
-    const saveReference = id => {
-        TrendDataService.createReference(id, reference)
+    const getReference = refID => {
+        TrendDataService.getOneReference(refID)
             .then(response => {
-                    console.log(response)
-                    //navigate("../RS/" + id)
-                    setReference({...reference, id: response.data.id})
-                    setSubmitted(true)
-                }
-            )
+                setCurrentReference(response.data);
+                setPrevReferenceConfig(response.data);
+                console.log(response.data)
+            })
             .catch(e => {
                 console.log(e);
                 LoginError(navigate, e)
-            });
+            })
+
     };
 
-    React.useEffect(() => {
-        console.log(reference)
-    }, [reference])
+    useEffect(() => {
+        if (refID)
+            getReference(refID);
+    }, [refID]);
+
+
+    //=======================
+    //Input Changes
+    //=======================
+
+    const handleInputChange = event => {
+        const {name, value} = event.target;
+        setCurrentReference({...currentReference, [name]: value});
+    };
 
 
     const updateReference = () => {
-        TrendDataService.updateReference(reference)
+        TrendDataService.updateReference(currentReference)
             .then(response => {
                 console.log(response)
             })
@@ -68,12 +71,6 @@ const AddReference = () => {
                 LoginError(navigate, e)
             });
     };
-
-
-// const newTrend = () => {
-//     setTrend(initialTrendState);
-//     setSubmitted(false);
-// };
 
 
     return (
@@ -90,27 +87,24 @@ const AddReference = () => {
                             className="form-control"
                             id="rproduct"
                             required
-                            value={reference.rproduct}
+                            value={currentReference.rproduct}
                             onChange={handleInputChange}
                             name="rproduct"
                         />
                     </div>
-                    <button onClick={saveReference} className="btn btn-primary">
-                        Create
-                    </button>
+                    <FileEdit2></FileEdit2>
                     <FileUp
-                        link={`http://localhost:3001/rppicture?trendID=${reference.trendID}&refID=${reference.id}`}
-                        ID={reference.id} submitted={submitted}
+                        link={`http://localhost:3001/rppicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}
+                        ID={currentReference.id} submitted={true}
                     ></FileUp>
                     <div className="form-group">
                         <label htmlFor="rsystemelements">Reference System Elements</label>
                         <input
-                            disabled={!submitted}
                             type="text"
                             className="form-control"
                             id="rsystemelements"
                             required
-                            value={reference.rsystemelements}
+                            value={currentReference.rsystemelements}
                             onChange={handleInputChange}
                             name="rsystemelements"
                         />
@@ -119,19 +113,18 @@ const AddReference = () => {
                     <div className="form-group">
                         <label htmlFor="usabilityattributes">UX/Usability Attributes</label>
                         <input
-                            disabled={!submitted}
                             type="text"
                             className="form-control"
                             id="usabilityattributes"
                             required
-                            value={reference.usabilityattributes}
+                            value={currentReference.usabilityattributes}
                             onChange={handleInputChange}
                             name="usabilityattributes"
                         />
                     </div>
                     <FileUp
-                        link={`http://localhost:3001/explpicture?trendID=${reference.trendID}&refID=${reference.id}`}
-                        ID={reference.id} submitted={submitted}
+                        link={`http://localhost:3001/explpicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}
+                        ID={currentReference.id} submitted={true}
                     ></FileUp>
                     <button onClick={updateReference} className="btn btn-success">
                         Submit
@@ -142,7 +135,7 @@ const AddReference = () => {
         </div>
     );
 };
-export default AddReference;
+export default ReferenceEdit;
 
 const styles = {
     mainContainer: {
