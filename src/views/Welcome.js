@@ -22,6 +22,7 @@ function Welcome(props) {
     const retrieveProjects = id => {
         TrendDataService.getAllProjects(id)
             .then(response => {
+                console.log(response.data)
                 setProjects(response.data);
             })
             .catch(e => {
@@ -67,27 +68,40 @@ function Welcome(props) {
     return (
         <div style={styles.mainContainer}>
             <Account></Account>
-            <span>Welcome! Currently Selected Project:</span>
-            <h2>Project ID: {currentProject?.project}</h2>
-            <Button onClick={() => navigate("/trend")}>Continue</Button>
-            <Button variant="success" onClick={handleAddNew}>Add new</Button>
-            {
-                projects.map((project, index) => (
-                    <ul key={index} className="list-group">
-                        <li key={index} className="list-group-item">
-                            <h3>{project.title}</h3>
-                            <span>Project ID: {project.id}</span>
-                            <Button variant='primary'
-                                    onClick={() => handleClick(project)}>select</Button>
-                            <Button variant='danger'
-                                    onClick={() => handleDelete(project.id)}>delete
-                            </Button>
-                        </li>
-                    </ul>
-                ))
-            }
+            <div>
+                {projects.length > 0 ? (
+                    <div>
+                        <span>Welcome! Currently Selected Project:</span>
+                        <h2>{`Project ID: ${currentProject?.project}`}</h2>
+                        <Button onClick={() => navigate("/trend")}>Continue</Button>
+                        <Button variant="success" onClick={handleAddNew}>Add new</Button>
+                        <div>
+                            {projects.map((project, index) => (
+                                <ul key={index} className="list-group">
+                                    <li key={index} className="list-group-item">
+                                        <h3>{project.title}</h3>
+                                        <span>Project ID: {project.id}</span>
+                                        <Button variant='primary'
+                                                onClick={() => handleClick(project)}>select</Button>
+                                        <Button variant='danger'
+                                                onClick={() => handleDelete(project.id)}>delete
+                                        </Button>
+                                    </li>
+                                </ul>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <div>
+                        <span> Welcome! Create a new Project</span>
+                        <br/>
+                        <Button variant="success" onClick={handleAddNew}>Add new</Button>
+                    </div>
+                )
+                }
+            </div>
         </div>
-    );
+    )
 }
 
 export default Welcome;

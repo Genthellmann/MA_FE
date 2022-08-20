@@ -10,7 +10,6 @@ import LoginError from "../services/LoginError";
 import {Route} from "react-router-dom";
 import ExplPicFileUp from "../components/ExplPicFileUp";
 import RpPicFileUp from "../components/RpPicFileUp";
-import FileUp_2 from "../components/FileUp_2";
 
 
 const AddReference = () => {
@@ -67,6 +66,7 @@ const AddReference = () => {
                 console.log(e);
                 LoginError(navigate, e)
             });
+        navigate(`../../RS/${reference.trendID}`)
     };
 
 

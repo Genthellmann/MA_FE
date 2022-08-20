@@ -10,8 +10,8 @@ import LoginError from "../services/LoginError";
 import {Route} from "react-router-dom";
 import ExplPicFileUp from "../components/ExplPicFileUp";
 import RpPicFileUp from "../components/RpPicFileUp";
-import FileUp_2 from "../components/FileUp_2";
-import FileEdit2 from "../components/FileEdit2";
+import FileEditRp from "../components/FileEditRp";
+import FileEditExpl from "../components/FileEditExpl";
 
 
 const ReferenceEdit = () => {
@@ -60,7 +60,6 @@ const ReferenceEdit = () => {
         setCurrentReference({...currentReference, [name]: value});
     };
 
-
     const updateReference = () => {
         TrendDataService.updateReference(currentReference)
             .then(response => {
@@ -70,8 +69,9 @@ const ReferenceEdit = () => {
                 console.log(e);
                 LoginError(navigate, e)
             });
-    };
+        navigate(`../../RS/${currentReference.trendID}`)
 
+    };
 
     return (
         <div style={styles.mainContainer}>
@@ -92,11 +92,11 @@ const ReferenceEdit = () => {
                             name="rproduct"
                         />
                     </div>
-                    <FileEdit2></FileEdit2>
-                    <FileUp
-                        link={`http://localhost:3001/rppicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}
-                        ID={currentReference.id} submitted={true}
-                    ></FileUp>
+                    <FileEditRp ID={currentReference.trendID} refID={refID}>Reference Product Picture</FileEditRp>
+                    {/*<FileUp*/}
+                    {/*    link={`http://localhost:3001/rppicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}*/}
+                    {/*    ID={currentReference.id} submitted={true}*/}
+                    {/*></FileUp>*/}
                     <div className="form-group">
                         <label htmlFor="rsystemelements">Reference System Elements</label>
                         <input
@@ -122,10 +122,11 @@ const ReferenceEdit = () => {
                             name="usabilityattributes"
                         />
                     </div>
-                    <FileUp
-                        link={`http://localhost:3001/explpicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}
-                        ID={currentReference.id} submitted={true}
-                    ></FileUp>
+                    <FileEditExpl ID={currentReference.trendID} refID={refID}>Reference Product Picture</FileEditExpl>
+                    {/*<FileUp*/}
+                    {/*    link={`http://localhost:3001/explpicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}*/}
+                    {/*    ID={currentReference.id} submitted={true}*/}
+                    {/*></FileUp>*/}
                     <button onClick={updateReference} className="btn btn-success">
                         Submit
                     </button>

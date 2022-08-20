@@ -81,6 +81,7 @@ const AddTrend = () => {
                     project: response.data.project,
                 });
                 setSubmitted(true);
+                console.log(response)
                 // setID(response.data.id);
             })
             .catch(e => {
@@ -103,7 +104,7 @@ const AddTrend = () => {
                     <div>
                         <h4>You submitted successfully!</h4>
                         {/*<h4>{trend.id}</h4>*/}
-                        <FileUp link={`http://localhost:3001/web/upload?trendID=&${trend.id}`} ID={trend.id}
+                        <FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}
                                 submitted={submitted}>Upload Picture</FileUp>
                         <Button><Link to={"/trend"} style={{'color': 'white'}}> Skip </Link></Button>
                         <br/>

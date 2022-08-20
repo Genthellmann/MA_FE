@@ -104,6 +104,22 @@ const deleteReference = id => {
     return http.delete(`/reference/${id}`);
 }
 
+//============================
+//Rppictures
+//============================
+
+const deleteRpPicture = id => {
+    return http.delete(`/rppicture/${id}`);
+}
+
+//============================
+//Explpictures
+//============================
+
+const deleteExplPicture = id => {
+    return http.delete(`/explpicture/${id}`);
+}
+
 
 const TrendService = {
     getAll,
@@ -126,6 +142,8 @@ const TrendService = {
     getOneReference,
     createReference,
     updateReference,
-    deleteReference
+    deleteReference,
+    deleteRpPicture,
+    deleteExplPicture,
 };
 export default TrendService;

@@ -5,11 +5,19 @@ import TrendDataService from "../services/trend_service";
 import FileUp from "./FileUp";
 import {useParams} from "react-router-dom";
 import http from "../http-common";
+import {Image} from "react-bootstrap";
 
 
-function FileEdit({props, ID}) {
+function FileEditRp({props, ID, refID}) {
     const [edit, setEdit] = useState(false);
-    const {refID} = useParams();
+
+    //Convert to binary data string
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
 
     //===========================
     //Reference Product Picture Fetch
@@ -18,7 +26,7 @@ function FileEdit({props, ID}) {
         return http.get(`/rppicture/${refID}`)
     }
 
-    const [rpPictures, setRpPictures] = useState(null);
+    //const [rpPictures, setRpPictures] = useState(null);
     const [rpImgUrl, setRpImgUrl] = useState("");
     const [rpPicType, setRpPicType] = useState("");
     // const reader = new FileReader();
@@ -29,43 +37,16 @@ function FileEdit({props, ID}) {
         getOneRpPicture(refID)
             .then(response => {
                 console.log(response)
-                setRpPictures(response.data)
-                // const b64 = arrayBufferToBase64(response.data[0].data.data)
-                // setRpImgUrl(b64)
-                // setRpPicType(response.data[0].data.type)
+                //setRpPictures(response.data)
+                const b64 = arrayBufferToBase64(response.data.data.data)
+                setRpImgUrl(b64)
+                setRpPicType(response.data.type)
             })
             .catch(e => {
                 console.log(e);
             });
-    }, [refID])
+    }, [])
 
-    //===========================
-    //Explanatory Picture Fetch
-    //===========================
-    const getOneExplPicture = id => {
-        return http.get(`/explpicture/${refID}`)
-    }
-
-    const [explPictures, setExplPictures] = useState(null);
-    const [explImgUrl, setExplImgUrl] = useState("");
-    const [explPicType, setExplPicType] = useState("");
-    //const reader = new FileReader();
-
-
-    //html-request: fetch Reference Product Pictures
-    React.useEffect(() => {
-        getOneExplPicture(refID)
-            .then(response => {
-                console.log(response)
-                setExplPictures(response.data)
-                // const b64 = arrayBufferToBase64(response.data[0].data.data)
-                // setExplImgUrl(b64)
-                // setExplPicType(response.data[0].data.type)
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    }, [refID])
 
     const handleChange = () => {
         setEdit(true);
@@ -77,11 +58,15 @@ function FileEdit({props, ID}) {
                 <div>
                     <FileUp link={`http://localhost:3001/rppicture?trendID=${ID}&refID=${refID}`}
                             submitted={true}></FileUp>
+                    {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}
                 </div>
 
             ) : (
                 <div>
-                    <FileReturn id={ID}></FileReturn>
+                    <Image src={`data:${rpPicType}; base64,${rpImgUrl}`}
+                           className='rounded'
+                           style={{'width': '100%'}}>
+                    </Image>
                     <Button onClick={handleChange}>Edit</Button>
                 </div>
 
@@ -89,4 +74,4 @@ function FileEdit({props, ID}) {
     );
 }
 
-export default FileEdit;
+export default FileEditRp;

@@ -57,7 +57,6 @@ function ReferenceSystem() {
     React.useEffect(() => {
         getRpPicture(trendID)
             .then(response => {
-                console.log(response)
                 setRpPictures(response.data)
                 // const b64 = arrayBufferToBase64(response.data[0].data.data)
                 // setRpImgUrl(b64)
@@ -85,7 +84,6 @@ function ReferenceSystem() {
     React.useEffect(() => {
         getExplPicture(trendID)
             .then(response => {
-                console.log(response)
                 setExplPictures(response.data)
                 // const b64 = arrayBufferToBase64(response.data[0].data.data)
                 // setExplImgUrl(b64)
@@ -102,7 +100,6 @@ function ReferenceSystem() {
 
         if (rpPictures) {
             let result = rpPictures.find(({refID}) => refID === searchID);
-            console.log(result)
             if (result !== undefined) {
                 let b64 = arrayBufferToBase64(result.data.data)
                 let type = result.data.type
@@ -152,7 +149,6 @@ function ReferenceSystem() {
     //Render Table
     const renderTable = () => {
         return references.map((reference, index) => {
-            console.log(reference)
             const {id, trendID, rproduct, rsystemelements, usabilityattributes} = reference;
             return (
                 <tr key={id}>
@@ -166,13 +162,11 @@ function ReferenceSystem() {
                         <DropdownButton id={`id:${id}`} title={""}>
                             <Dropdown.Item id={`Edit${id}`}
                                            eventKey={`Edit${id}`}
-                            >
-                                <Link to={`../../RS/edit/${id}`}
-                                      style={{'color': 'white', textDecoration: 'none'}}> Edit </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item id={`Delete${id}`}
-                                           eventKey={`Delete${id}`}
-                                           onClick={handleDelete(reference)}>Delete</Dropdown.Item>
+                                           href={`../../RS/edit/${id}`}
+                            >Edit</Dropdown.Item>
+                            <Dropdown.Item id={id}
+                                           eventKey={`${id}`}
+                                           onClick={handleDelete}>Delete</Dropdown.Item>
                         </DropdownButton>
                     </td>
                 </tr>
@@ -180,21 +174,42 @@ function ReferenceSystem() {
         })
     }
 
-    //Rerender Table when picture fetching proceeds
-    React.useRef(() => {
-        renderTable();
-    }, [rpPictures, explPictures])
+    // //Rerender Table when picture fetching proceeds
+    // React.useRef(() => {
+    //     renderTable();
+    // }, [rpPictures, explPictures])
 
     //===========================
-    //Table Edit
+    //Reference Delete
     //===========================
 
-    const handleEdit = () => {
+    const handleDelete = e => {
 
-    }
+        const refID = e.currentTarget.id
+        TrendDataService.deleteReference(refID)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            });
 
-    const handleDelete = () => {
+        TrendDataService.deleteRpPicture(refID)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            });
 
+        TrendDataService.deleteExplPicture(refID)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            });
+        window.location.reload();
     }
 
 
