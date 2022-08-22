@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import TrendCircle from "./TrendCircle";
-import SimpleArc from "./SimpleArc";
+import SimpleArc from "./SimpleArc/SimpleArc";
 import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
@@ -10,7 +10,7 @@ import styles from '../views/trend.styles.css'
 import LoginError from "../services/LoginError";
 
 export default function TrendRadar({trends, setTrends, filteredTrends, currentIndex, setActiveTrend}) {
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     const initialTrendState = {
         id: null,

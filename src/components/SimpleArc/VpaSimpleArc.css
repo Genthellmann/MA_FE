@@ -1,0 +1,326 @@
+h1 div {
+    /*font: 26px Monaco, MonoSpace;*/
+    font: 20px Avenir, MonoSpace;
+    height: 50%;
+    width: 5%;
+    z-index: 1;
+    /*left: 0;*/
+    top: 0%;
+    /*transform-origin: bottom center;*/
+}
+
+/*Jobs*/
+.vpachar1 {
+    transform: translateX(-50%) rotate(320deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar2 {
+    transform: translateX(-50%) rotate(324deg);
+    transform-origin: 50% 100%;
+
+}
+
+.vpachar3 {
+    transform: translateX(-50%) rotate(326deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar4 {
+    transform: translateX(-50%) rotate(330deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar5 {
+    transform: translateX(-50%) rotate(334deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar6 {
+    transform: translateX(-50%) rotate(338deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar7 {
+    transform: translateX(-50%) rotate(342deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar8 {
+    transform: translateX(-50%) rotate(346deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar9 {
+    transform: translateX(-50%) rotate(350deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar10 {
+    transform: translateX(-50%) rotate(354deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar11 {
+    transform: translateX(-50%) rotate(358deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar12 {
+    transform: translateX(-50%) rotate(2deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar13 {
+    transform: translateX(-50%) rotate(6deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar14 {
+    transform: translateX(-50%) rotate(10deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar15 {
+    transform: translateX(-50%) rotate(14deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar16 {
+    transform: translateX(-50%) rotate(18deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar17 {
+    transform: translateX(-50%) rotate(22deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar18 {
+    transform: translateX(-50%) rotate(26deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar19 {
+    transform: translateX(-50%) rotate(30deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar20 {
+    transform: translateX(-50%) rotate(34deg);
+    transform-origin: 50% 100%;
+}
+
+/*Pains*/
+
+.vpachar21 {
+    transform: translateX(-50%) rotate(76deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar22 {
+    transform: translateX(-50%) rotate(80deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar23 {
+    transform: translateX(-50%) rotate(84deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar24 {
+    transform: translateX(-50%) rotate(88deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar25 {
+    transform: translateX(-50%) rotate(92deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar26 {
+    transform: translateX(-50%) rotate(96deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar27 {
+    transform: translateX(-50%) rotate(100deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar28 {
+    transform: translateX(-50%) rotate(104deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar29 {
+    transform: translateX(-50%) rotate(108deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar30 {
+    transform: translateX(-50%) rotate(112deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar31 {
+    transform: translateX(-50%) rotate(116deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar32 {
+    transform: translateX(-50%) rotate(120deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar33 {
+    transform: translateX(-50%) rotate(124deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar34 {
+    transform: translateX(-50%) rotate(128deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar35 {
+    transform: translateX(-50%) rotate(132deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar36 {
+    transform: translateX(-50%) rotate(136deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar37 {
+    transform: translateX(-50%) rotate(140deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar38 {
+    transform: translateX(-50%) rotate(144deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar39 {
+    transform: translateX(-50%) rotate(148deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar40 {
+    transform: translateX(-50%) rotate(152deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar41 {
+    transform: translateX(-50%) rotate(156deg);
+    transform-origin: 50% 100%;
+}
+
+/*Pains*/
+
+.vpachar42 {
+    transform: translateX(-50%) rotate(204deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar43 {
+    transform: translateX(-50%) rotate(208deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar44 {
+    transform: translateX(-50%) rotate(212deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar45 {
+    transform: translateX(-50%) rotate(216deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar46 {
+    transform: translateX(-50%) rotate(220deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar47 {
+    transform: translateX(-50%) rotate(224deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar48 {
+    transform: translateX(-50%) rotate(228deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar49 {
+    transform: translateX(-50%) rotate(232deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar50 {
+    transform: translateX(-50%) rotate(236deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar51 {
+    transform: translateX(-50%) rotate(240deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar52 {
+    transform: translateX(-50%) rotate(244deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar53 {
+    transform: translateX(-50%) rotate(248deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar54 {
+    transform: translateX(-50%) rotate(252deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar55 {
+    transform: translateX(-50%) rotate(256deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar56 {
+    transform: translateX(-50%) rotate(260deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar57 {
+    transform: translateX(-50%) rotate(264deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar58 {
+    transform: translateX(-50%) rotate(268deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar59 {
+    transform: translateX(-50%) rotate(272deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar60 {
+    transform: translateX(-50%) rotate(276deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar61 {
+    transform: translateX(-50%) rotate(280deg);
+    transform-origin: 50% 100%;
+}
+
+.vpachar62 {
+    transform: translateX(-50%) rotate(284deg);
+    transform-origin: 50% 100%;
+}

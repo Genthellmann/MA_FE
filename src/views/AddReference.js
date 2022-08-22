@@ -102,6 +102,10 @@ const AddReference = () => {
                         link={`http://localhost:3001/rppicture?trendID=${reference.trendID}&refID=${reference.id}`}
                         ID={reference.id} submitted={submitted}
                     ></FileUp>
+                    <FileUp
+                        link={`http://localhost:3001/explpicture?trendID=${reference.trendID}&refID=${reference.id}`}
+                        ID={reference.id} submitted={submitted}
+                    ></FileUp>
                     <div className="form-group">
                         <label htmlFor="rsystemelements">Reference System Elements</label>
                         <input
@@ -129,10 +133,6 @@ const AddReference = () => {
                             name="usabilityattributes"
                         />
                     </div>
-                    <FileUp
-                        link={`http://localhost:3001/explpicture?trendID=${reference.trendID}&refID=${reference.id}`}
-                        ID={reference.id} submitted={submitted}
-                    ></FileUp>
                     <button onClick={updateReference} className="btn btn-success">
                         Submit
                     </button>

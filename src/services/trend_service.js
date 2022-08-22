@@ -120,6 +120,22 @@ const deleteExplPicture = id => {
     return http.delete(`/explpicture/${id}`);
 }
 
+//============================
+//VpaElements
+//============================
+
+const getVpaElements = id => {
+    return http.get(`/vpa/${id}`);
+}
+
+const createVpaElement = data => {
+    return http.post(`/vpa`, data);
+}
+
+const updateVpaElement = id => {
+    return http.put(`vpa/${id}`);
+}
+
 
 const TrendService = {
     getAll,
@@ -145,5 +161,8 @@ const TrendService = {
     deleteReference,
     deleteRpPicture,
     deleteExplPicture,
+    getVpaElements,
+    createVpaElement,
+    updateVpaElement,
 };
 export default TrendService;

@@ -1,7 +1,7 @@
 import './SimpleArc.css';
 
-const SimpleArc = props =>{
-    return(
+const SimpleArc = props => {
+    return (
         <h1>
             <span className="char1">U</span>
             <span className="char2">s</span>
