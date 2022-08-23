@@ -129,13 +129,16 @@ const getVpaElements = id => {
 }
 
 const createVpaElement = data => {
-    return http.post(`/vpa`, data);
+    return http.post("/vpa", data);
 }
 
 const updateVpaElement = id => {
     return http.put(`vpa/${id}`);
 }
 
+const bulkUpdate = data => {
+    return http.post("vpa/multiple", data)
+};
 
 const TrendService = {
     getAll,
@@ -164,5 +167,6 @@ const TrendService = {
     getVpaElements,
     createVpaElement,
     updateVpaElement,
+    bulkUpdate,
 };
 export default TrendService;

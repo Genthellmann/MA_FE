@@ -6,7 +6,6 @@ import {ProjectContext} from "../components/ProjectContextProvider";
 import AuthService from "../services/auth.service";
 import Account from "./Account";
 import Button from "react-bootstrap/Button";
-import {Col} from "react-bootstrap";
 
 
 function Welcome(props) {
@@ -71,9 +70,15 @@ function Welcome(props) {
             <div>
                 {projects.length > 0 ? (
                     <div>
-                        <span>Welcome! Currently Selected Project:</span>
-                        <h2>{`Project ID: ${currentProject?.project}`}</h2>
-                        <Button onClick={() => navigate("/trend")}>Continue</Button>
+                        <h2>Welcome!</h2>
+                        <br/>
+                        {(currentProject.project != null) ? (
+                            <h2>{`Project ID: ${currentProject?.project}`}</h2>
+                        ) : ("Select or Create Project to Continue"
+                        )}
+                        <br/>
+                        <Button onClick={() => navigate("/trend")}
+                                disabled={currentProject.project == null}>Continue</Button>
                         <Button variant="success" onClick={handleAddNew}>Add new</Button>
                         <div>
                             {projects.map((project, index) => (
