@@ -10,6 +10,8 @@ import TrendCircle from "../components/TrendCircle";
 import VpaSimpleArc from "../components/SimpleArc/VpaSimpleArc";
 import SeparatingLines from "../components/SeparatingLines";
 import Button from "react-bootstrap/Button";
+import Benchmarking from "../components/Benchmarking";
+import StrategicPositioning from "../components/StrategicPositioning";
 
 function Vpa(props) {
     const navigate = useNavigate();
@@ -18,20 +20,20 @@ function Vpa(props) {
 
     const initialVpaElementState = {
         id: null,
-        trendID: null,
+        trendID: trendID,
         content: "",
         xpos: 0,
         ypos: 0,
     };
 
     const [vpaElements, setVpaElements] = useState(null);
-    const [currentVpaElement, setCurrentVpaElement] = useState(null);
+    const [currentVpaElement, setCurrentVpaElement] = useState(initialVpaElementState);
 
     React.useEffect(() => {
         console.log(vpaElements)
     }, [vpaElements])
 
-    React.useEffect(() => {
+    const getVPAElements = () => {
         Trend_service.getVpaElements(trendID)
             .then(response => {
                 console.log(response.data)
@@ -41,6 +43,10 @@ function Vpa(props) {
                 console.log(e);
                 LoginError(navigate, e)
             });
+    };
+
+    React.useEffect(() => {
+        getVPAElements();
     }, [trendID])
 
     const handleSave = () => {
@@ -61,10 +67,13 @@ function Vpa(props) {
     //onDragStart: grab the parameter and store within the dataTransfer object
     //parameters: event 'e', respective trend 'trend'
     const onDragStart = (e, ve) => {
+        console.log("drag")
         console.log(e)
         console.log(ve.id)
+        const {id} = e.target;
+        console.log(id)
         // e.dataTransfer.setData("text", JSON.stringify(currentVpaElement.id))
-        e.dataTransfer.setData("text", JSON.stringify(ve.id))
+        e.dataTransfer.setData("index", id)
     }
 
     const [dropZindex, setDropZindex] = useState(5);
@@ -84,12 +93,13 @@ function Vpa(props) {
 
     const onDrop = (e) => {
         e.preventDefault();
-        let id = e.dataTransfer.getData("text")
+        const id = e.dataTransfer.getData("index")
         setDropZindex(5)
 
         setVpaElements(prev => {
-            return prev.map(el => {
-                if (el.id != id) return el
+            return prev.map((el, index) => {
+                console.log("index: " + index + " id: " + id)
+                if (index != id) return el
                 else return {
                     ...el,
                     xpos: (e.nativeEvent.layerX / e.target.clientHeight) * 100,
@@ -107,15 +117,16 @@ function Vpa(props) {
     //Edit Cards
     //=================
 
-
     const handleInputChange = event => {
         const {id, value} = event.target;
+
         console.log("id: " + id + " value: " + value)
 
 
         setVpaElements(prev => {
-            return prev.map(el => {
-                if (el.id != id) return el
+            return prev.map((el, index) => {
+                console.log(index)
+                if (index != id) return el
                 else return {
                     ...el, ["content"]: value
                 }
@@ -123,6 +134,35 @@ function Vpa(props) {
         })
     };
 
+    //=================
+    //create new Card
+    //=================
+
+    // const handleCreate = () => {
+    //     Trend_service.createVpaElement({
+    //         "trendID": trendID,
+    //         "content": "",
+    //         "xpos": 90,
+    //         "ypos": 90,
+    //     })
+    //         .then(response => {
+    //             console.log(response)
+    //             getVPAElements();
+    //         })
+    //         .catch(e => {
+    //             console.log(e)
+    //             LoginError(navigate, e)
+    //         });
+    // }
+
+    const handleCreate = () => {
+        setVpaElements(vpaElements => vpaElements.concat({
+            "trendID": trendID,
+            "content": "",
+            "xpos": 90,
+            "ypos": 90,
+        }));
+    }
 
     let radius = 90;
 
@@ -162,51 +202,15 @@ function Vpa(props) {
                             ></div>
 
                             {vpaElements && vpaElements.map((ve, index) => (
-                                // <Card key={ve.id}
-                                //       draggable
-                                //       onDragStart={(e) => onDragStart(e, ve)}
-                                //       onDragOver={(e) => onCardDragOver(e)}
-                                //       onDrop={(e) => onDropCard(e)}
-                                //
-                                //       style={{
-                                //           transform: "translate(-50%,-50%)",
-                                //           position: 'absolute',
-                                //           zIndex: 100,
-                                //           marginLeft: `${ve.xpos}%`,
-                                //           marginTop: `${ve.ypos}%`,
-                                //           width: "10%",
-                                //           height: "10%"
-                                //
-                                //       }}>
-                                //
-                                //     {/*<Card.Body style={{padding: "2px"}}>*/}
-                                //     {/*<Card.Text>*/}
-                                //     {/*<input value={ve.content}*/}
-                                //     {/*       onChange={handleInputChange}*/}
-                                //     {/*       id={ve.id}*/}
-                                //     {/*       style={{width: "100%", height: "100%"}}*/}
-                                //     {/*>*/}
-                                //
-                                //     {/*</input>*/}
-                                //     <Form.Control as="textarea" value={ve.content}
-                                //                   onChange={handleInputChange}
-                                //                   id={ve.id}
-                                //                   style={{width: "100%", height: "100%"}}
-                                //     >
-                                //
-                                //     </Form.Control>
-                                //     {/*</Card.Text>*/}
-                                //     {/*</Card.Body>*/}
-                                // </Card>
                                 <Form.Control as="textarea"
-                                              key={ve.id}
+                                              key={index}
                                               draggable
                                               onDragStart={(e) => onDragStart(e, ve)}
                                               onDragOver={(e) => onCardDragOver(e)}
                                               onDrop={(e) => onDropCard(e)}
                                               value={ve.content}
                                               onChange={handleInputChange}
-                                              id={ve.id}
+                                              id={index}
 
 
                                               style={{
@@ -242,9 +246,20 @@ function Vpa(props) {
                     </div>
                 </Col>
                 <Col>
-                    <div>
+                    <Benchmarking/>
+                    <StrategicPositioning/>
+                    <h2>New Card</h2>
+                    <div style={{display: "flex", justifyContent: "space-around"}}>
+                        <Button className="btn btn-success"
+                                onClick={handleCreate}
+                                style={{width: '30%'}}
+                        >
+                            Create
+                        </Button>
                         <Button className="btn btn-primary"
-                                onClick={handleSave}>Save</Button>
+                                onClick={handleSave}
+                                style={{width: '30%'}}
+                        >Save</Button>
                     </div>
                 </Col>
             </Row>

@@ -11,12 +11,12 @@ h1 div {
 
 /*Jobs*/
 .vpachar1 {
-    transform: translateX(-50%) rotate(320deg);
+    transform: translateX(-50%) rotate(318deg);
     transform-origin: 50% 100%;
 }
 
 .vpachar2 {
-    transform: translateX(-50%) rotate(324deg);
+    transform: translateX(-50%) rotate(322deg);
     transform-origin: 50% 100%;
 
 }

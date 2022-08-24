@@ -21,7 +21,7 @@ const Sidebar = props => {
                         <Nav.Link href="/welcome" style={styles.sidebarItem}>Projects</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/vpa/1" style={styles.sidebarItem}>Vpa</Nav.Link>
+                        <Nav.Link href="/vpa/2" style={styles.sidebarItem}>Vpa</Nav.Link>
                     </Nav.Item>
                 </div>
             </Nav>

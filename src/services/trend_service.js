@@ -140,6 +140,26 @@ const bulkUpdate = data => {
     return http.post("vpa/multiple", data)
 };
 
+//============================
+//Benchmarks
+//============================
+
+const getBenchmarks = id => {
+    return http.get(`/benchmark/all/${id}`);
+}
+
+const createBenchmark = data => {
+    return http.post("/benchmark", data);
+}
+
+const updateBenchmark = (id, data) => {
+    return http.put(`benchmark/${id}`, data);
+}
+
+const deleteBenchmark = id => {
+    return http.delete(`benchmark/${id}`)
+};
+
 const TrendService = {
     getAll,
     get,
@@ -168,5 +188,9 @@ const TrendService = {
     createVpaElement,
     updateVpaElement,
     bulkUpdate,
+    getBenchmarks,
+    createBenchmark,
+    updateBenchmark,
+    deleteBenchmark,
 };
 export default TrendService;

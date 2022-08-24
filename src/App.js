@@ -20,13 +20,6 @@ import AddReference from "./views/AddReference";
 import EditReference from "./views/ReferenceEdit";
 import Vpa from "./views/Vpa";
 
-//====
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
-// import {TouchBackend} from "react-dnd-touch-backend";
-
-//====
-
 
 function App() {
 
@@ -51,9 +44,6 @@ function App() {
                         <Route path="/RS/add/:trendID" element={<AddReference/>}/>
                         <Route path="RS/edit/:refID" element={<EditReference/>}/>
                         <Route path="Vpa/:trendID" element={<Vpa/>}/>
-                        {/*<DndProvider backend={HTML5Backend}>*/}
-                        {/*    <Route path="vpa2/:trendID" element={<vpa2/>}/>*/}
-                        {/*</DndProvider>*/}
                     </Routes>
                 </BrowserRouter>
             </ProjectContextProvider>
