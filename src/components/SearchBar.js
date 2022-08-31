@@ -15,14 +15,15 @@ const SearchBar = ({searchTitle, setSearchTitle}) => {
     };
 
     return (
-        <div className="input-group mb-3">
+        <div className="d-flex" style={{marginRight: 0}}>
             <Form.Control
                 variant="outline-dark"
                 type="text"
-                className="form-control"
-                placeholder="Search"
+                className="form-control me-sm-2"
+                placeholder="Search Trend"
                 value={searchTitle}
                 onChange={onChangeSearchTitle}
+                style={{borderRadius: '1em', marginRight: 0}}
             />
         </div>
     )

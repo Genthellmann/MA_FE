@@ -10,7 +10,10 @@ import LoginError from "../services/LoginError";
 import Account from "./Account";
 import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
-import Button from "react-bootstrap/Button";
+import {Button as BootstrapButton} from "react-bootstrap/Button";
+import NavBar from "../components/NavBar";
+import Button from '@mui/material/Button';
+import NavBar2 from "../components/NavBar2";
 
 
 export default function TrendsView() {
@@ -60,6 +63,17 @@ export default function TrendsView() {
             });
     };
 
+    const deleteTrend = () => {
+        TrendDataService.remove(currentTrend.id)
+            .then(response => {
+                refreshList();
+            })
+            .catch(e => {
+                console.log(e);
+                LoginError(navigate, e)
+            });
+    };
+
 
     //Only show trends depending on Filter setting
     //Retrieve all trends from db and only change view depending on filters set
@@ -83,58 +97,54 @@ export default function TrendsView() {
     }, [filterMask, trends, searchTitle]);
 
     return (
-        // <div style={styles.backgroundContainer}>
-        //     <div style={styles.mainContainer}>
-        <div style={styles.mainContainer}>
-            <Account/>
-            <Sidebar/>
-            <Row>
-                <Col lg={8}>
-                </Col>
-                <Col lg={4}>
-                    <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
-                </Col>
-            </Row>
-            <Row>
-                <Col lg={8}>
-                    <div>
-                        <TrendRadar trends={trends} setTrends={setTrends}
-                                    filteredTrends={filteredTrends}
-                                    setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
-                    </div>
-                </Col>
-                <Col lg={4}>
-                    <div>
-                        <TrendList trends={trends} setActiveTrend={setActiveTrend} currentIndex={currentIndex}
-                                   filteredTrends={filteredTrends} setFilteredTrends={setFilteredTrends}
-                                   removeAllTrends={removeAllTrends} filterMask={filterMask}
-                                   setFilterMask={setFilterMask}
-                                   style={{width: '45%'}}/>
-                    </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col lg={8}>
-                    <div>
-                        <TrendDetails currentTrend={currentTrend}/>
-                    </div>
-                </Col>
-            </Row>
+        <div>
+            <NavBar2/>
+            <div style={styles.backgroundContainer}>
+                <Row style={styles.RowStyle}>
+                    <Col lg={8} style={styles.ColStyle}>
+                        <div>
+                            <TrendRadar trends={trends} setTrends={setTrends}
+                                        filteredTrends={filteredTrends}
+                                        setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
+                        </div>
+                    </Col>
+                    <Col lg={4} style={styles.ColStyle}>
+                        <div>
+                            <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
+                            <TrendList trends={trends} setActiveTrend={setActiveTrend}
+                                       currentIndex={currentIndex} currentTrend={currentTrend}
+                                       filteredTrends={filteredTrends} setFilteredTrends={setFilteredTrends}
+                                       removeAllTrends={removeAllTrends} filterMask={filterMask}
+                                       setFilterMask={setFilterMask} deleteTrend={deleteTrend}
+                                       style={{width: '45%'}}/>
+                        </div>
+                    </Col>
+                </Row>
+                <Row style={styles.RowStyle}>
+                    <Col style={styles.ColStyle}>
+                        <div>
+                            <TrendDetails currentTrend={currentTrend}/>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
         </div>
-
-        // </div>
     )
 }
 
 const styles = {
-    mainContainer: {
-        borderRadius: 10,
-        width: "100%",
-        // height: "100%",
+    backgroundContainer: {
         backgroundColor: "white",
-        paddingLeft: "10%",
-        paddingBottom: 5,
-        paddingTop: 5,
-        paddingRight: 5,
+        width: "100%",
+        height: "100%",
+        paddingLeft: '1vw',
+        paddingRight: '1vw',
+        paddingTop: '2vw',
+    },
+    RowStyle: {
+        margin: 0
+    },
+    ColStyle: {
+        padding: 0
     }
 }

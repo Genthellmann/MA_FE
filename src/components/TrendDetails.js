@@ -13,10 +13,11 @@ export default function TrendDetails({currentTrend}) {
         <div>
             {currentTrend ? (
                 <div>
-                    <Row>
+                    <Row style={styles.RowStyles}>
                         <h4>{currentTrend.title}</h4>
                         <Col lg={8} style={styles.cardCol}>
-                            <Card>
+                            <Card className="card border-secondary mt-3 me-3"
+                                  style={styles.CardStyle}>
                                 <Card.Body>
                                     <Card.Title>Description</Card.Title>
                                     <ExpendableText maxHeight={maxHeight}>
@@ -24,7 +25,9 @@ export default function TrendDetails({currentTrend}) {
                                     </ExpendableText>
                                 </Card.Body>
                             </Card>
-                            <Card>
+                            <Card className="card border-secondary mt-3 me-3"
+                                  style={styles.CardStyle}
+                            >
                                 <Card.Body>
                                     <Card.Title>Implication</Card.Title>
                                     <ExpendableText maxHeight={maxHeight}>
@@ -34,13 +37,17 @@ export default function TrendDetails({currentTrend}) {
                             </Card>
                         </Col>
                         <Col lg={4} style={styles.cardCol}>
-                            <Card>
+                            <Card className="card border-secondary mt-3"
+                                  style={styles.CardStyle}
+                            >
                                 <Card.Body>
                                     <Card.Title>Picture</Card.Title>
                                     <FileReturn id={currentTrend.id}></FileReturn>
                                 </Card.Body>
                             </Card>
-                            <Card>
+                            <Card className="card border-secondary mt-3"
+                                  style={styles.CardStyle}
+                            >
                                 <Card.Body>
                                     <Card.Title>Evaluation</Card.Title>
                                     <ExpendableText maxHeight={maxHeight}>
@@ -55,10 +62,6 @@ export default function TrendDetails({currentTrend}) {
                                     </ExpendableText>
                                 </Card.Body>
                             </Card>
-                            <Button variant="primary" size="sm">
-                                <Link to={"/trend/" + currentTrend.id}
-                                      style={{'color': 'white', textDecoration: 'none'}}> Edit </Link>
-                            </Button>
                             <Button variant="primary" size="sm">
                                 <Link to={"/RS/" + currentTrend.id} style={{'color': 'white', textDecoration: 'none'}}>Reference
                                     System </Link>
@@ -80,5 +83,11 @@ export default function TrendDetails({currentTrend}) {
 const styles = {
     cardCol: {
         padding: 0,
+    },
+    RowStyles: {
+        margin: 0
+    },
+    CardStyle: {
+        borderRadius: '1.078rem'
     }
 }

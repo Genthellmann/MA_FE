@@ -24,7 +24,8 @@ function Filter({filterMask, setFilterMask}) {
 
     return (
         <div>
-            <DropdownButton id="dropdown-basic-button" title="Filter">
+            <DropdownButton id="dropdown-basic-button" title="Filter" style={styles.FilterSortBtn}
+                            variant="light">
                 <Form style={{paddingLeft: '8px'}}>
                     <label>Category</label>
                     <br/>
@@ -70,3 +71,11 @@ function Filter({filterMask, setFilterMask}) {
 }
 
 export default Filter;
+
+const styles = {
+    FilterSortBtn: {
+        width: '6rem',
+        flexGrow: 1,
+        
+    }
+}

@@ -17,13 +17,15 @@ export default function TrendCircle({radius, color, pos}) {
             // onDragOver={(e) => onDragOver(e)}
             // onDrop={(e) => onDrop(e)}
              style={{
-                 'width': `${radius}%`,
-                 'background': `${color}`,
-                 'aspectRatio': 1,
-                 'borderRadius': '100%',
-                 'zIndex': `${pos}`,
-                 'position': 'absolute',
-                 'borderStyle': 'solid'
+                 width: `${radius}%`,
+                 background: `${color}`,
+                 aspectRatio: 1,
+                 borderRadius: '100%',
+                 zIndex: `${pos}`,
+                 position: 'absolute',
+                 borderStyle: 'solid',
+                 borderWidth: '0.1px',
+                 borderColor: 'red'
 
              }}>
         </div>

@@ -23,6 +23,7 @@ function Account(props) {
     const handleClick = () => {
         AuthService.logout(navigate)
     }
+    
     return (
         <Row style={{paddingBottom: 10}}>
             <Col sm={8}></Col>

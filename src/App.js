@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useRef} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import '/Users/johannesthellmann/WebstormProjects/ux_trend/src/components/customTheme/bootstrap.min.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import Trend from "./views/Trend"
@@ -8,10 +9,7 @@ import AddTrend from "./views/AddTrend"
 import TrendsView from "./views/TrendsView";
 import Login from "./views/Login";
 import Register from "./views/Register";
-import Account from "./views/Account";
 import Profile from "./components/Profile";
-import MainContainer from "./components/MainContainer";
-import Sidebar from "./components/Sidebar";
 import {ProjectContextProvider} from "./components/ProjectContextProvider";
 import Welcome from "./views/Welcome";
 import AddProject from "./views/AddProject";
@@ -23,12 +21,23 @@ import Vpa from "./views/Vpa";
 
 function App() {
 
+    // const bossTheme = createTheme({
+    //     palette: {
+    //         primary: {
+    //             main:
+    //                 '#a86632'
+    //         }
+    //
+    //     }
+    // });
+
 
     return (
 
         <div style={styles.backgroundContainer}>
 
             <ProjectContextProvider>
+                {/*<ThemeProvider theme={bossTheme}>*/}
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login" element={<Login/>}></Route>
@@ -46,6 +55,7 @@ function App() {
                         <Route path="Vpa/:trendID" element={<Vpa/>}/>
                     </Routes>
                 </BrowserRouter>
+                {/*</ThemeProvider>*/}
             </ProjectContextProvider>
         </div>
 
@@ -56,21 +66,11 @@ export default App;
 
 const styles = {
     backgroundContainer: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         width: "100%",
         height: "100%",
-        padding: 10,
-        paddingLeft: 70,
+        padding: 0,
+        paddingLeft: 0,
         margin: 0
-    },
-    mainContainer: {
-        borderRadius: 10,
-        width: "100%",
-        // height: "100%",
-        backgroundColor: "white",
-        paddingLeft: "50px",
-        paddingRight: "10px",
-        paddingTop: "10px",
-        paddingBottom: "10px"
     }
 }

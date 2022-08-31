@@ -23,10 +23,10 @@ function ExpendableText({maxHeight, children, MAX_POSSIBLE_HEIGHT}) {
                 {children}
             </div>
             {shouldShowExpand && (
-                <Button onClick={() => setExpanded(!expanded)}
+                <button onClick={() => setExpanded(!expanded)}
                         style={styles.cardButton}>
                     <div style={styles.buttonText}>{(expanded) ? (<div>less</div>) : (<div>more</div>)}</div>
-                </Button>
+                </button>
             )}
         </Card>);
 }
@@ -37,6 +37,7 @@ const styles = {
     cardText: {
         overflow: 'hidden',
         transition: 'max-height 2s',
+        borderWidth: 0,
     },
     cardButton: {
         border: 'rgba(255,255,255,0)',
@@ -44,7 +45,8 @@ const styles = {
         backgroundImage: 'linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,1))',
         borderRadius: 0,
         width: '100%',
-        boxShadow: '0px 0px 0px 0px'
+        boxShadow: '0 0 0 0rem rgba(238, 243, 253, 0.5) !important',
+
     },
     buttonText: {
         color: 'blue'
