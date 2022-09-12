@@ -27,8 +27,8 @@ function FileEditRp({props, ID, refID}) {
     }
 
     //const [rpPictures, setRpPictures] = useState(null);
-    const [rpImgUrl, setRpImgUrl] = useState("");
-    const [rpPicType, setRpPicType] = useState("");
+    const [rpImgUrl, setRpImgUrl] = useState(false);
+    const [rpPicType, setRpPicType] = useState(false);
     // const reader = new FileReader();
 
 
@@ -61,14 +61,26 @@ function FileEditRp({props, ID, refID}) {
                     {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}
                 </div>
 
-            ) : (
-                <div>
-                    <Image src={`data:${rpPicType}; base64,${rpImgUrl}`}
-                           className='rounded'
-                           style={{'width': '100%'}}>
-                    </Image>
-                    <Button onClick={handleChange}>Edit</Button>
+            ) : (<div>
+                    {rpPicType ? (
+                        <div style={{display: "flex", alignItems: "flex-start", justifyContent: "space-between"}}>
+                            <Image src={`data:${rpPicType}; base64,${rpImgUrl}`}
+                                   className='rounded'
+                                   style={{'width': '70%'}}>
+                            </Image>
+                            <Button onClick={handleChange}>Edit</Button>
+                        </div>
+                    ) : (
+                        <div style={{display: "flex", alignItems: "flex-start", justifyContent: "space-between"}}>
+                            <Image src={require("../images/img_placeholder.png")}
+                                   style={{'width': '50%'}}>
+                            </Image>
+                            <Button onClick={handleChange}>Edit</Button>
+                        </div>
+                    )
+                    }
                 </div>
+
 
             )} </div>
     );

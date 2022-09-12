@@ -10,6 +10,9 @@ const FileReturn = memo((id) => {
     const [picType, setPicType] = useState("");
     const reader = new FileReader();
 
+    const [src, setSrc] = useState("");
+
+
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(buffer));
@@ -17,26 +20,37 @@ const FileReturn = memo((id) => {
         return window.btoa(binary);
     };
 
-    //useEffect renders component only once, when site is loaded if dependencies are empty
     React.useEffect(() => {
         TrendDataService.getPicture(id.id)
             .then(response => {
-                console.log(response)
-                const b64 = arrayBufferToBase64(response.data[0].data.data)
-                setImgUrl(b64)
-                setPicType(response.data[0].data.type)
+                console.log(response);
+
+                const picType = response.data[0].data.type;
+                const b64 = arrayBufferToBase64(response.data[0].data.data);
+                setSrc(`data:${picType};base64,${b64}`)
+
+
+                // const b64 = arrayBufferToBase64(response.data[0].data.data)
+                // setImgUrl(b64)
+                // setPicType(response.data[0].data.type)
 
 
             })
             .catch(e => {
                 console.log(e);
+                setSrc(require("../images/img_placeholder.png"))
             });
-    }, [])
+    }, [id])
 
     return (
-        <Image src={`data:${picType}; base64,${imgUrl}`}
+        <Image src={src}
                className='rounded'
-               style={{'width': '100%'}}></Image>
+               style={{'width': '100%'}}>
+        </Image>
+        // <Image src={`data:${picType};base64,${imgUrl}`}
+        //        className='rounded'
+        //        style={{'width': '100%'}}>
+        // </Image>
     );
 })
 

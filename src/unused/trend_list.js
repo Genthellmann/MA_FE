@@ -93,7 +93,7 @@
 //                             <input
 //                                 type="text"
 //                                 className="form-control"
-//                                 placeholder="Search Trend by title"
+//                                 placeholder="Search TrendEdit by title"
 //                                 value={searchTitle}
 //                                 onChange={onChangeSearchTitle}
 //                             />
@@ -110,7 +110,7 @@
 //                     </div>
 //                 </Row>
 //
-//                 {/*Trend Radar*/}
+//                 {/*TrendEdit Radar*/}
 //
 //                 <Row >
 //                     <div>
@@ -184,14 +184,14 @@
 //                 </button>
 //             </div>
 //
-//             {/*Detail View of Trend    */}
+//             {/*Detail View of TrendEdit    */}
 //
 //             <div
 //                 // className="col-md-6"
 //             >
 //                 {currentTrend ? (
 //                     <div>
-//                         <h4>Trend</h4>
+//                         <h4>TrendEdit</h4>
 //                         <div>
 //                             <label>
 //                                 <strong>Title:</strong>
@@ -215,7 +215,7 @@
 //                 ) : (
 //                     <div>
 //                         <br />
-//                         <p>Please click on a Trend...</p>
+//                         <p>Please click on a TrendEdit...</p>
 //                     </div>
 //                 )}
 //             </div>

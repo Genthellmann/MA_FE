@@ -58,17 +58,28 @@ function FileEditExpl({props, ID, refID}) {
                 <div>
                     <FileUp link={`http://localhost:3001/explpicture?trendID=${ID}&refID=${refID}`}
                             submitted={true}></FileUp>
-                    {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}
                 </div>
 
-            ) : (
-                <div>
-                    <Image src={`data:${explPicType}; base64,${explImgUrl}`}
-                           className='rounded'
-                           style={{'width': '100%'}}>
-                    </Image>
-                    <Button onClick={handleChange}>Edit</Button>
+            ) : (<div>
+                    {explPicType ? (
+                        <div style={{display: "flex", alignItems: "flex-start", justifyContent: "space-between"}}>
+                            <Image src={`data:${explPicType}; base64,${explImgUrl}`}
+                                   className='rounded'
+                                   style={{'width': '100%'}}>
+                            </Image>
+                            <Button onClick={handleChange}>Edit</Button>
+                        </div>
+                    ) : (
+                        <div style={{display: "flex", alignItems: "flex-start", justifyContent: "space-between"}}>
+                            <Image src={require("../images/img_placeholder.png")}
+                                   style={{'width': '50%'}}>
+                            </Image>
+                            <Button onClick={handleChange}>Edit</Button>
+                        </div>
+                    )
+                    }
                 </div>
+
 
             )} </div>
     );

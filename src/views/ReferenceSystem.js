@@ -8,29 +8,30 @@ import {DropdownButton, Image, Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import http from "../http-common";
+import NavBar2 from "../components/NavBar2";
 
 
 function ReferenceSystem() {
     const {trendID} = useParams();
     let navigate = useNavigate();
 
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return window.btoa(binary);
-    };
-
-    const reader = new FileReader();
 
     //===========================
-    //Reference Content Return
+    //Trend and Reference Content Return
     //===========================
+    const [currentTrend, setCurrentTrend] = useState("");
     const [references, setReferences] = useState(false);
     // const [rppictures, setRppictures] = useState(null);
     // const [explpictures, setExplpictures] = useState(null);
 
     React.useEffect(() => {
+        TrendDataService.get(trendID)
+            .then(response => {
+                setCurrentTrend(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            })
         TrendDataService.getReference(trendID)
             .then(response => {
                 setReferences(response.data);
@@ -39,6 +40,19 @@ function ReferenceSystem() {
                 LoginError(navigate, e)
             });
     }, [trendID])
+
+
+    //===========================
+    //For Picture Fetch
+    //===========================
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
+    const reader = new FileReader();
 
     //===========================
     //Reference Product Picture Fetch
@@ -141,7 +155,6 @@ function ReferenceSystem() {
         }
     }
 
-
     //===========================
     //Render Table
     //===========================
@@ -214,57 +227,75 @@ function ReferenceSystem() {
 
 
     return (
-        <div style={styles.mainContainer}>
-            <Account/>
-            <Sidebar/>
-            <div>
-                {references.length > 0 ? (
-                    <div>
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Reference Product</th>
-                                <th>RP Pic Link</th>
-                                <th>Reference System Elements</th>
-                                <th>UX/Usability Attributes</th>
-                                <th>Explanatory Picture or Drawing</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {renderTable()}
-                            </tbody>
-                        </Table>
-                        <Button>
-                            <Link to={"/RS/add/" + trendID}
-                                  style={{'color': 'white', textDecoration: 'none'}}>Add</Link>
-                        </Button>
-                        {/*{rppictures.map()}*/}
-                    </div>
+        <div>
+            <NavBar2/>
+            <div style={styles.backgroundContainer}>
+                <h1>{currentTrend.title}</h1>
+                <h5>{`Probability of Occurence: ${currentTrend.probability}, 
+                Maturity: ${currentTrend.maturity}, 
+                Impact: ${currentTrend.impact}`}</h5>
+                <div>
+                    {references.length > 0 ? (
+                        <div>
+                            <div className="card" style={styles.TableStyle}>
+                                <Table striped="columns" hover responsive="sm">
+                                    <thead>
+                                    <tr>
+                                        <th>Reference Product</th>
+                                        <th>RP Pic Link</th>
+                                        <th>Reference System Elements</th>
+                                        <th>UX/Usability Attributes</th>
+                                        <th>Explanatory Picture or Drawing</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {renderTable()}
+                                    </tbody>
+                                </Table>
+                            </div>
+                            <Button
+                                onClick={() => navigate("/RS/add/" + trendID)}
+                                style={styles.AddButton}
+                            >Add</Button>
+                        </div>
 
-                ) : (
-                    <div>
-                        <p>No References yet...</p>
-                        <Button
-                            onClick={() => navigate("/RS/add/" + trendID)}>Add</Button>
-                    </div>
-                )}
+                    ) : (
+                        <div>
+                            <p>No References yet...</p>
+                            <Button
+                                onClick={() => navigate("/RS/add/" + trendID)}
+                                style={styles.AddButton}>Add</Button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 };
 
+
 export default ReferenceSystem;
 
 const styles = {
-    mainContainer: {
-        borderRadius: 10,
-        width: "100%",
-        // height: "100%",
+    backgroundContainer: {
         backgroundColor: "white",
-        paddingLeft: "10%",
-        paddingBottom: 5,
-        paddingTop: 5,
-        paddingRight: 5,
+        width: "100%",
+        height: "100%",
+        paddingLeft: '1vw',
+        paddingRight: '1vw',
+        paddingTop: '2vw',
+    },
+    RowStyle: {
+        margin: 0
+    },
+    ColStyle: {
+        padding: 0
+    },
+    TableStyle: {
+        borderRadius: '1.078rem'
+    },
+    AddButton: {
+        marginTop: '1rem'
     }
-};
+}

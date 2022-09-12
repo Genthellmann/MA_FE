@@ -4,8 +4,8 @@ import React, {useRef} from "react";
 import '/Users/johannesthellmann/WebstormProjects/ux_trend/src/components/customTheme/bootstrap.min.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-import Trend from "./views/Trend"
-import AddTrend from "./views/AddTrend"
+import TrendEdit from "./views/TrendEdit"
+import TrendAdd from "./views/TrendAdd"
 import TrendsView from "./views/TrendsView";
 import Login from "./views/Login";
 import Register from "./views/Register";
@@ -14,7 +14,7 @@ import {ProjectContextProvider} from "./components/ProjectContextProvider";
 import Welcome from "./views/Welcome";
 import AddProject from "./views/AddProject";
 import ReferenceSystem from "./views/ReferenceSystem";
-import AddReference from "./views/AddReference";
+import ReferenceAdd from "./views/ReferenceAdd";
 import EditReference from "./views/ReferenceEdit";
 import Vpa from "./views/Vpa";
 
@@ -45,12 +45,12 @@ function App() {
                         <Route path="/profile" element={<Profile/>}></Route>
                         <Route path="/" element={<Login/>}/>
                         <Route path="/trend" element={<TrendsView/>}/>
-                        <Route path="/add" element={<AddTrend/>}/>
-                        <Route path="/trend/:id" element={<Trend/>}/>
+                        <Route path="/add" element={<TrendAdd/>}/>
+                        <Route path="/trend/:id" element={<TrendEdit/>}/>
                         <Route path="/welcome" element={<Welcome/>}/>
                         <Route path="/newproject" element={<AddProject/>}/>
                         <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
-                        <Route path="/RS/add/:trendID" element={<AddReference/>}/>
+                        <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
                         <Route path="RS/edit/:refID" element={<EditReference/>}/>
                         <Route path="Vpa/:trendID" element={<Vpa/>}/>
                     </Routes>

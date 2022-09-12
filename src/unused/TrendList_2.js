@@ -112,7 +112,7 @@
 //                         <SeparatingLines length={radius.radius1/2} angle={180}/>
 //                         <SeparatingLines length={radius.radius1/2} angle={300}/>
 //
-//                         {/*Elements inside Trend Radar    */}
+//                         {/*Elements inside TrendEdit Radar    */}
 //                     </div>
 //                 </div>
 //                 <div style={{ "zIndex": 3, "position": "absolute"}}>

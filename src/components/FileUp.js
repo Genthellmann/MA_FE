@@ -60,48 +60,40 @@ function FileUp({link, submitted}) {
 
     const url = link;
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-sm-8 mt-3">
-                    <h4>Upload Image</h4>
-                    <form
-                        id="fileUploadForm"
-                        className="mt-4"
-                        action={url}
-                        target="file_upload"
-                        method="POST"
-                        encType="multipart/form-data"
-
-                    >
-                        <div className="form-group">
-                            <input
-                                disabled={!submitted}
-                                // id={ID}
-                                type="file"
-                                // name={ID}
-                                name="file"
-                                id="input-files"
-                                className="form-control-file border"
-                                onChange={onChangePicture}
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary"
-                                disabled={!submitted}
-                        >Upload
-                        </button>
-                        <div>
-                            <img className="preview-images" src={imgData}></img>
-                        </div>
-                        <iframe name="file_upload"></iframe>
-                    </form>
+        <div style={{width: '100%'}}>
+            <form
+                id="fileUploadForm"
+                action={url}
+                target="file_upload"
+                method="POST"
+                encType="multipart/form-data"
+                style={{width: '100%'}}
+            >
+                <div className="form-group">
+                    <input
+                        disabled={!submitted}
+                        // id={ID}
+                        type="file"
+                        // name={ID}
+                        name="file"
+                        id="input-files"
+                        className="form-control border"
+                        style={{borderRadius: '1.078rem'}}
+                        onChange={onChangePicture}
+                    />
                 </div>
-            </div>
-            {/*<div className="row">*/}
-            {/*    <div>*/}
-            {/*        <img className="preview-images" src={imgData}></img>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+                <div style={{width: '100%'}}>
+                    <img className="rounded" src={imgData}
+                         style={{width: '100%', marginTop: '1rem', marginBottom: '1rem'}}></img>
+                </div>
+                {/*<button type="submit" className="btn btn-primary"*/}
+                {/*        disabled={!submitted}*/}
+                {/*>Upload*/}
+                {/*</button>*/}
+                <br/>
 
+                <iframe name="file_upload"></iframe>
+            </form>
         </div>
     );
 

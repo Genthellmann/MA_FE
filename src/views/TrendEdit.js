@@ -12,8 +12,9 @@ import LoginError from "../services/LoginError";
 import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
 import NavBar2 from "../components/NavBar2";
+import FileEditTrend from "../components/FileEditTrend";
 
-const Trend = props => {
+const TrendEdit = props => {
     const {id} = useParams();
     let navigate = useNavigate();
     const currentProject = React.useContext(ProjectContext)
@@ -108,6 +109,7 @@ const Trend = props => {
                     LoginError(navigate, e)
                 });
         }
+        document.getElementById("fileUploadForm").submit()
     };
 
     const deleteTrend = () => {
@@ -301,9 +303,10 @@ const Trend = props => {
                                     checked={"high" === currentTrend.impact}
                                 />
                             </Form.Group>
-                            <label htmlFor="title">Picture</label>
-                            <div>
-                                <FileEdit ID={currentTrend.id}>FileUpload</FileEdit>
+                            <Form.Label><strong>Picture</strong></Form.Label>
+                            <div style={{width: '50%'}}>
+                                <FileEditTrend ID={id}
+                                               submitted={true}>FileUpload</FileEditTrend>
                             </div>
 
                             <br/>
@@ -327,7 +330,7 @@ const Trend = props => {
         </div>
     );
 };
-export default Trend;
+export default TrendEdit;
 
 const styles = {
     FormContainer: {
@@ -354,7 +357,7 @@ const styles = {
 }
 
 
-// const Trend = props => {
+// const TrendEdit = props => {
 //     const {id} = useParams();
 //     let navigate = useNavigate();
 //     const currentProject = React.useContext(ProjectContext)
@@ -469,7 +472,7 @@ const styles = {
 //                 <div>
 //                     {currentTrend ? (
 //                         <div className="edit-form">
-//                             <h4>Trend</h4>
+//                             <h4>TrendEdit</h4>
 //                             <form>
 //                                 <div className="form-group">
 //                                     <label htmlFor="title">Title</label>
@@ -661,7 +664,7 @@ const styles = {
 //                     ) : (
 //                         <div>
 //                             <br/>
-//                             <p>Please click on a Trend...</p>
+//                             <p>Please click on a TrendEdit...</p>
 //                         </div>
 //                     )}
 //                 </div>
@@ -669,7 +672,7 @@ const styles = {
 //         </div>
 //     );
 // };
-// export default Trend;
+// export default TrendEdit;
 //
 // const styles = {
 //     mainContainer: {

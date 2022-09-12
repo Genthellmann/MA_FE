@@ -11,7 +11,7 @@ import {ProjectContext} from "../components/ProjectContextProvider";
 import NavBar2 from "../components/NavBar2";
 import FileEdit from "../components/FileEdit";
 
-const AddTrend = () => {
+const TrendAdd = () => {
     const navigate = useNavigate();
 
     const currentProject = React.useContext(ProjectContext);
@@ -281,7 +281,7 @@ const AddTrend = () => {
                             </Form.Group>
                             <label htmlFor="title">Picture</label>
                             <div>
-                                <FileEdit ID={trend.id}>FileUpload</FileEdit>
+                                <FileUp ID={trend.id}>FileUpload</FileUp>
                             </div>
 
                             <br/>
@@ -299,7 +299,7 @@ const AddTrend = () => {
         </div>
     );
 };
-export default AddTrend;
+export default TrendAdd;
 
 const styles = {
     FormContainer: {

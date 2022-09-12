@@ -12,7 +12,7 @@ import ExplPicFileUp from "../components/ExplPicFileUp";
 import RpPicFileUp from "../components/RpPicFileUp";
 
 
-const AddReference = () => {
+const ReferenceAdd = () => {
     const navigate = useNavigate();
 
     let {trendID} = useParams();
@@ -142,7 +142,7 @@ const AddReference = () => {
         </div>
     );
 };
-export default AddReference;
+export default ReferenceAdd;
 
 const styles = {
     mainContainer: {
