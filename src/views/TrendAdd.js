@@ -30,7 +30,10 @@ const TrendAdd = () => {
 
     const [trend, setTrend] = useState(initialTrendState);
     const [submitted, setSubmitted] = useState(false);
-    // const [id, setID] = useState(1);
+
+    //show Modal if wrong File uploaded
+    const [show, setShow] = useState(false);
+    const [isValid, setIsValid] = useState(false);
 
     const handleInputChange = event => {
         const {name, value} = event.target;
@@ -97,22 +100,38 @@ const TrendAdd = () => {
         setSubmitted(false);
     };
 
+    const saveTrendPicture = () => {
+        document.getElementById("fileUploadForm").submit();
+        navigate("../../trend");
+    }
+
     return (
         <div>
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
                     {submitted ? (
-                        <div>
-                            <h4>You submitted successfully!</h4>
-                            {/*<h4>{trend.id}</h4>*/}
-                            <FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}
-                                    submitted={submitted}>Upload Picture</FileUp>
-                            <Button><Link to={"/trend"} style={{'color': 'white'}}> Skip </Link></Button>
-                            <br/>
-                            <br/>
-                            <Button><Link to={"/trend"} style={{'color': 'white'}}> Done </Link></Button>
-                            <Button className="btn btn-success" onClick={newTrend}>Add Next</Button>
+                        <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+                            <h5 style={{width: '100%'}}>Trend created successfully!</h5>
+                            <div style={{width: '50%', marginTop: '2rem'}}>
+                                <FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}
+                                        submitted={submitted} show={show} setShow={setShow}
+                                        isValid={isValid} setIsValid={setIsValid}>Upload
+                                    Picture</FileUp>
+                            </div>
+                            <div style={{display: "flex", justifyContent: "center", width: '50%', marginTop: '2rem'}}>
+                                <button className="btn btn-success"
+                                        onClick={saveTrendPicture}
+                                        style={{paddingLeft: '1.5rem', paddingRight: '1.5rem', marginRight: '2rem'}}
+                                        disabled={!show && !isValid}
+                                >Save
+                                </button>
+                                <button className="btn btn-danger" onClick={() => {
+                                    navigate("../../trend")
+                                }}
+                                >Cancel
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <Form style={{width: '100%'}}>
@@ -279,16 +298,17 @@ const TrendAdd = () => {
                                     onChange={handleImpactChange}
                                 />
                             </Form.Group>
-                            <label htmlFor="title">Picture</label>
-                            <div>
-                                <FileUp ID={trend.id}>FileUpload</FileUp>
-                            </div>
-
+                            {/*<label htmlFor="title">Picture</label>*/}
+                            {/*<div>*/}
+                            {/*    <FileUp ID={trend.id}>FileUpload</FileUp>*/}
+                            {/*</div>*/}
+                            <span style={{fontStyle: 'italic'}}> Save Trend to Add Pictures in the Next Step...</span>
                             <br/>
                             <button
                                 type="button"
-                                class="btn btn-dark"
+                                class="btn btn-primary"
                                 onClick={saveTrend}
+                                style={styles.saveBtn}
                             >
                                 Save Trend
                             </button>
@@ -322,5 +342,8 @@ const styles = {
     },
     ColStyle: {
         padding: 0
+    },
+    saveBtn: {
+        marginTop: '1rem'
     }
 }

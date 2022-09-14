@@ -6,6 +6,7 @@ import FileUp from "./FileUp";
 import {useParams} from "react-router-dom";
 import http from "../http-common";
 import {Image} from "react-bootstrap";
+import FileUpExpl from "./FileUpExpl";
 
 
 function FileEditExpl({props, ID, refID}) {
@@ -56,8 +57,8 @@ function FileEditExpl({props, ID, refID}) {
     return (<div>
             {edit ? (
                 <div>
-                    <FileUp link={`http://localhost:3001/explpicture?trendID=${ID}&refID=${refID}`}
-                            submitted={true}></FileUp>
+                    <FileUpExpl link={`http://localhost:3001/explpicture?trendID=${ID}&refID=${refID}`}
+                                submitted={true}></FileUpExpl>
                 </div>
 
             ) : (<div>
