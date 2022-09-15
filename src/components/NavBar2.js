@@ -11,7 +11,7 @@ function NavBar2(props) {
     const username = useContext(ProjectContext).user.username;
 
     return (
-        <Navbar collapseOnSelect expand="lg" bg="light">
+        <Navbar collapseOnSelect expand="lg" bg="light" sticky="top">
             <Container style={styles.NavBar}>
                 <Navbar.Brand href="/trend">trendRadar</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>

@@ -7,7 +7,7 @@ import {useState} from 'react'
 import {useParams} from "react-router-dom";
 import FileReturn from "./FileReturn";
 
-function FileEditTrend(props, ID) {
+function FileEditTrend({ID, show, setShow, isValid, setIsValid}) {
     const [edit, setEdit] = useState(false);
     const {id} = useParams();
 
@@ -52,12 +52,14 @@ function FileEditTrend(props, ID) {
         setEdit(true);
     }
 
+
     return (
         <div>
             {edit ? (
                 <div>
                     <FileUp link={`http://localhost:3001/web/upload?trendID=${id}`}
-                            submitted={true}></FileUp>
+                            submitted={true} isValid={isValid} setIsValid={setIsValid} show={show}
+                            setShow={setShow}></FileUp>
                     {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}
                 </div>
             ) : (

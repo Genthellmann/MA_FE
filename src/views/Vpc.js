@@ -12,8 +12,9 @@ import SeparatingLines from "../components/SeparatingLines";
 import Button from "react-bootstrap/Button";
 import Benchmarking from "../components/Benchmarking";
 import StrategicPositioning from "../components/StrategicPositioning";
+import NavBar2 from "../components/NavBar2";
 
-function Vpa(props) {
+function Vpc(props) {
     const navigate = useNavigate();
 
     const {trendID} = useParams();
@@ -167,118 +168,122 @@ function Vpa(props) {
     let radius = 90;
 
     return (
-        <div style={styles.mainContainer}>
-            <Account/>
-            <Sidebar/>
-            <Row>
-                <Col lg={8}>
-                    <div style={{
-                        display: "flex",
-                        position: "relative",
-                        width: "100%",
-                        justifyContent: "left",
-                        alignItems: "flex-start",
-                        aspectRatio: 1
-                    }}>
+        <div>
+            <NavBar2/>
+            <div style={styles.backgroundContainer}>
+                <Row style={styles.RowStyle}>
+                    <Col lg={8}>
                         <div style={{
                             display: "flex",
                             position: "relative",
                             width: "100%",
                             justifyContent: "left",
                             alignItems: "flex-start",
-                            aspectRatio: 1,
+                            aspectRatio: 1
                         }}>
-                            <div onDragOver={(e) => onDragOver(e)}
-                                 onDrop={(e) => onDrop(e)}
-                                 style={{
-                                     display: "flex",
-                                     position: "absolute",
-                                     width: '100%',
-                                     justifyContent: 'left',
-                                     alignItems: "flex-start",
-                                     aspectRatio: 1,
-                                     zIndex: `${dropZindex}`,
-                                 }}
-                            ></div>
+                            <div style={{
+                                display: "flex",
+                                position: "relative",
+                                width: "100%",
+                                justifyContent: "left",
+                                alignItems: "flex-start",
+                                aspectRatio: 1,
+                            }}>
+                                <div onDragOver={(e) => onDragOver(e)}
+                                     onDrop={(e) => onDrop(e)}
+                                     style={{
+                                         display: "flex",
+                                         position: "absolute",
+                                         width: '100%',
+                                         justifyContent: 'left',
+                                         alignItems: "flex-start",
+                                         aspectRatio: 1,
+                                         zIndex: `${dropZindex}`,
+                                     }}
+                                ></div>
 
-                            {vpaElements && vpaElements.map((ve, index) => (
-                                <Form.Control as="textarea"
-                                              key={index}
-                                              draggable
-                                              onDragStart={(e) => onDragStart(e, ve)}
-                                              onDragOver={(e) => onCardDragOver(e)}
-                                              onDrop={(e) => onDropCard(e)}
-                                              value={ve.content}
-                                              onChange={handleInputChange}
-                                              id={index}
+                                {vpaElements && vpaElements.map((ve, index) => (
+                                    <Form.Control as="textarea"
+                                                  key={index}
+                                                  draggable
+                                                  onDragStart={(e) => onDragStart(e, ve)}
+                                                  onDragOver={(e) => onCardDragOver(e)}
+                                                  onDrop={(e) => onDropCard(e)}
+                                                  value={ve.content}
+                                                  onChange={handleInputChange}
+                                                  id={index}
 
 
-                                              style={{
-                                                  paddingTop: "5px",
-                                                  fontSize: "12pt",
-                                                  transform: "translate(-50%,-50%)",
-                                                  position: 'absolute',
-                                                  zIndex: 100,
-                                                  marginLeft: `${ve.xpos}%`,
-                                                  marginTop: `${ve.ypos}%`,
-                                                  width: "15%",
-                                                  height: "7.5%"
-                                              }}>
-                                </Form.Control>
+                                                  style={{
+                                                      paddingTop: "5px",
+                                                      fontSize: "12pt",
+                                                      transform: "translate(-50%,-50%)",
+                                                      position: 'absolute',
+                                                      zIndex: 100,
+                                                      marginLeft: `${ve.xpos}%`,
+                                                      marginTop: `${ve.ypos}%`,
+                                                      width: "15%",
+                                                      height: "7.5%"
+                                                  }}>
+                                    </Form.Control>
 
-                            ))}
+                                ))}
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                position: "absolute",
+                                width: '100%',
+                                justifyContent: 'center',
+                                alignItems: "center",
+                                aspectRatio: 1,
+                                zIndex: 1,
+                            }}>
+                                <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
+                                <VpaSimpleArc/>
+                                <SeparatingLines length={radius / 2} angle={90}/>
+                                <SeparatingLines length={radius / 2} angle={210}/>
+                                <SeparatingLines length={radius / 2} angle={330}/>
+                            </div>
                         </div>
-                        <div style={{
-                            display: "flex",
-                            position: "absolute",
-                            width: '100%',
-                            justifyContent: 'center',
-                            alignItems: "center",
-                            aspectRatio: 1,
-                            zIndex: 1,
-                        }}>
-                            <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
-                            <VpaSimpleArc/>
-                            <SeparatingLines length={radius / 2} angle={90}/>
-                            <SeparatingLines length={radius / 2} angle={210}/>
-                            <SeparatingLines length={radius / 2} angle={330}/>
+                    </Col>
+                    <Col>
+                        <Benchmarking/>
+                        <StrategicPositioning/>
+                        <h2>New Card</h2>
+                        <div style={{display: "flex", justifyContent: "space-around"}}>
+                            <Button className="btn btn-success"
+                                    onClick={handleCreate}
+                                    style={{width: '30%'}}
+                            >
+                                Create
+                            </Button>
+                            <Button className="btn btn-primary"
+                                    onClick={handleSave}
+                                    style={{width: '30%'}}
+                            >Save</Button>
                         </div>
-                    </div>
-                </Col>
-                <Col>
-                    <Benchmarking/>
-                    <StrategicPositioning/>
-                    <h2>New Card</h2>
-                    <div style={{display: "flex", justifyContent: "space-around"}}>
-                        <Button className="btn btn-success"
-                                onClick={handleCreate}
-                                style={{width: '30%'}}
-                        >
-                            Create
-                        </Button>
-                        <Button className="btn btn-primary"
-                                onClick={handleSave}
-                                style={{width: '30%'}}
-                        >Save</Button>
-                    </div>
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            </div>
         </div>
     );
 }
 
-export default Vpa;
+export default Vpc;
 
 const styles = {
-    mainContainer: {
-        position: "",
-        borderRadius: 10,
-        // width: "100%",
-        // height: "100%",
+    backgroundContainer: {
         backgroundColor: "white",
-        paddingLeft: "10%",
-        paddingBottom: 5,
-        paddingTop: 5,
-        paddingRight: 5,
+        width: "100%",
+        height: "100%",
+        paddingLeft: '1vw',
+        paddingRight: '1vw',
+        paddingTop: '2vw',
+    },
+    RowStyle: {
+        margin: 0
+    },
+    ColStyle: {
+        padding: 0
     }
 }

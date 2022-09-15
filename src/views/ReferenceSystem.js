@@ -165,18 +165,24 @@ function ReferenceSystem() {
             const {id, trendID, rproduct, rsystemelements, usabilityattributes} = reference;
             return (
                 <tr key={id}>
-                    <td>{rproduct}</td>
-                    {/*<td>{id}</td>*/}
-                    <td>{isRpPicture(id)}</td>
+                    <td>{rproduct}{isRpPicture(id)}</td>
                     <td>{rsystemelements}</td>
                     <td>{usabilityattributes}</td>
                     <td>{isExplPicture(id)}</td>
                     <td>
                         <DropdownButton id={`id:${id}`} title={""}>
-                            <Dropdown.Item id={`Edit${id}`}
-                                           eventKey={`Edit${id}`}
+                            <Dropdown.Item id={`EditContent${id}`}
+                                           eventKey={`EditContent${id}`}
                                            href={`../../RS/edit/${id}`}
-                            >Edit</Dropdown.Item>
+                            >Edit Content</Dropdown.Item>
+                            <Dropdown.Item id={`EditRp${id}`}
+                                           eventKey={`EditRp${id}`}
+                                           href={`../../RS/edit/rppicture/${trendID}/${id}`}
+                            >Edit Reference Picture</Dropdown.Item>
+                            <Dropdown.Item id={`EditExpl${id}`}
+                                           eventKey={`EditExpl${id}`}
+                                           href={`../../RS/edit/explpicture/${trendID}/${id}`}
+                            >Edit Explanatory Picture</Dropdown.Item>
                             <Dropdown.Item id={id}
                                            eventKey={`${id}`}
                                            onClick={handleDelete}>Delete</Dropdown.Item>
@@ -242,10 +248,9 @@ function ReferenceSystem() {
                                     <thead>
                                     <tr>
                                         <th>Reference Product</th>
-                                        <th>RP Pic Link</th>
                                         <th>Reference System Elements</th>
                                         <th>UX/Usability Attributes</th>
-                                        <th>Explanatory Picture or Drawing</th>
+                                        <th>Explanatory Picture</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -293,7 +298,9 @@ const styles = {
         padding: 0
     },
     TableStyle: {
-        borderRadius: '1.078rem'
+        borderRadius: '1.078rem',
+        overflow: 'scroll',
+        minHeight: '25vh'
     },
     AddButton: {
         marginTop: '1rem'

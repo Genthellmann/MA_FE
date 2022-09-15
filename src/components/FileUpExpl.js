@@ -1,27 +1,68 @@
 import React, {useState} from 'react';
 import LoginError from "../services/LoginError";
 import {useNavigate} from "react-router-dom";
+import {Modal} from "react-bootstrap";
 
 
-function FileUpExpl({link, submitted}) {
+function FileUpExpl({link, submitted, show, setShow, isValid, setIsValid, target}) {
     const navigate = useNavigate();
 
     const [picture, setPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
     const [uploaded, setUploaded] = useState(false);
 
+    // const onChangePicture = e => {
+    //     if (e.target.files[0]) {
+    //         console.log("picture: ", e.target.files);
+    //         setPicture(e.target.files[0]);
+    //         const reader = new FileReader();
+    //         reader.addEventListener("load", () => {
+    //             setImgData(reader.result);
+    //         });
+    //         reader.readAsDataURL(e.target.files[0]);
+    //     }
+    // }
+
+    //======================
+    //Modal to check file type
+    //======================
+    var fileTypes = ['jpg', 'jpeg', 'png', '']
+
     const onChangePicture = e => {
         if (e.target.files[0]) {
+            var extension = e.target.files[0].name.split('.').pop().toLowerCase()  //file extension from input file
+            var isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
             console.log("picture: ", e.target.files);
-            setPicture(e.target.files[0]);
-            const reader = new FileReader();
-            reader.addEventListener("load", () => {
-                setImgData(reader.result);
-            });
-            reader.readAsDataURL(e.target.files[0]);
+            if (isSuccess) {
+                handleValid();
+                setPicture(e.target.files[0]);
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    setImgData(reader.result);
+                });
+                reader.readAsDataURL(e.target.files[0]);
+            } else {
+                handleShow()
+                setImgData(null);
+                setPicture(null);
+            }
         }
     }
 
+
+    const handleClose = () => {
+        setShow(false);
+        setIsValid(false);
+        document.getElementById("input-files").value = null;
+
+    }
+
+    const handleShow = () => setShow(true);
+    const handleValid = () => setIsValid(true);
+
+    const handleSubmit = () => {
+        navigate(target);
+    }
 
     // const submitForm = (event) => {
     //     event.default
@@ -68,6 +109,7 @@ function FileUpExpl({link, submitted}) {
                 method="POST"
                 encType="multipart/form-data"
                 style={{width: '100%'}}
+                onSubmit={handleSubmit}
             >
                 <div className="form-group">
                     <input
@@ -81,6 +123,12 @@ function FileUpExpl({link, submitted}) {
                         onChange={onChangePicture}
                     />
                 </div>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Only Images allowed!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Please select .jpg, .jpeg or .png</Modal.Body>
+                </Modal>
                 <div style={{width: '100%'}}>
                     <img className="rounded" src={imgData}
                          style={{width: '100%', marginTop: '1rem', marginBottom: '1rem'}}></img>

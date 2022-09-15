@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import TrendDataService from "../services/trend_service";
 import LoginError from "../services/LoginError";
@@ -13,22 +13,7 @@ function Benchmarking(props) {
 
 
     //===========================
-    //Benchmark Content Return
-    //===========================
-    const [benchmarks, setBenchmarks] = useState(false);
-
-    const getBenchmarks = () => {
-        TrendDataService.getBenchmarks(trendID)
-            .then(response => {
-                setBenchmarks(response.data);
-            })
-            .catch(e => {
-                LoginError(navigate, e)
-            });
-    };
-
-    //===========================
-    //Return RSE
+    //RSEs
     //===========================
     const [references, setReferences] = useState(false);
 
@@ -36,10 +21,29 @@ function Benchmarking(props) {
         TrendDataService.getReference(trendID)
             .then(response => {
                 setReferences(response.data);
+                console.log(response.data)
             })
             .catch(e => {
                 LoginError(navigate, e)
             });
+    };
+
+    //===========================
+    //existing Benchmarks
+    //===========================
+    const [benchmarks, setBenchmarks] = useState(false);
+
+    //get Benchmarks
+    const getBenchmarks = () => {
+        TrendDataService.getBenchmarks(trendID)
+            .then(response => {
+                setBenchmarks(response.data);
+                setBenchmark(initialBmState);
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            });
+
     };
 
     React.useEffect(() => {
@@ -47,7 +51,7 @@ function Benchmarking(props) {
         getReferences();
     }, [trendID])
 
-
+    //handle RSE change in Benchmark List
     const handleSelect = (event, id) => {
         const {value} = event.target
         console.log("id: " + id + " value: " + value)
@@ -61,6 +65,61 @@ function Benchmarking(props) {
                 LoginError(navigate, e)
             })
     }
+
+    const setfalse = () => {
+        setCreationSpace(false);
+    }
+
+    //===========================
+    //create new Benchmark
+    //===========================
+    const initialBmState = {
+        id: null,
+        trendID: trendID,
+        ux: "",
+        rse: "",
+    }
+
+    const [creationSpace, setCreationSpace] = useState(false);
+    const [benchmark, setBenchmark] = useState(initialBmState);
+
+
+    const handleAddBm = () => {
+        setCreationSpace(true);
+        console.log(references)
+        setBenchmark({...benchmark, rse: references[0].rproduct});
+
+    }
+
+    const handleSaveBm = () => {
+        TrendDataService.createBenchmark(benchmark)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            })
+        getBenchmarks();
+    }
+
+    const handleCancel = () => {
+        setCreationSpace(false);
+    }
+
+    const handleInputChange = event => {
+        const {name, value} = event.target;
+        setBenchmark({...benchmark, ux: value});
+    };
+
+    //handle RSE change in Benchmark Creation
+    const handleSelectBmCreate = (event) => {
+        const {name, value} = event.target
+        console.log(" value: " + value)
+        setBenchmark({...benchmark, rse: value});
+    }
+
+    React.useEffect(() => {
+    }, [benchmarks])
 
 
     return (
@@ -87,6 +146,48 @@ function Benchmarking(props) {
                         </li>
                     ))}
             </ul>
+            <div>
+                {creationSpace ? (
+                    <div>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label>
+                                    <strong>Title</strong>
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    className="form-control"
+                                    id="title"
+                                    name="ux"
+                                    value={benchmark.ux}
+                                    onChange={handleInputChange}
+                                    style={{borderRadius: '1.078rem'}}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Reference System Element</Form.Label>
+                                <Form.Select
+                                    onChange={event => handleSelectBmCreate(event)}
+                                >
+                                    {references && references.map((reference, index) => (
+                                        <option
+                                            value={reference.rse}
+                                            key={reference.id}
+                                            selected={benchmark.rse === reference.rproduct}
+                                        >{reference.rproduct}</option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        </Form>
+                        <button className="btn btn-primary" onClick={handleSaveBm}>Save</button>
+                        <button className="btn btn-danger" onClick={handleCancel}>Cancel</button>
+                    </div>
+                ) : (
+                    <div>
+                        <button className="btn btn-primary" onClick={handleAddBm}>Add Benchmark</button>
+                    </div>)}
+            </div>
+
         </div>);
 }
 

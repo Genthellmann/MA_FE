@@ -1,6 +1,6 @@
 h1 span {
     /*font: 26px Monaco, MonoSpace;*/
-    font: 20px Avenir, MonoSpace;
+    font: 1rem Avenir, MonoSpace;
     height: 50%;
     position: absolute;
     width: 5%;

@@ -90,7 +90,7 @@ const getOneReference = id => {
     return http.get(`/reference/${id}`);
 }
 
-const createReference = (id, data) => {
+const createReference = data => {
     console.log(data)
     return http.post("/reference", data);
 }

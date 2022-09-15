@@ -36,6 +36,10 @@ const TrendEdit = props => {
     const [prevTrendConfig, setPrevTrendConfig] = useState(initialTrendState);
     const [message, setMessage] = useState("");
 
+    //show Modal if wrong File uploaded
+    const [show, setShow] = useState(false);
+    const [isValid, setIsValid] = useState(false);
+
     const getTrend = id => {
         TrendDataService.get(id)
             .then(response => {
@@ -91,6 +95,7 @@ const TrendEdit = props => {
             )
                 .then(response => {
                     setMessage("The trend was updated successfully!");
+                    navigate("/trend")
                 })
                 .catch(e => {
                     console.log(e);
@@ -306,7 +311,9 @@ const TrendEdit = props => {
                             <Form.Label><strong>Picture</strong></Form.Label>
                             <div style={{width: '50%'}}>
                                 <FileEditTrend ID={id}
-                                               submitted={true}>FileUpload</FileEditTrend>
+                                               submitted={true}
+                                               show={show} setShow={setShow}
+                                               isValid={isValid} setIsValid={setIsValid}>FileUpload</FileEditTrend>
                             </div>
 
                             <br/>

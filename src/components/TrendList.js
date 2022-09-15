@@ -68,7 +68,7 @@ export default function TrendList({
 
 
     return (
-        <div style={{paddingTop: '1vw', paddingLeft: 0}}>
+        <div style={{paddingTop: '1rem', paddingLeft: 0}}>
             <Container style={styles.FilterSortBtnContainer}>
                 <DropdownButton id="dropdown-sort-button" title={sorting}
                                 variant="light"
@@ -84,7 +84,7 @@ export default function TrendList({
                 </DropdownButton>
                 <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
             </Container>
-            <div style={styles.ListContainer}>
+            <div className="card border-secondary mt-3" style={styles.ListContainer}>
                 <ul className="list-group" style={styles.ListGroup}>
                     {filteredTrends &&
                         filteredTrends.sort((a, b) => sortHandler(a, b, sorting)).map((trend, index) => (
@@ -94,6 +94,7 @@ export default function TrendList({
                                 }
                                 onClick={() => setActiveTrend(trend, index)}
                                 key={index}
+                                style={styles.ListItem}
                             >
                                 {trend.title}
                             </li>
@@ -146,13 +147,20 @@ const styles = {
         marginBottom: '2rem',
         display: "flex",
         justifyContent: "center",
+        height: '60vh',
+        borderRadius: '1.078rem',
+        padding: 0,
 
     },
     ListGroup: {
         borderRadius: '1em',
         overflow: 'scroll',
         maxHeight: '70vh',
-        width: '100%'
+        width: '100%',
+    },
+    ListItem: {
+        borderLeft: 0,
+        borderRight: 0
     },
     AddButton: {
         paddingLeft: '2rem',

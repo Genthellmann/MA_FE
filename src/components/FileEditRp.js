@@ -8,7 +8,7 @@ import http from "../http-common";
 import {Image} from "react-bootstrap";
 
 
-function FileEditRp({props, ID, refID}) {
+function FileEditRp({ID, refID, show, setShow, isValid, setIsValid, submitted}) {
     const [edit, setEdit] = useState(false);
 
     //Convert to binary data string
@@ -22,7 +22,7 @@ function FileEditRp({props, ID, refID}) {
     //===========================
     //Reference Product Picture Fetch
     //===========================
-    const getOneRpPicture = id => {
+    const getOneRpPicture = () => {
         return http.get(`/rppicture/${refID}`)
     }
 
@@ -34,6 +34,7 @@ function FileEditRp({props, ID, refID}) {
 
     //html-request: fetch Reference Product Pictures
     React.useEffect(() => {
+        console.log(refID)
         getOneRpPicture(refID)
             .then(response => {
                 console.log(response)
@@ -57,7 +58,8 @@ function FileEditRp({props, ID, refID}) {
             {edit ? (
                 <div>
                     <FileUp link={`http://localhost:3001/rppicture?trendID=${ID}&refID=${refID}`}
-                            submitted={true}></FileUp>
+                            submitted={submitted} show={show} setShow={setShow} isValid={isValid}
+                            setIsValid={setIsValid}></FileUp>
                     {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}
                 </div>
 
@@ -68,14 +70,14 @@ function FileEditRp({props, ID, refID}) {
                                    className='rounded'
                                    style={{'width': '70%'}}>
                             </Image>
-                            <Button onClick={handleChange}>Edit</Button>
+                            <Button onClick={handleChange} disabled={!submitted}>Edit</Button>
                         </div>
                     ) : (
                         <div style={{display: "flex", alignItems: "flex-start", justifyContent: "space-between"}}>
                             <Image src={require("../images/img_placeholder.png")}
                                    style={{'width': '50%'}}>
                             </Image>
-                            <Button onClick={handleChange}>Edit</Button>
+                            <Button onClick={handleChange} disabled={!submitted}>Edit</Button>
                         </div>
                     )
                     }

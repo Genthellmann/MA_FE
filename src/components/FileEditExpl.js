@@ -9,7 +9,7 @@ import {Image} from "react-bootstrap";
 import FileUpExpl from "./FileUpExpl";
 
 
-function FileEditExpl({props, ID, refID}) {
+function FileEditExpl({ID, refID, show, setShow, isValid, setIsValid, target}) {
     const [edit, setEdit] = useState(false);
 
     //Convert to binary data string
@@ -58,7 +58,8 @@ function FileEditExpl({props, ID, refID}) {
             {edit ? (
                 <div>
                     <FileUpExpl link={`http://localhost:3001/explpicture?trendID=${ID}&refID=${refID}`}
-                                submitted={true}></FileUpExpl>
+                                submitted={true} show={show} setShow={setShow} isValid={isValid}
+                                setIsValid={setIsValid} target={target}></FileUpExpl>
                 </div>
 
             ) : (<div>

@@ -102,7 +102,8 @@ const TrendAdd = () => {
 
     const saveTrendPicture = () => {
         document.getElementById("fileUploadForm").submit();
-        navigate("../../trend");
+        
+        // navigate("../../trend");
     }
 
     return (

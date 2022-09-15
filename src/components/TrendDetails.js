@@ -15,8 +15,8 @@ export default function TrendDetails({currentTrend}) {
                 <div>
                     <Row style={styles.RowStyles}>
                         <h4>{currentTrend.title}</h4>
-                        <Col lg={8} style={styles.cardCol}>
-                            <Card className="card border-secondary mt-3 me-3"
+                        <Col lg={5} style={styles.cardCol}>
+                            <Card className="card border-secondary me-3"
                                   style={styles.CardStyle}>
                                 <Card.Body>
                                     <Card.Title>Description</Card.Title>
@@ -25,7 +25,7 @@ export default function TrendDetails({currentTrend}) {
                                     </ExpendableText>
                                 </Card.Body>
                             </Card>
-                            <Card className="card border-secondary mt-3 me-3"
+                            <Card className="card border-secondary me-3 mt-3"
                                   style={styles.CardStyle}
                             >
                                 <Card.Body>
@@ -36,8 +36,8 @@ export default function TrendDetails({currentTrend}) {
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col lg={4} style={styles.cardCol}>
-                            <Card className="card border-secondary mt-3"
+                        <Col lg={3} style={styles.cardCol}>
+                            <Card className="card border-secondary"
                                   style={styles.CardStyle}
                             >
                                 <Card.Body>
@@ -62,10 +62,12 @@ export default function TrendDetails({currentTrend}) {
                                     </ExpendableText>
                                 </Card.Body>
                             </Card>
-                            <Button variant="primary" size="sm">
-                                <Link to={"/RS/" + currentTrend.id} style={{'color': 'white', textDecoration: 'none'}}>Reference
-                                    System </Link>
-                            </Button>
+                        </Col>
+                        <Col lg={4} style={{display: "flex", flexDirection: "column", alignItems: "end"}}>
+                            <h4>Actions</h4>
+                            <Link to={"/RS/" + currentTrend.id}>Reference System </Link>
+                            <Link to={"/vpc/" + currentTrend.id}>User & Customer Benefit</Link>
+                            <Link to={"/vpc/" + currentTrend.id}>Strategic Positioning</Link>
                         </Col>
                     </Row>
                 </div>
@@ -85,7 +87,8 @@ const styles = {
         padding: 0,
     },
     RowStyles: {
-        margin: 0
+        margin: 0,
+        marginTop: '3rem'
     },
     CardStyle: {
         borderRadius: '1.078rem'

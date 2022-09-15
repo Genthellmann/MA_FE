@@ -4,15 +4,17 @@ import {useNavigate} from "react-router-dom";
 import {Alert, Modal} from "react-bootstrap";
 
 
-function FileUp({link, submitted, show, setShow, isValid, setIsValid}) {
+function FileUp({link, submitted, show, setShow, isValid, setIsValid, target}) {
     const navigate = useNavigate();
 
     const [picture, setPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
     //const [uploaded, setUploaded] = useState(false);
 
+    //======================
+    //Modal to check file type
+    //======================
     var fileTypes = ['jpg', 'jpeg', 'png', '']
-
 
     const onChangePicture = e => {
         if (e.target.files[0]) {
@@ -45,6 +47,11 @@ function FileUp({link, submitted, show, setShow, isValid, setIsValid}) {
 
     const handleShow = () => setShow(true);
     const handleValid = () => setIsValid(true);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        navigate(target);
+    }
 
     // const submitForm = (event) => {
     //     event.default
@@ -91,6 +98,7 @@ function FileUp({link, submitted, show, setShow, isValid, setIsValid}) {
                 method="POST"
                 encType="multipart/form-data"
                 style={{width: '100%'}}
+                onSubmit={handleSubmit}
             >
                 <div className="form-group">
                     <input
@@ -123,7 +131,7 @@ function FileUp({link, submitted, show, setShow, isValid, setIsValid}) {
                 {/*>Upload*/}
                 {/*</button>*/}
                 {/*<br/>*/}
-                {/*<iframe name="file_upload"></iframe>*/}
+                <iframe name="file_upload"></iframe>
             </form>
         </div>
     );

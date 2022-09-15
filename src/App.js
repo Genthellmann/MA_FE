@@ -16,7 +16,12 @@ import AddProject from "./views/AddProject";
 import ReferenceSystem from "./views/ReferenceSystem";
 import ReferenceAdd from "./views/ReferenceAdd";
 import EditReference from "./views/ReferenceEdit";
-import Vpa from "./views/Vpa";
+import Vpc from "./views/Vpc";
+import FileUpload from "./components/FileUpload";
+import ReferenceAddPage2 from "./views/ReferenceAddPage2";
+import ReferenceAddPage3 from "./views/ReferenceAddPage3";
+import ReferenceEditRp from "./views/ReferenceEditRp";
+import ReferenceEditExpl from "./views/ReferenceEditExpl";
 
 
 function App() {
@@ -37,7 +42,6 @@ function App() {
         <div style={styles.backgroundContainer}>
 
             <ProjectContextProvider>
-                {/*<ThemeProvider theme={bossTheme}>*/}
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login" element={<Login/>}></Route>
@@ -51,11 +55,14 @@ function App() {
                         <Route path="/newproject" element={<AddProject/>}/>
                         <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
                         <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
+                        <Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>
+                        <Route path="/RS/add/page3/:trendID/:refID/:dest" element={<ReferenceAddPage3/>}/>
                         <Route path="RS/edit/:refID" element={<EditReference/>}/>
-                        <Route path="Vpa/:trendID" element={<Vpa/>}/>
+                        <Route path="RS/edit/rppicture/:trendID/:refID" element={<ReferenceEditRp/>}/>
+                        <Route path="RS/edit/explpicture/:trendID/:refID" element={<ReferenceEditExpl/>}/>
+                        <Route path="vpc/:trendID" element={<Vpc/>}/>
                     </Routes>
                 </BrowserRouter>
-                {/*</ThemeProvider>*/}
             </ProjectContextProvider>
         </div>
 

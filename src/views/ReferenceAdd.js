@@ -23,7 +23,7 @@ const ReferenceAdd = () => {
 
     const initialReferenceState = {
         id: null,
-        trendID: null,
+        trendID: trendID,
         rproduct: "",
         rsystemelements: "",
         usabilityattributes: "",
@@ -31,7 +31,8 @@ const ReferenceAdd = () => {
 
     const [reference, setReference] = useState(initialReferenceState);
     const [submitted, setSubmitted] = useState(false);
-    const [created, setCreated] = useState(false);
+    // const [page1, setPage1] = useState(false);
+    // const [page3, setPage3] = useState(false);
 
     //=======================
     //Input Changes
@@ -41,113 +42,284 @@ const ReferenceAdd = () => {
         setReference({...reference, [name]: value, trendID: trendID});
     };
 
-    const submitForms = function () {
-        document.getElementById("fileUploadForm").submit()
-        document.getElementById("fileUploadFormExpl").submit()
-    }
-
-    const saveReference = id => {
-        let refID = null;
-        TrendDataService.createReference(id, reference)
+    const saveReference = () => {
+        TrendDataService.createReference(reference)
             .then(response => {
-                    console.log(response.data.id)
-                    console.log(id.id)
-                    //navigate("../RS/" + id)
-                    setReference({...reference, id: response.data.id})
-                    setSubmitted(true)
-
-                    refID = response.data.id;
+                    console.log(response.data)
+                    setReference(response.data)
+                    setSubmitted(true);
+                    navigate(`../../RS/add/page2/${reference.trendID}/${response.data.id}/rppicture`)
                 }
             )
             .catch(e => {
                 console.log(e);
                 LoginError(navigate, e)
             });
-        document.getElementById("fileUploadForm").submit()
-        navigate("../../RS/" + id.id)
-    };
-
-
-    const updateReference = () => {
-        TrendDataService.updateReference(reference)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(e => {
-                console.log(e);
-                LoginError(navigate, e)
-            });
-        navigate(`../../RS/${reference.trendID}`)
     };
 
 
     return (
+
         <div>
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
-
-                    <Form style={{width: '100%'}}>
-                        <Form.Group className="mb-3">
-                            <Form.Label><strong>Reference Product</strong></Form.Label>
-                            <Form.Control
-                                type="text"
-                                className="form-control"
-                                id="rproduct"
-                                required
-                                value={reference.rproduct}
-                                onChange={handleInputChange}
-                                name="rproduct"
-                                style={{borderRadius: '1.078rem'}}
-                            />
-                        </Form.Group>
-                        <Form.Label><strong>Reference Product Picture</strong></Form.Label>
-                        <div style={styles.PictureEdit}>
-                            <FileEditRp ID={reference.trendID} refID={trendID}
-                            >Reference Product
-                                Picture</FileEditRp>
+                    <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+                        <h4>Add New Trend - Step 1/3</h4>
+                        <Form style={{width: '100%'}}>
+                            <Form.Group className="mb-3">
+                                <Form.Label><strong>Reference Product</strong></Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    className="form-control"
+                                    id="rproduct"
+                                    required
+                                    value={reference.rproduct}
+                                    onChange={handleInputChange}
+                                    name="rproduct"
+                                    style={{borderRadius: '1.078rem'}}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label><strong>Reference System Elements</strong></Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    type="text"
+                                    className="form-control"
+                                    id="rsystemelements"
+                                    required
+                                    value={reference.rsystemelements}
+                                    onChange={handleInputChange}
+                                    name="rsystemelements"
+                                    style={{borderRadius: '1.078rem', height: '5vh'}}
+                                    // disabled={!submitted}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label><strong>UX/Usability Attributes</strong></Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    type="text"
+                                    className="form-control"
+                                    id="usabilityattributes"
+                                    required
+                                    value={reference.usabilityattributes}
+                                    onChange={handleInputChange}
+                                    name="usabilityattributes"
+                                    style={{borderRadius: '1.078rem', height: '30vh'}}
+                                    // disabled={!submitted}
+                                />
+                            </Form.Group>
+                        </Form>
+                        <div style={{marginTop: '2rem'}}>
+                            <button className="btn btn-primary" onClick={saveReference}
+                            >Next
+                            </button>
                         </div>
-                        <Form.Label><strong>Reference Product Picture</strong></Form.Label>
-                        <div style={styles.PictureEdit}>
-                            <FileEditExpl ID={reference.trendID} refID={trendID}
-                            >Explanatory Picture or Drawing
-                                Picture</FileEditExpl>
-                        </div>
-                        <Form.Group className="mb-3">
-                            <Form.Label><strong>Reference System Elements</strong></Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                type="text"
-                                className="form-control"
-                                id="rsystemelements"
-                                required
-                                value={reference.rsystemelements}
-                                onChange={handleInputChange}
-                                name="rsystemelements"
-                                style={{borderRadius: '1.078rem', height: '5vh'}}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label><strong>UX/Usability Attributes</strong></Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                type="text"
-                                className="form-control"
-                                id="usabilityattributes"
-                                required
-                                value={reference.usabilityattributes}
-                                onChange={handleInputChange}
-                                name="usabilityattributes"
-                                style={{borderRadius: '1.078rem', height: '30vh'}}
-                            />
-                        </Form.Group>
-                        <button onClick={saveReference} className="btn btn-success">
-                            Submit
-                        </button>
-                    </Form>
+                    </div>
                 </div>
             </div>
         </div>
+
+        // <div>
+        //     <NavBar2/>
+        //     <div style={styles.backgroundContainer}>
+        //         <div style={styles.FormContainer}>
+        //             {page1 ? (
+        //                 <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+        //                     <div>{reference.id}</div>
+        //                     <Form style={{width: '100%'}}>
+        //                         <Form.Group className="mb-3">
+        //                             <Form.Label><strong>Reference Product</strong></Form.Label>
+        //                             <Form.Control
+        //                                 type="text"
+        //                                 className="form-control"
+        //                                 id="rproduct"
+        //                                 required
+        //                                 value={reference.rproduct}
+        //                                 onChange={handleInputChange}
+        //                                 name="rproduct"
+        //                                 style={{borderRadius: '1.078rem'}}
+        //                             />
+        //                         </Form.Group>
+        //                         {/*<button className='btn btn-primary' onClick={e => {*/}
+        //                         {/*    saveReference(e)*/}
+        //                         {/*}} disabled={submitted}>Create*/}
+        //                         {/*</button>*/}
+        //                         <Form.Group className="mb-3">
+        //                             <Form.Label><strong>Reference System Elements</strong></Form.Label>
+        //                             <Form.Control
+        //                                 as="textarea"
+        //                                 type="text"
+        //                                 className="form-control"
+        //                                 id="rsystemelements"
+        //                                 required
+        //                                 value={reference.rsystemelements}
+        //                                 onChange={handleInputChange}
+        //                                 name="rsystemelements"
+        //                                 style={{borderRadius: '1.078rem', height: '5vh'}}
+        //                                 // disabled={!submitted}
+        //                             />
+        //                         </Form.Group>
+        //                         <Form.Group>
+        //                             <Form.Label><strong>UX/Usability Attributes</strong></Form.Label>
+        //                             <Form.Control
+        //                                 as="textarea"
+        //                                 type="text"
+        //                                 className="form-control"
+        //                                 id="usabilityattributes"
+        //                                 required
+        //                                 value={reference.usabilityattributes}
+        //                                 onChange={handleInputChange}
+        //                                 name="usabilityattributes"
+        //                                 style={{borderRadius: '1.078rem', height: '30vh'}}
+        //                                 // disabled={!submitted}
+        //                             />
+        //                         </Form.Group>
+        //                         <button onClick={saveReference} className="btn btn-success">
+        //                             Submit
+        //                         </button>
+        //                     </Form>
+        //                 </div>
+        //             ) : (
+        //                 <div>
+        //                     {page3 ? (
+        //                         <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+        //                             <Form.Label><strong>Explanatory Picture or Drawing</strong></Form.Label>
+        //                             <div style={styles.PictureEdit}>
+        //                                 <FileEditExpl ID={reference.trendID} refID={reference.id} show={show}
+        //                                               setShow={setShow} submitted={submitted}
+        //                                               isValid={isValid} setIsValid={setIsValid}
+        //                                               target={`../../RS/${trendID}`}
+        //                                 ></FileEditExpl>
+        //                             </div>
+        //                             <div style={{
+        //                                 display: "flex",
+        //                                 justifyContent: "center",
+        //                                 width: '50%',
+        //                                 marginTop: '2rem'
+        //                             }}>
+        //                                 <button className="btn btn-success"
+        //                                         onClick={saveExplPicture}
+        //                                         style={{
+        //                                             paddingLeft: '1.5rem',
+        //                                             paddingRight: '1.5rem',
+        //                                             marginRight: '2rem'
+        //                                         }}
+        //                                         disabled={!show && !isValid}
+        //                                 >Submit
+        //                                 </button>
+        //                                 <button className="btn btn-danger" onClick={() => {
+        //                                     navigate(`../../RS/${trendID}`)
+        //                                 }}
+        //                                 >Cancel
+        //                                 </button>
+        //                             </div>
+        //                         </div>) : (
+        //                         <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+        //                             <Form.Label><strong>Reference Picture</strong></Form.Label>
+        //                             <div style={styles.PictureEdit}>
+        //                                 <FileEditRp ID={reference.trendID} refID={reference.id} show={show}
+        //                                             setShow={setShow} submitted={submitted}
+        //                                             isValid={isValid} setIsValid={setIsValid}
+        //                                 ></FileEditRp>
+        //                             </div>
+        //                             <div style={{
+        //                                 display: "flex",
+        //                                 justifyContent: "center",
+        //                                 width: '50%',
+        //                                 marginTop: '2rem'
+        //                             }}>
+        //                                 <button className="btn btn-success"
+        //                                         onClick={saveRpPicture}
+        //                                         style={{
+        //                                             paddingLeft: '1.5rem',
+        //                                             paddingRight: '1.5rem',
+        //                                             marginRight: '2rem'
+        //                                         }}
+        //                                         disabled={!show && !isValid}
+        //                                 >Save
+        //                                 </button>
+        //                                 <button className="btn btn-danger" onClick={cancelRpPicture}
+        //                                 >Cancel
+        //                                 </button>
+        //                             </div>
+        //                         </div>
+        //
+        //                     )}
+        //                 </div>
+        //             )}
+        //         </div>
+        //     </div>
+        // </div>
+
+        // <div>
+        //     <NavBar2/>
+        //     <div style={styles.backgroundContainer}>
+        //         <div style={styles.FormContainer}>
+        //             <Form style={{width: '100%'}}>
+        //                 <Form.Group className="mb-3">
+        //                     <Form.Label><strong>Reference Product</strong></Form.Label>
+        //                     <Form.Control
+        //                         type="text"
+        //                         className="form-control"
+        //                         id="rproduct"
+        //                         required
+        //                         value={reference.rproduct}
+        //                         onChange={handleInputChange}
+        //                         name="rproduct"
+        //                         style={{borderRadius: '1.078rem'}}
+        //                     />
+        //                 </Form.Group>
+        //                 <Form.Label><strong>Reference Product Picture</strong></Form.Label>
+        //                 <div style={styles.PictureEdit}>
+        //                     <FileEditRp ID={reference.trendID} refID={null} show={show} setShow={setShow}
+        //                                 isValid={isValid} setIsValid={setIsValid}
+        //                     >Reference Product
+        //                         Picture</FileEditRp>
+        //                 </div>
+        //                 <Form.Label><strong>Reference Product Picture</strong></Form.Label>
+        //                 <div style={styles.PictureEdit}>
+        //                     <FileEditExpl ID={reference.trendID} refID={null}
+        //                                   show={show} setShow={setShow} isValid={isValid} setIsValid={setIsValid}
+        //                     >Explanatory Picture or Drawing
+        //                         Picture</FileEditExpl>
+        //                 </div>
+        //                 <Form.Group className="mb-3">
+        //                     <Form.Label><strong>Reference System Elements</strong></Form.Label>
+        //                     <Form.Control
+        //                         as="textarea"
+        //                         type="text"
+        //                         className="form-control"
+        //                         id="rsystemelements"
+        //                         required
+        //                         value={reference.rsystemelements}
+        //                         onChange={handleInputChange}
+        //                         name="rsystemelements"
+        //                         style={{borderRadius: '1.078rem', height: '5vh'}}
+        //                     />
+        //                 </Form.Group>
+        //                 <Form.Group>
+        //                     <Form.Label><strong>UX/Usability Attributes</strong></Form.Label>
+        //                     <Form.Control
+        //                         as="textarea"
+        //                         type="text"
+        //                         className="form-control"
+        //                         id="usabilityattributes"
+        //                         required
+        //                         value={reference.usabilityattributes}
+        //                         onChange={handleInputChange}
+        //                         name="usabilityattributes"
+        //                         style={{borderRadius: '1.078rem', height: '30vh'}}
+        //                     />
+        //                 </Form.Group>
+        //                 <button onClick={saveReference} className="btn btn-success">
+        //                     Submit
+        //                 </button>
+        //             </Form>
+        //         </div>
+        //     </div>
+        // </div>
 
         // <div style={styles.mainContainer}>
         //     <Sidebar/>
@@ -225,7 +397,7 @@ const styles = {
         paddingLeft: "10%"
     },
     FormContainer: {
-        width: "70%",
+        width: "60%",
         display: "flex",
         alignItems: "center",
     },
