@@ -6,23 +6,16 @@ import {ProjectContext} from "./ProjectContextProvider";
 import {AiOutlineUser} from "react-icons/ai";
 
 
-function NavBar2(props) {
+function NavBarWelcome(props) {
     const navigate = useNavigate();
     const username = useContext(ProjectContext).user.username;
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" sticky="top">
             <Container style={styles.NavBar}>
-                <Navbar.Brand href="/trend">trendRadar</Navbar.Brand>
+                <Navbar.Brand>trendRadar</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="/welcome">Projects</Nav.Link>
-                        <Nav.Link href="/trend">Trends</Nav.Link>
-                        <Nav.Link>References</Nav.Link>
-                        <Nav.Link>User & Customer Benefits</Nav.Link>
-
-                    </Nav>
                     <Nav className="ms-auto">
                         <NavDropdown title={username} id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -39,7 +32,7 @@ function NavBar2(props) {
     );
 }
 
-export default NavBar2;
+export default NavBarWelcome;
 
 const styles = {
     NavBar: {

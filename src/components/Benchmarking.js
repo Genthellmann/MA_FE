@@ -43,8 +43,8 @@ function Benchmarking(props) {
             .catch(e => {
                 LoginError(navigate, e)
             });
-
     };
+
 
     React.useEffect(() => {
         getBenchmarks();
@@ -55,7 +55,7 @@ function Benchmarking(props) {
     const handleSelect = (event, id) => {
         const {value} = event.target
         console.log("id: " + id + " value: " + value)
-        let currentBenchmark = benchmarks.find(element => element.id = id)
+        let currentBenchmark = benchmarks.find(element => element.id == id)
         currentBenchmark.rse = value;
         trend_service.updateBenchmark(id, currentBenchmark)
             .then(response => {
@@ -87,19 +87,8 @@ function Benchmarking(props) {
     const handleAddBm = () => {
         setCreationSpace(true);
         console.log(references)
-        setBenchmark({...benchmark, rse: references[0].rproduct});
+        setBenchmark({...benchmark, ux: "", rse: references[0].rproduct});
 
-    }
-
-    const handleSaveBm = () => {
-        TrendDataService.createBenchmark(benchmark)
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(e => {
-                LoginError(navigate, e)
-            })
-        getBenchmarks();
     }
 
     const handleCancel = () => {
@@ -118,77 +107,177 @@ function Benchmarking(props) {
         setBenchmark({...benchmark, rse: value});
     }
 
-    React.useEffect(() => {
-    }, [benchmarks])
+    const addBmtoList = () => {
+        setBenchmarks(benchmarks => benchmarks.concat(benchmark));
+    }
+
+    const handleSaveBm = () => {
+        TrendDataService.createBenchmark(benchmark)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            })
+    }
+
+    const handleCreate = () => {
+        addBmtoList();
+        handleSaveBm();
+        setCreationSpace(false)
+    }
+
+    //===========================
+    //Delete Benchmark
+    //===========================
+    const deletefromBmList = id => {
+        setBenchmarks(benchmarks.filter(x =>
+            x.id != id));
+    }
+
+    const deleteBm = id => {
+        TrendDataService.deleteBenchmark(id)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(e => {
+                LoginError(navigate, e)
+            })
+    }
+
+    const handleDeleteBm = e => {
+        const bmId = e.currentTarget.id
+        deletefromBmList(bmId);
+        deleteBm(bmId);
+    }
 
 
     return (
         <div style={{paddingTop: '30px'}}>
             <h2>Benchmarking</h2>
-            <ul className="list-group">
-                {benchmarks &&
-                    benchmarks.map((benchmark, index) => (
-                        <li className="list-group-item "
-                            key={index} style={{display: "flex", justifyContent: "space-between"}}
-                        >
-                            <Form.Group>
-                                <Form.Label>{benchmark.ux}</Form.Label>
-                                <Form.Select onChange={event => handleSelect(event, benchmark.id)}
-                                >
-                                    {references && references.map((reference, index) => (
-                                        <option selected={benchmark.rse === reference.rproduct}
-                                                value={reference.rproduct}
-                                                key={reference.id}
-                                        >{reference.rproduct}</option>
-                                    ))}
-                                </Form.Select>
-                            </Form.Group>
-                        </li>
-                    ))}
-            </ul>
-            <div>
-                {creationSpace ? (
-                    <div>
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>
-                                    <strong>Title</strong>
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    className="form-control"
-                                    id="title"
-                                    name="ux"
-                                    value={benchmark.ux}
-                                    onChange={handleInputChange}
-                                    style={{borderRadius: '1.078rem'}}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Reference System Element</Form.Label>
-                                <Form.Select
-                                    onChange={event => handleSelectBmCreate(event)}
-                                >
-                                    {references && references.map((reference, index) => (
-                                        <option
-                                            value={reference.rse}
-                                            key={reference.id}
-                                            selected={benchmark.rse === reference.rproduct}
-                                        >{reference.rproduct}</option>
-                                    ))}
-                                </Form.Select>
-                            </Form.Group>
-                        </Form>
-                        <button className="btn btn-primary" onClick={handleSaveBm}>Save</button>
+            <div className="card border-secondary mt-3" style={styles.ListContainer}>
+                <ul className="list-group" className="list-group" style={styles.ListGroup}>
+                    {benchmarks &&
+                        benchmarks.map((benchmark, index) => (
+                            <li className="list-group-item "
+                                key={index}
+                                style={styles.ListItem}
+                            >
+                                <Form.Group>
+                                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                                        <Form.Label>{benchmark.ux}</Form.Label>
+                                        <button className="btn btn-danger btn-sm pt-0 pb-0"
+                                                id={benchmark.id}
+                                                eventKey={`${benchmark.id}`}
+                                                onClick={handleDeleteBm}
+                                                style={{height: "1.2rem"}}
+                                        >delete
+                                        </button>
+                                    </div>
+                                    <Form.Select onChange={event => handleSelect(event, benchmark.id)}
+                                                 style={{borderRadius: '1.078rem'}}
+
+                                    >
+                                        {references && references.map((reference, index) => (
+                                            <option selected={benchmark.rse === reference.rproduct}
+                                                    value={reference.rproduct}
+                                                    key={reference.id}
+                                            >{reference.rproduct}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </li>
+                        ))}
+                </ul>
+            </div>
+            {creationSpace ? (
+                <div>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>
+                                <strong>Title</strong>
+                            </Form.Label>
+                            <Form.Control
+                                type="text"
+                                className="form-control"
+                                id="benchmarkTitle"
+                                name="ux"
+                                value={benchmark.ux}
+                                onChange={handleInputChange}
+                                style={{borderRadius: '1.078rem'}}
+
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Reference System Element</Form.Label>
+                            <Form.Select
+                                onChange={event => handleSelectBmCreate(event)}
+                                style={{borderRadius: '1.078rem'}}
+                            >
+                                {references && references.map((reference, index) => (
+                                    <option
+                                        value={reference.rse}
+                                        key={reference.id}
+                                        selected={benchmark.rse === reference.rproduct}
+                                    >{reference.rproduct}</option>
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                    </Form>
+                    <div style={{display: "flex", justifyContent: "space-around", marginTop: "1rem"}}>
+                        <button className="btn btn-primary" onClick={handleCreate}
+                                style={{paddingLeft: '1.5rem', paddingRight: '1.5rem'}}>Save
+                        </button>
                         <button className="btn btn-danger" onClick={handleCancel}>Cancel</button>
                     </div>
-                ) : (
-                    <div>
-                        <button className="btn btn-primary" onClick={handleAddBm}>Add Benchmark</button>
-                    </div>)}
-            </div>
+                </div>
+            ) : (
+                <div style={{display: "flex", justifyContent: "space-around"}}>
+                    <button className="btn btn-primary" onClick={handleAddBm}>Add Benchmark</button>
+                </div>)}
 
         </div>);
 }
 
 export default Benchmarking;
+
+const styles = {
+    SortButton: {
+        marginRight: '2rem',
+    },
+
+    FilterSortBtnContainer: {
+        display: "flex",
+        justifyContent: "left",
+        paddingLeft: 0,
+        paddingBottom: '1rem'
+    },
+    ListContainer: {
+        marginBottom: '1rem',
+        display: "flex",
+        justifyContent: "center",
+        maxHeight: '60vh',
+        borderRadius: '1.078rem',
+        padding: 0,
+
+    },
+    ListGroup: {
+        borderRadius: '1em',
+        overflow: 'scroll',
+        maxHeight: '70vh',
+        width: '100%',
+    },
+    ListItem: {
+        borderLeft: 0,
+        borderRight: 0
+    },
+    AddButton: {
+        paddingLeft: '2rem',
+        paddingRight: '2rem'
+    },
+    BtnContainer: {
+        display: "flex",
+        justifyContent: "space-around",
+        marginBottom: '2rem'
+    }
+}

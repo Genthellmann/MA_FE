@@ -160,8 +160,8 @@ function Vpc(props) {
         setVpaElements(vpaElements => vpaElements.concat({
             "trendID": trendID,
             "content": "",
-            "xpos": 90,
-            "ypos": 90,
+            "xpos": 10,
+            "ypos": 95,
         }));
     }
 
@@ -173,6 +173,9 @@ function Vpc(props) {
             <div style={styles.backgroundContainer}>
                 <Row style={styles.RowStyle}>
                     <Col lg={8}>
+                        <Button className="btn btn-primary"
+                                onClick={handleSave}
+                        >Save</Button>
                         <div style={{
                             display: "flex",
                             position: "relative",
@@ -238,30 +241,24 @@ function Vpc(props) {
                                 aspectRatio: 1,
                                 zIndex: 1,
                             }}>
-                                <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
+                                <TrendCircle radius={radius} color={"rgb(210, 210, 213);"} position={0}/>
                                 <VpaSimpleArc/>
                                 <SeparatingLines length={radius / 2} angle={90}/>
                                 <SeparatingLines length={radius / 2} angle={210}/>
                                 <SeparatingLines length={radius / 2} angle={330}/>
                             </div>
                         </div>
+                        <div style={{display: "flex", justifyContent: "flex-start"}}>
+                            <Button className="btn btn-success"
+                                    onClick={handleCreate}
+                            >
+                                Add Card
+                            </Button>
+                        </div>
                     </Col>
                     <Col>
                         <Benchmarking/>
                         <StrategicPositioning/>
-                        <h2>New Card</h2>
-                        <div style={{display: "flex", justifyContent: "space-around"}}>
-                            <Button className="btn btn-success"
-                                    onClick={handleCreate}
-                                    style={{width: '30%'}}
-                            >
-                                Create
-                            </Button>
-                            <Button className="btn btn-primary"
-                                    onClick={handleSave}
-                                    style={{width: '30%'}}
-                            >Save</Button>
-                        </div>
                     </Col>
                 </Row>
             </div>

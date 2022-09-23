@@ -11,7 +11,7 @@ import Account from "./Account";
 import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
 import {Button as BootstrapButton} from "react-bootstrap/Button";
-import NavBar from "../components/NavBar";
+import NavBar from "../unused/NavBar";
 import Button from '@mui/material/Button';
 import NavBar2 from "../components/NavBar2";
 
@@ -21,9 +21,18 @@ export default function TrendsView() {
     //set global project state for entire app component
     const currentProject = React.useContext(ProjectContext);
 
+    var stored_trend = sessionStorage.getItem("trend");
+
+    var stored_index = sessionStorage.getItem("index");
+
+    const initStoredTrend = {
+        id: null
+    }
+
+
     const [trends, setTrends] = useState([]);
-    const [currentTrend, setCurrentTrend] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(-1);
+    const [currentTrend, setCurrentTrend] = useState(JSON.parse(stored_trend) ? JSON.parse(stored_trend) : initStoredTrend);
+    const [currentIndex, setCurrentIndex] = useState(JSON.parse(stored_index));
     const [searchTitle, setSearchTitle] = useState("");
 
     const retrieveTrends = cp => {
@@ -40,22 +49,45 @@ export default function TrendsView() {
         retrieveTrends(currentProject.project)
     }, [])
 
-    const refreshList = () => {
+    React.useEffect(() => {
+        // console.log(currentTrend)
+    }, [currentTrend])
+
+    //refresh List after Delete
+    const refreshListad = () => {
         retrieveTrends(currentProject.project);
         setCurrentTrend(null);
         setCurrentIndex(-1);
     };
 
+    //refresh List after Delete
+    const refreshList = () => {
+        retrieveTrends(currentProject.project);
+    };
+
+    // const setActiveTrend = (trend, index) => {
+    //     setCurrentTrend(trend);
+    //     setCurrentIndex(index);
+    //     sessionStorage.setItem("trend", JSON.stringify(trend))
+    //     sessionStorage.setItem("index", JSON.stringify(index))
+    //     // localStorage.setItem("user", JSON.stringify(response.data));
+    //     console.log(filteredTrends)
+    //     console.log(trends)
+    //
+    // };
+
     const setActiveTrend = (trend, index) => {
         setCurrentTrend(trend);
-        setCurrentIndex(index);
+        sessionStorage.setItem("trend", JSON.stringify(trend))
+        console.log(filteredTrends)
+        console.log(trends)
     };
 
     const removeAllTrends = () => {
         //TrendDataService.deleteAllPictures();
         TrendDataService.removeAll(currentProject.project)
             .then(response => {
-                refreshList();
+                refreshListad();
             })
             .catch(e => {
                 console.log(e);
@@ -66,7 +98,7 @@ export default function TrendsView() {
     const deleteTrend = () => {
         TrendDataService.remove(currentTrend.id)
             .then(response => {
-                refreshList();
+                refreshListad();
             })
             .catch(e => {
                 console.log(e);
@@ -85,7 +117,7 @@ export default function TrendsView() {
         impact: ["low", "medium", "high"],
     }
     const [filterMask, setFilterMask] = useState(initFilterMask);
-    const [filteredTrends, setFilteredTrends] = useState([]);
+    const [filteredTrends, setFilteredTrends] = useState(trends);
 
     React.useEffect(() => {
         const trendfilter = trends.filter(trend => filterMask.category.includes(trend.category))
@@ -96,6 +128,7 @@ export default function TrendsView() {
         setFilteredTrends(trendfilter)
     }, [filterMask, trends, searchTitle]);
 
+
     return (
         <div>
             <NavBar2/>
@@ -103,7 +136,7 @@ export default function TrendsView() {
                 <Row style={styles.RowStyle}>
                     <Col lg={8} style={styles.ColStyle}>
                         <div>
-                            <TrendRadar trends={trends} setTrends={setTrends}
+                            <TrendRadar trends={trends} setTrends={setTrends} currentTrend={currentTrend}
                                         filteredTrends={filteredTrends}
                                         setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
                         </div>

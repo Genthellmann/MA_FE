@@ -3,8 +3,6 @@ import TrendDataService from "../services/trend_service";
 import {Image} from "react-bootstrap";
 
 const FileReturn = memo((id) => {
-    console.log("FileReturn ID")
-    console.log(id)
 
     const [imgUrl, setImgUrl] = useState("");
     const [picType, setPicType] = useState("");
@@ -23,7 +21,6 @@ const FileReturn = memo((id) => {
     React.useEffect(() => {
         TrendDataService.getPicture(id.id)
             .then(response => {
-                console.log(response);
 
                 const picType = response.data[0].data.type;
                 const b64 = arrayBufferToBase64(response.data[0].data.data);

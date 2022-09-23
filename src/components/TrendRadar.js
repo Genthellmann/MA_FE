@@ -1,16 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import TrendCircle from "./TrendCircle";
 import SimpleArc from "./SimpleArc/SimpleArc";
 import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
-import {ButtonGroup, ToggleButton, ToggleButtonGroup} from "react-bootstrap";
+import {ButtonGroup, Overlay, OverlayTrigger, ToggleButton, ToggleButtonGroup, Tooltip} from "react-bootstrap";
 import styles from '../views/trend.styles.css'
 import LoginError from "../services/LoginError";
 
-export default function TrendRadar({trends, setTrends, filteredTrends, currentIndex, setActiveTrend}) {
+export default function TrendRadar({trends, setTrends, currentTrend, filteredTrends, currentIndex, setActiveTrend}) {
     const navigate = useNavigate();
+
+    // console.log(currentIndex)
+    // document.getElementById(`trend${currentIndex}`)?.focus();
 
     const initialTrendState = {
         id: null,
@@ -45,9 +48,15 @@ export default function TrendRadar({trends, setTrends, filteredTrends, currentIn
         e.preventDefault();
     }
 
-    React.useEffect(() => {
-        document.getElementById(`trend${currentIndex}`)?.focus();
-    }, [currentIndex])
+
+    // React.useEffect(() => {
+    //     document.getElementById(`trend${currentIndex}`)?.focus();
+    // }, [])
+    //
+    // React.useEffect(() => {
+    //     document.getElementById(`trend${currentIndex}`)?.focus();
+    // }, [currentIndex])
+
 
     const onDrop = e => {
         e.preventDefault();
@@ -80,6 +89,9 @@ export default function TrendRadar({trends, setTrends, filteredTrends, currentIn
             });
     }
 
+    const [show, setShow] = useState(false);
+    const target = useRef(null);
+
     return (
         <div>
             <div
@@ -100,37 +112,71 @@ export default function TrendRadar({trends, setTrends, filteredTrends, currentIn
                 <SeparatingLines length={radius.radius1 / 2} angle={210}/>
                 <SeparatingLines length={radius.radius1 / 2} angle={330}/>
 
-                <div id={'targetDiv'}
-                     onDragOver={(e) => onDragOver(e)}
-                     onDrop={(e) => onDrop(e)}
-                     style={{'width': '100%', 'position': 'absolute', "aspectRatio": 1, 'zIndex': '100'}}>
-                </div>
+                {/*<div id={'targetDiv'}*/}
+                {/*     onDragOver={(e) => onDragOver(e)}*/}
+                {/*     onDrop={(e) => onDrop(e)}*/}
+                {/*     style={{'width': '100%', 'position': 'absolute', "aspectRatio": 1, 'zIndex': '100'}}>*/}
+                {/*</div>*/}
 
                 {filteredTrends &&
                     filteredTrends.map((trend, index) => (
-                        <Button variant="primary"
-                                aria-pressed={true}
-                                onClick={() => setActiveTrend(trend, index)}
-                                key={index}
-                                draggable
-                                id={`trend${index}`}
-                                onDragStart={(e) => onDragStart(e, trend)}
-                                className={'btn-primary:focus'}
+                        // <OverlayTrigger
+                        //     key='top'
+                        //     placement='top'
+                        //     overlay={
+                        //         <Tooltip id={`${trend.id}-top`}>
+                        //             {trend.title}
+                        //         </Tooltip>
+                        //     }
+                        // >
+                        <button className="btn btn-primary"
+
+                            // aria-pressed={true}
+
+                            // ref={target}
+                            // onMouseOver={() => setShow(!show)}
+
+                            // onClick={() => setActiveTrend(trend, index)}
+                                onClick={() => setActiveTrend(trend)}
+
+                                key={trend.id}
+                            // draggable
+                                id={`trend${trend.id}`}
+                            // onDragStart={(e) => onDragStart(e, trend)}
                                 style={{
                                     'position': 'absolute',
                                     // 'zIndex':`${zIndex_trend[trend.maturity]}+100`,
                                     zIndex: 101,
+                                    boxShadow: trend.id == currentTrend.id ? '0 0 0 .3rem rgba(238, 243, 253, 0.5)' : "",
                                     'marginLeft': `${trend.xpos}%`,
                                     'marginBottom': `${trend.ypos}%`,
                                     'width': `${radius_trend[trend.maturity]}%`,
                                     'height': `${radius_trend[trend.maturity]}%`,
                                     'borderRadius': '100%',
                                     'background': `${color_impact[trend.impact]}`,
-                                    'borderColor': 'black',
                                     'padding': '0',
                                 }}
-                        ></Button>
+                        ></button>
                     ))}
+                {/*    <OverlayTrigger*/}
+                {/*    key={placement}*/}
+                {/*    placement={placement}*/}
+                {/*    overlay={*/}
+                {/*        <Tooltip id={`tooltip-${placement}`}>*/}
+                {/*            Tooltip on <strong>{placement}</strong>.*/}
+                {/*        </Tooltip>*/}
+                {/*    }*/}
+                {/*>*/}
+                {/*</OverlayTrigger></button>*/}
+
+
+                {/*<Overlay target={target.current} show={show} placement="right">*/}
+                {/*    {(props) => (*/}
+                {/*        <Tooltip id="overlay-example" {...props}>*/}
+                {/*            My Tooltip*/}
+                {/*        </Tooltip>*/}
+                {/*    )}*/}
+                {/*</Overlay>*/}
             </div>
         </div>
     )

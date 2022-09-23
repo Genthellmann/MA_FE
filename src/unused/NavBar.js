@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import AuthService from "../services/auth.service";
-import {ProjectContext} from "./ProjectContextProvider";
+import {ProjectContext} from "../components/ProjectContextProvider";
 import {ButtonBase} from "@mui/material";
 
 const pages = [{name: 'Trends', link: '/trend'},

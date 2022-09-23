@@ -6,6 +6,8 @@ import {ProjectContext} from "../components/ProjectContextProvider";
 import AuthService from "../services/auth.service";
 import Account from "./Account";
 import Button from "react-bootstrap/Button";
+import NavBarWelcome from "../components/NavBarWelcome";
+import {Col, Row} from "react-bootstrap";
 
 
 function Welcome(props) {
@@ -54,8 +56,10 @@ function Welcome(props) {
         //TODO: Delete Project from Project Table
 
 
-        TrendDataService.removeAll(project)
+        TrendDataService.deleteProject(project)
             .then(response => {
+                console.log(response.data)
+                retrieveProjects(currentUserId);
             })
             .catch(e => {
                 console.log(e);
@@ -65,45 +69,102 @@ function Welcome(props) {
 
 
     return (
-        <div style={styles.mainContainer}>
-            <Account></Account>
-            <div>
-                {projects.length > 0 ? (
-                    <div>
-                        <h2>Welcome!</h2>
-                        <br/>
-                        {(currentProject.project != null) ? (
-                            <h2>{`Project ID: ${currentProject?.project}`}</h2>
-                        ) : ("Select or Create Project to Continue"
-                        )}
-                        <br/>
-                        <Button onClick={() => navigate("/trend")}
-                                disabled={currentProject.project == null}>Continue</Button>
-                        <Button variant="success" onClick={handleAddNew}>Add new</Button>
-                        <div>
-                            {projects.map((project, index) => (
-                                <ul key={index} className="list-group">
-                                    <li key={index} className="list-group-item">
-                                        <h3>{project.title}</h3>
-                                        <span>Project ID: {project.id}</span>
-                                        <Button variant='primary'
-                                                onClick={() => handleClick(project)}>select</Button>
-                                        <Button variant='danger'
-                                                onClick={() => handleDelete(project.id)}>delete
-                                        </Button>
-                                    </li>
-                                </ul>
-                            ))}
+        <div>
+            <NavBarWelcome/>
+            <div style={styles.backgroundContainer}>
+                {/*{projects.length > 0 ? (*/}
+                {/*    <div>*/}
+                {/*        <h2>Welcome!</h2>*/}
+                {/*        <br/>*/}
+                {/*        {(currentProject.project != null) ? (*/}
+                {/*            <h2>{`Project ID: ${currentProject?.project}`}</h2>*/}
+                {/*        ) : ("Select or Create Project to Continue"*/}
+                {/*        )}*/}
+                {/*        <br/>*/}
+                {/*        <Button onClick={() => navigate("/trend")}*/}
+                {/*                disabled={currentProject.project == null}>Continue</Button>*/}
+                {/*        <Button variant="success" onClick={handleAddNew}>Add new</Button>*/}
+                {/*        <div>*/}
+                {/*            {projects.map((project, index) => (*/}
+                {/*                <ul key={index} className="list-group">*/}
+                {/*                    <li key={index} className="list-group-item">*/}
+                {/*                        <h3>{project.title}</h3>*/}
+                {/*                        <span>Project ID: {project.id}</span>*/}
+                {/*                        <Button variant='primary'*/}
+                {/*                                onClick={() => handleClick(project)}>select</Button>*/}
+                {/*                        <Button variant='danger'*/}
+                {/*                                onClick={() => handleDelete(project.id)}>delete*/}
+                {/*                        </Button>*/}
+                {/*                    </li>*/}
+                {/*                </ul>*/}
+                {/*            ))}*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*) : (*/}
+                {/*    <div>*/}
+                {/*        <span> Welcome! Create a new Project</span>*/}
+                {/*        <br/>*/}
+                {/*        <Button variant="success" onClick={handleAddNew}>Add new</Button>*/}
+                {/*    </div>*/}
+                {/*)*/}
+                {/*}*/}
+                <Row style={{display: "flex", justifyContent: "center"}}>
+                    <Col lg={8}>
+                        <div style={{display: "flex", justifyContent: "flex-start", width: '100%'}}>
+                            {projects.length > 0 ? (
+                                <div style={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    width: '100%',
+                                    flexDirection: "column"
+                                }}>
+                                    <h3>Welcome!</h3>
+                                    <h5>Select or Create Project to continue...</h5>
+                                    {projects.map((project, index) => (
+                                        <ul key={index} className="list-group"
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-start",
+                                                width: '100%',
+                                                borderRadius: '1.078rem',
+                                            }}>
+                                            <li key={index} className="list-group-item"
+                                                style={{display: "flex", width: '100%', flexDirection: "column"}}>
+                                                <div style={{
+                                                    display: "flex",
+                                                    width: '100%',
+                                                    justifyContent: "space-between"
+                                                }}>
+                                                    <h3>{project.title}</h3>
+                                                    <div>
+                                                        <button className="btn btn-danger btn-sm"
+                                                                onClick={() => handleDelete(project.id)}>delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <span>Project ID: {project.id}</span>
+                                                </div>
+                                                <div style={{display: "flex", justifyContent: "center"}}>
+                                                    <button className="btn btn-primary"
+                                                            onClick={() => handleClick(project)}>select
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div>
+                                    <span> Welcome! Create a new Project</span>
+                                </div>
+                            )
+                            }
                         </div>
-                    </div>
-                ) : (
-                    <div>
-                        <span> Welcome! Create a new Project</span>
-                        <br/>
-                        <Button variant="success" onClick={handleAddNew}>Add new</Button>
-                    </div>
-                )
-                }
+                        <Button className="btn btn-success" onClick={handleAddNew}
+                                style={{marginTop: "1rem"}}>Add new</Button>
+                    </Col>
+                </Row>
             </div>
         </div>
     )
@@ -112,14 +173,18 @@ function Welcome(props) {
 export default Welcome;
 
 const styles = {
-    mainContainer: {
-        borderRadius: 10,
-        width: "100%",
-        // height: "100%",
+    backgroundContainer: {
         backgroundColor: "white",
-        paddingLeft: "10%",
-        paddingBottom: 5,
-        paddingTop: 5,
-        paddingRight: 5,
+        width: "100%",
+        height: "100%",
+        paddingLeft: '1vw',
+        paddingRight: '1vw',
+        paddingTop: '2vw',
+    },
+    RowStyle: {
+        margin: 0
+    },
+    ColStyle: {
+        padding: 0
     }
 }

@@ -12,7 +12,7 @@ import Register from "./views/Register";
 import Profile from "./components/Profile";
 import {ProjectContextProvider} from "./components/ProjectContextProvider";
 import Welcome from "./views/Welcome";
-import AddProject from "./views/AddProject";
+import ProjectAdd from "./views/ProjectAdd";
 import ReferenceSystem from "./views/ReferenceSystem";
 import ReferenceAdd from "./views/ReferenceAdd";
 import EditReference from "./views/ReferenceEdit";
@@ -52,7 +52,7 @@ function App() {
                         <Route path="/add" element={<TrendAdd/>}/>
                         <Route path="/trend/:id" element={<TrendEdit/>}/>
                         <Route path="/welcome" element={<Welcome/>}/>
-                        <Route path="/newproject" element={<AddProject/>}/>
+                        <Route path="/newproject" element={<ProjectAdd/>}/>
                         <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
                         <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
                         <Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>

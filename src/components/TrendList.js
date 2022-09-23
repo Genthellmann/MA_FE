@@ -22,6 +22,9 @@ export default function TrendList({
     let navigate = useNavigate();
     const currentProject = React.useContext(ProjectContext);
 
+    // var currentTrend = JSON.parse(sessionStorage.getItem("trend"));
+    // const [ct, setct] = useState(currentTrend);
+
     function sortHandler(a, b, type) {
         switch (type) {
             case "ByName":
@@ -36,6 +39,7 @@ export default function TrendList({
                 break;
         }
     }
+
 
     function ByName(a, b) {
         const nameA = a.title.toUpperCase(); // ignore upper and lowercase
@@ -90,13 +94,13 @@ export default function TrendList({
                         filteredTrends.sort((a, b) => sortHandler(a, b, sorting)).map((trend, index) => (
                             <li
                                 className={
-                                    "list-group-item " + (index === currentIndex ? "active" : "")
+                                    "list-group-item " + (trend.id == currentTrend.id ? "active" : "")
                                 }
                                 onClick={() => setActiveTrend(trend, index)}
                                 key={index}
                                 style={styles.ListItem}
                             >
-                                {trend.title}
+                                {trend.title}{trend.id}
                             </li>
                         ))}
                 </ul>
@@ -147,7 +151,7 @@ const styles = {
         marginBottom: '2rem',
         display: "flex",
         justifyContent: "center",
-        height: '60vh',
+        maxHeight: '60vh',
         borderRadius: '1.078rem',
         padding: 0,
 

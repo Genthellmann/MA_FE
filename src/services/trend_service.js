@@ -78,6 +78,12 @@ const updateProject = data => {
     return http.put("/projects", data);
 }
 
+//delete Project
+const deleteProject = id => {
+    return http.delete(`/projects/${id}`);
+}
+
+
 //============================
 //Reference Systems
 //============================
@@ -160,6 +166,27 @@ const deleteBenchmark = id => {
     return http.delete(`benchmark/${id}`)
 };
 
+//============================
+//Strategic Positioning
+//============================
+
+const getStratPos = trendID => {
+    return http.get(`/stratpos/${trendID}`);
+}
+
+// const createStratPos = data => {
+//     return http.post("/stratpos", data);
+// }
+
+const updateStratPos = data => {
+    return http.put('/stratpos', data);
+}
+
+const deleteStratPos = trendID => {
+    return http.delete(`/stratpos/${trendID}`)
+};
+
+
 const TrendService = {
     getAll,
     get,
@@ -177,6 +204,7 @@ const TrendService = {
     createProject,
     getAllProjects,
     updateProject,
+    deleteProject,
     getReference,
     getOneReference,
     createReference,
@@ -192,5 +220,8 @@ const TrendService = {
     createBenchmark,
     updateBenchmark,
     deleteBenchmark,
+    getStratPos,
+    updateStratPos,
+    deleteStratPos
 };
 export default TrendService;

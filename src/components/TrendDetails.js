@@ -66,7 +66,7 @@ export default function TrendDetails({currentTrend}) {
                         <Col lg={4} style={{display: "flex", flexDirection: "column", alignItems: "end"}}>
                             <h4>Actions</h4>
                             <Link to={"/RS/" + currentTrend.id}>Reference System </Link>
-                            <Link to={"/vpc/" + currentTrend.id}>User & Customer Benefit</Link>
+                            <Link to={"/vpc/" + currentTrend.id}>User & Customer Benefits</Link>
                             <Link to={"/vpc/" + currentTrend.id}>Strategic Positioning</Link>
                         </Col>
                     </Row>
