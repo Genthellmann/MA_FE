@@ -5,9 +5,77 @@ import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
-import {ButtonGroup, Overlay, OverlayTrigger, ToggleButton, ToggleButtonGroup, Tooltip} from "react-bootstrap";
+import {ButtonGroup, Overlay, OverlayTrigger, ToggleButton, ToggleButtonGroup, Tooltip as tp} from "react-bootstrap";
 import styles from '../views/trend.styles.css'
 import LoginError from "../services/LoginError";
+import * as PropTypes from "prop-types";
+
+import Tooltip from '@mui/material/Tooltip';
+
+function TrendCircleOverlay({
+                                key, trend, onClick,
+                                id, radiusTrend,
+                                colorImpact
+                            }) {
+
+    const ref = useRef(null);
+
+    const [show, setShow] = useState(false)
+
+    return (
+        <Tooltip title={trend.title} placement={"top"}>
+            <button className="btn btn-primary"
+
+                    onMouseOver={(e) => {
+                        setShow(true)
+                    }}
+                    onMouseOut={() => setShow(false)}
+                // aria-pressed={true}
+                // onMouseOver={() => setShow(!show)}
+
+                // onClick={() => setActiveTrend(trend, index)}
+                    onClick={onClick}
+
+                    ref={ref}
+                // draggable
+                    id={`trend${trend.id}`}
+                // onDragStart={(e) => onDragStart(e, trend)}
+                    style={{
+                        "position": "absolute",
+                        // 'zIndex':`${zIndex_trend[trend.maturity]}+100`,
+                        zIndex: 101,
+                        boxShadow: trend.id == id ? "0 0 0 .3rem rgba(238, 243, 253, 0.5)" : "",
+                        "marginLeft": `${trend.xpos}%`,
+                        "marginBottom": `${trend.ypos}%`,
+                        "width": `${radiusTrend[trend.maturity]}%`,
+                        "height": `${radiusTrend[trend.maturity]}%`,
+                        "borderRadius": "100%",
+                        "background": `${colorImpact[trend.impact]}`,
+                        "padding": "0",
+                    }}
+            >
+
+            </button>
+            {/*{console.log(ref.current)}*/}
+            {/*<Overlay*/}
+            {/*    show={show}*/}
+            {/*    target={ref.current}*/}
+            {/*    placement="top">*/}
+            {/*    <Tooltip>*/}
+            {/*        {trend.title}*/}
+            {/*    </Tooltip>*/}
+
+            {/*</Overlay>*/}
+        </Tooltip>);
+}
+
+TrendCircleOverlay.propTypes = {
+    trend: PropTypes.any,
+    onClick: PropTypes.func,
+    id: PropTypes.any,
+    radiusTrend: PropTypes.shape({high: PropTypes.number, low: PropTypes.number, medium: PropTypes.number}),
+    colorImpact: PropTypes.shape({high: PropTypes.string, low: PropTypes.string, medium: PropTypes.string})
+};
 
 export default function TrendRadar({trends, setTrends, currentTrend, filteredTrends, currentIndex, setActiveTrend}) {
     const navigate = useNavigate();
@@ -25,6 +93,7 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
         xpos: 0,
         ypos: 0,
     };
+
 
     // const[draggedTrend,setDraggedTrend] = useState(initialTrendState)
     const [message, setMessage] = useState("");
@@ -119,64 +188,23 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
                 {/*</div>*/}
 
                 {filteredTrends &&
-                    filteredTrends.map((trend, index) => (
-                        // <OverlayTrigger
-                        //     key='top'
-                        //     placement='top'
-                        //     overlay={
-                        //         <Tooltip id={`${trend.id}-top`}>
-                        //             {trend.title}
-                        //         </Tooltip>
-                        //     }
-                        // >
-                        <button className="btn btn-primary"
+                    filteredTrends.map((trend, index) => {
 
-                            // aria-pressed={true}
-
-                            // ref={target}
-                            // onMouseOver={() => setShow(!show)}
-
-                            // onClick={() => setActiveTrend(trend, index)}
-                                onClick={() => setActiveTrend(trend)}
-
-                                key={trend.id}
-                            // draggable
-                                id={`trend${trend.id}`}
-                            // onDragStart={(e) => onDragStart(e, trend)}
-                                style={{
-                                    'position': 'absolute',
-                                    // 'zIndex':`${zIndex_trend[trend.maturity]}+100`,
-                                    zIndex: 101,
-                                    boxShadow: trend.id == currentTrend.id ? '0 0 0 .3rem rgba(238, 243, 253, 0.5)' : "",
-                                    'marginLeft': `${trend.xpos}%`,
-                                    'marginBottom': `${trend.ypos}%`,
-                                    'width': `${radius_trend[trend.maturity]}%`,
-                                    'height': `${radius_trend[trend.maturity]}%`,
-                                    'borderRadius': '100%',
-                                    'background': `${color_impact[trend.impact]}`,
-                                    'padding': '0',
-                                }}
-                        ></button>
-                    ))}
-                {/*    <OverlayTrigger*/}
-                {/*    key={placement}*/}
-                {/*    placement={placement}*/}
-                {/*    overlay={*/}
-                {/*        <Tooltip id={`tooltip-${placement}`}>*/}
-                {/*            Tooltip on <strong>{placement}</strong>.*/}
-                {/*        </Tooltip>*/}
-                {/*    }*/}
-                {/*>*/}
-                {/*</OverlayTrigger></button>*/}
-
-
-                {/*<Overlay target={target.current} show={show} placement="right">*/}
-                {/*    {(props) => (*/}
-                {/*        <Tooltip id="overlay-example" {...props}>*/}
-                {/*            My Tooltip*/}
-                {/*        </Tooltip>*/}
-                {/*    )}*/}
-                {/*</Overlay>*/}
+                        return (
+                            // <OverlayTrigger
+                            //     key='top'
+                            //     placement='top'
+                            //     overlay={
+                            //         <Tooltip id={`${trend.id}-top`}>
+                            //             {trend.title}
+                            //         </Tooltip>
+                            //     }
+                            // >
+                            <TrendCircleOverlay key={trend.id} trend={trend} onClick={() => setActiveTrend(trend)}
+                                                id={currentTrend.id} radiusTrend={radius_trend}
+                                                colorImpact={color_impact}/>
+                        );
+                    })}
             </div>
         </div>
     )

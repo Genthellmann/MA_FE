@@ -56,8 +56,8 @@ export default function TrendsView() {
     //refresh List after Delete
     const refreshListad = () => {
         retrieveTrends(currentProject.project);
-        setCurrentTrend(null);
-        setCurrentIndex(-1);
+        // setCurrentTrend(null);
+        // setCurrentIndex(-1);
     };
 
     //refresh List after Delete

@@ -74,7 +74,7 @@ export default function TrendList({
     return (
         <div style={{paddingTop: '1rem', paddingLeft: 0}}>
             <Container style={styles.FilterSortBtnContainer}>
-                <DropdownButton id="dropdown-sort-button" title={sorting}
+                <DropdownButton id="dropdown-sort-button" title="Sort"
                                 variant="light"
                                 style={styles.SortButton}>
                     {sortOptions.map((sortOptions) => (
@@ -100,7 +100,7 @@ export default function TrendList({
                                 key={index}
                                 style={styles.ListItem}
                             >
-                                {trend.title}{trend.id}
+                                {trend.title}
                             </li>
                         ))}
                 </ul>

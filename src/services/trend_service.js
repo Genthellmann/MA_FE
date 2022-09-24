@@ -146,6 +146,11 @@ const bulkUpdate = data => {
     return http.post("vpa/multiple", data)
 };
 
+const multipleDelete = data => {
+    console.log(data)
+    return http.post("vpa/deleteMultiple", data)
+};
+
 //============================
 //Benchmarks
 //============================
@@ -216,6 +221,7 @@ const TrendService = {
     createVpaElement,
     updateVpaElement,
     bulkUpdate,
+    multipleDelete,
     getBenchmarks,
     createBenchmark,
     updateBenchmark,

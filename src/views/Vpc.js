@@ -13,6 +13,59 @@ import Button from "react-bootstrap/Button";
 import Benchmarking from "../components/Benchmarking";
 import StrategicPositioning from "../components/StrategicPositioning";
 import NavBar2 from "../components/NavBar2";
+import * as PropTypes from "prop-types";
+
+
+function NewComponent(props) {
+    return (<Form
+            style={{
+                transform: "translate(-50%,-50%)",
+                position: "absolute",
+                zIndex: 100,
+                marginLeft: `${props.ve.xpos}%`,
+                marginTop: `${props.ve.ypos}%`,
+                width: "15%",
+                height: "7.5%"
+            }}>
+            <button type="button"
+                    className="btn-close"
+                    onClick={props.onClick}
+                    id={props.id}
+                    style={{fontSize: '0.35rem', marginBottom: 0}}></button>
+            <Form.Control as="textarea"
+                // ref={props.ref}
+
+                          draggable
+                          onDragStart={props.onDragStart}
+                          onDragOver={props.onDragOver}
+                          onDrop={props.onDrop}
+                // onClick={props.onClick}
+                          value={props.ve.content}
+                          onChange={props.onChange}
+                          id={props.id}
+
+
+                          style={{
+                              paddingTop: "5px",
+                              fontSize: "12pt",
+
+                          }}>
+            </Form.Control>
+        </Form>
+    );
+}
+
+NewComponent.propTypes = {
+    // ref: PropTypes.any,
+    onDragStart: PropTypes.func,
+    onDragOver: PropTypes.func,
+    onDrop: PropTypes.func,
+    // onClick: PropTypes.func,
+    ve: PropTypes.any,
+    onChange: PropTypes.func,
+    id: PropTypes.any,
+    onClick: PropTypes.func,
+};
 
 function Vpc(props) {
     const navigate = useNavigate();
@@ -29,15 +82,15 @@ function Vpc(props) {
 
     const [vpaElements, setVpaElements] = useState(null);
     const [currentVpaElement, setCurrentVpaElement] = useState(initialVpaElementState);
+    const [idsToDelete, setIdstoDelete] = useState([-1])
+
 
     React.useEffect(() => {
-        console.log(vpaElements)
     }, [vpaElements])
 
     const getVPAElements = () => {
         Trend_service.getVpaElements(trendID)
             .then(response => {
-                console.log(response.data)
                 setVpaElements(response.data)
             })
             .catch(e => {
@@ -53,7 +106,16 @@ function Vpc(props) {
     const handleSave = () => {
         Trend_service.bulkUpdate(vpaElements)
             .then(response => {
-                console.log(response)
+            })
+            .catch(e => {
+                console.log(e)
+                LoginError(navigate, e)
+            })
+        const dataIdsToDelete = {
+            'ids': idsToDelete
+        }
+        Trend_service.multipleDelete(dataIdsToDelete)
+            .then(response => {
             })
             .catch(e => {
                 console.log(e)
@@ -68,11 +130,7 @@ function Vpc(props) {
     //onDragStart: grab the parameter and store within the dataTransfer object
     //parameters: event 'e', respective trend 'trend'
     const onDragStart = (e, ve) => {
-        console.log("drag")
-        console.log(e)
-        console.log(ve.id)
         const {id} = e.target;
-        console.log(id)
         // e.dataTransfer.setData("text", JSON.stringify(currentVpaElement.id))
         e.dataTransfer.setData("index", id)
     }
@@ -99,7 +157,6 @@ function Vpc(props) {
 
         setVpaElements(prev => {
             return prev.map((el, index) => {
-                console.log("index: " + index + " id: " + id)
                 if (index != id) return el
                 else return {
                     ...el,
@@ -121,12 +178,8 @@ function Vpc(props) {
     const handleInputChange = event => {
         const {id, value} = event.target;
 
-        console.log("id: " + id + " value: " + value)
-
-
         setVpaElements(prev => {
             return prev.map((el, index) => {
-                console.log(index)
                 if (index != id) return el
                 else return {
                     ...el, ["content"]: value
@@ -164,6 +217,60 @@ function Vpc(props) {
             "ypos": 95,
         }));
     }
+
+    // //=================
+    // //Delete Card
+    // //=================
+
+    const handleDelete = (e, ve) => {
+        const id = ve.id;
+        setVpaElements(vpaElements.filter(el => el.id !== id))
+        setIdstoDelete(idsToDelete => idsToDelete.concat([id]))
+
+    };
+
+    React.useEffect(() => {
+        console.log(idsToDelete)
+    }, [idsToDelete])
+
+    //=================
+    //Delete Card
+    //=================
+    // const useOutsideClick = (callback) => {
+    //     const ref = React.useRef();
+    //
+    //     React.useEffect(() => {
+    //         const handleClick = (event) => {
+    //             if (ref.current && !ref.current.contains(event.target)) {
+    //                 callback();
+    //             }
+    //         };
+    //
+    //         document.addEventListener('click', handleClick);
+    //
+    //         return () => {
+    //             document.removeEventListener('click', handleClick);
+    //         };
+    //     }, [ref]);
+    //
+    //     return ref;
+    // };
+    //
+    // const handleClickOutside = () => {
+    //     setCurrentVpaElement(null);
+    // };
+    //
+    // const ref = useOutsideClick(handleClickOutside);
+    //
+    // const handleClick = event => {
+    //     var {id} = event.target;
+    //     setCurrentVpaElement(id);
+    // };
+    //
+    // React.useEffect(() => {
+    //     console.log(currentVpaElement)
+    // }, [currentVpaElement])
+
 
     let radius = 90;
 
@@ -206,29 +313,12 @@ function Vpc(props) {
                                 ></div>
 
                                 {vpaElements && vpaElements.map((ve, index) => (
-                                    <Form.Control as="textarea"
-                                                  key={index}
-                                                  draggable
-                                                  onDragStart={(e) => onDragStart(e, ve)}
-                                                  onDragOver={(e) => onCardDragOver(e)}
-                                                  onDrop={(e) => onDropCard(e)}
-                                                  value={ve.content}
-                                                  onChange={handleInputChange}
+                                    <NewComponent key={index} onDragStart={(e) => onDragStart(e, ve)}
+                                                  onDragOver={(e) => onCardDragOver(e)} onDrop={(e) => onDropCard(e)}
+                                                  ve={ve} onChange={handleInputChange}
                                                   id={index}
-
-
-                                                  style={{
-                                                      paddingTop: "5px",
-                                                      fontSize: "12pt",
-                                                      transform: "translate(-50%,-50%)",
-                                                      position: 'absolute',
-                                                      zIndex: 100,
-                                                      marginLeft: `${ve.xpos}%`,
-                                                      marginTop: `${ve.ypos}%`,
-                                                      width: "15%",
-                                                      height: "7.5%"
-                                                  }}>
-                                    </Form.Control>
+                                                  onClick={(e) => handleDelete(e, ve)}
+                                    />
 
                                 ))}
                             </div>
@@ -254,6 +344,7 @@ function Vpc(props) {
                             >
                                 Add Card
                             </Button>
+                            <Button onClick={() => console.log(idsToDelete)}>ids to delete</Button>
                         </div>
                     </Col>
                     <Col>
