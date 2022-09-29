@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
-import TrendCircle from "./TrendCircle";
-import SimpleArc from "./SimpleArc/SimpleArc";
-import SeparatingLines from "./SeparatingLines";
+import TrendCircle from "../components/TrendCircle";
+import SimpleArc from "../components/SimpleArc/SimpleArc";
+import SeparatingLines from "../components/SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
-import VpaSimpleArc from "./SimpleArc/VpaSimpleArc";
-import SeparatingLines2 from "./SeparatingLines2";
+import VpaSimpleArc from "../components/SimpleArc/VpaSimpleArc";
+import SeparatingLines2 from "../components/SeparatingLines2";
 
 
 export default function VpaCircle({radius, vpaElements, setVpaElements}) {
@@ -51,9 +51,9 @@ export default function VpaCircle({radius, vpaElements, setVpaElements}) {
             >
                 <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
                 <VpaSimpleArc/>
-                <SeparatingLines2 length={radius / 2} angle={90}/>
-                <SeparatingLines2 length={radius / 2} angle={210}/>
-                <SeparatingLines2 length={radius / 2} angle={330}/>
+                <SeparatingLines2 length={radius / 2} angle={120}/>
+                <SeparatingLines2 length={radius / 2} angle={240}/>
+                <SeparatingLines2 length={radius / 2} angle={0}/>
             </div>
         </div>
     )

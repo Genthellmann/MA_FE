@@ -6,6 +6,15 @@ import TrendDataService from "../services/trend_service";
 import NavBar2 from "./NavBar2";
 
 
+//=========================
+//change when switching host
+//=========================
+
+const host = "http://localhost:3001"
+
+// const host = "https://api.ux-trendradar.de"
+
+
 function FileUpload({dest, trendID, refID}) {
     const navigate = useNavigate();
 
@@ -83,6 +92,16 @@ function FileUpload({dest, trendID, refID}) {
     const handleSubmit = e => {
         setUploaded(true)
         setInfo("File Uploaded successfully!")
+        setIsValid(false)
+    }
+
+    const handleCancel = () => {
+        setUploaded(false)
+        document.getElementById("input-files").value = null;
+        setImgData(null);
+        setPicture(null);
+        setInfo("");
+        setIsValid(false);
     }
 
     const [link, setLink] = useState("");
@@ -90,13 +109,13 @@ function FileUpload({dest, trendID, refID}) {
     React.useEffect(() => {
         switch (dest) {
             case "rppicture":
-                setLink(`http://localhost:3001/rppicture?trendID=${trendID}&refID=${refID}`);
+                setLink(host + `/rppicture?trendID=${trendID}&refID=${refID}`);
                 break;
             case "explpicture":
-                setLink(`http://localhost:3001/explpicture?trendID=${trendID}&refID=${refID}`);
+                setLink(host + `/explpicture?trendID=${trendID}&refID=${refID}`);
                 break;
             case "trendpicture":
-                setLink(`http://localhost:3001/web/upload?trendID=${trendID}`);
+                setLink(host + `/web/upload?trendID=${trendID}`);
                 break;
         }
 
@@ -141,7 +160,7 @@ function FileUpload({dest, trendID, refID}) {
                 <div style={{width: '100%'}}>
                     <img className="rounded" src={imgData}
                          style={{width: '100%', marginTop: '1rem', marginBottom: '1rem'}}></img>
-                    <span style={{fontStyle: 'italic'}}>To Change Picture Choose File...</span>
+                    {/*<span style={{fontStyle: 'italic'}}>To Change Picture Choose File...</span>*/}
                 </div>
                 <span></span>
                 {/*<button type="submit" className="btn btn-primary"*/}
@@ -168,10 +187,22 @@ function FileUpload({dest, trendID, refID}) {
 
                     >Upload
                     </button>
-                    <button className="btn btn-danger" onClick={deletePicture}
-                            hidden={!uploaded}
-                    >Delete
+                    <button type="button" className="btn btn-danger"
+                            onClick={handleCancel}
+                        // disabled={!submitted}
+                            style={{
+                                paddingLeft: '1.5rem',
+                                paddingRight: '1.5rem',
+                                marginRight: '2rem'
+                            }}
+                            disabled={!show && !isValid}
+
+                    >Cancel
                     </button>
+                    {/*<button className="btn btn-danger" onClick={deletePicture}*/}
+                    {/*        hidden={!uploaded}*/}
+                    {/*>Delete*/}
+                    {/*</button>*/}
                 </div>
             </form>
         </div>

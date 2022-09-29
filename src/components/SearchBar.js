@@ -20,7 +20,7 @@ const SearchBar = ({searchTitle, setSearchTitle}) => {
                 variant="outline-dark"
                 type="text"
                 className="form-control me-sm-2"
-                placeholder="Search TrendEdit"
+                placeholder="Search"
                 value={searchTitle}
                 onChange={onChangeSearchTitle}
                 style={{borderRadius: '1em', marginRight: 0}}

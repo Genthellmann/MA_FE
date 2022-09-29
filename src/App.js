@@ -22,48 +22,50 @@ import ReferenceAddPage2 from "./views/ReferenceAddPage2";
 import ReferenceAddPage3 from "./views/ReferenceAddPage3";
 import ReferenceEditRp from "./views/ReferenceEditRp";
 import ReferenceEditExpl from "./views/ReferenceEditExpl";
+import ExitPrompt from "./components/ExitPrompt";
+import {ContextPromptProvider} from "./components/ContextPromptProvider";
 
 
 function App() {
 
-    // const bossTheme = createTheme({
-    //     palette: {
-    //         primary: {
-    //             main:
-    //                 '#a86632'
-    //         }
-    //
-    //     }
-    // });
+    // const PromptContext = React.createContext();
 
 
     return (
 
         <div style={styles.backgroundContainer}>
+            {/*<PromptContext.Provider value={{showExitPrompt, setShowExitPrompt}}>*/}
 
-            <ProjectContextProvider>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/login" element={<Login/>}></Route>
-                        <Route path="/register" element={<Register/>}></Route>
-                        <Route path="/profile" element={<Profile/>}></Route>
-                        <Route path="/" element={<Login/>}/>
-                        <Route path="/trend" element={<TrendsView/>}/>
-                        <Route path="/add" element={<TrendAdd/>}/>
-                        <Route path="/trend/:id" element={<TrendEdit/>}/>
-                        <Route path="/welcome" element={<Welcome/>}/>
-                        <Route path="/newproject" element={<ProjectAdd/>}/>
-                        <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
-                        <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
-                        <Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>
-                        <Route path="/RS/add/page3/:trendID/:refID/:dest" element={<ReferenceAddPage3/>}/>
-                        <Route path="RS/edit/:refID" element={<EditReference/>}/>
-                        <Route path="RS/edit/rppicture/:trendID/:refID" element={<ReferenceEditRp/>}/>
-                        <Route path="RS/edit/explpicture/:trendID/:refID" element={<ReferenceEditExpl/>}/>
-                        <Route path="vpc/:trendID" element={<Vpc/>}/>
-                    </Routes>
-                </BrowserRouter>
-            </ProjectContextProvider>
+            <ContextPromptProvider>
+                <ProjectContextProvider>
+                    <BrowserRouter getUserConfirmation={(message, callback) => {
+                        const allowTransition = window.confirm(message)
+                        callback(allowTransition)
+                    }}
+                    >
+                        <Routes>
+                            <Route path="/login" element={<Login/>}></Route>
+                            {/*<Route path="/register" element={<Register/>}></Route>*/}
+                            <Route path="/profile" eement={<Profile/>}></Route>
+                            <Route path="/" element={<Login/>}/>
+                            <Route path="/trend" element={<TrendsView/>}/>
+                            <Route path="/add" element={<TrendAdd/>}/>
+                            <Route path="/trend/:id" element={<TrendEdit/>}/>
+                            <Route path="/welcome" element={<Welcome/>}/>
+                            <Route path="/newproject" element={<ProjectAdd/>}/>
+                            <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
+                            <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
+                            <Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>
+                            <Route path="/RS/add/page3/:trendID/:refID/:dest" element={<ReferenceAddPage3/>}/>
+                            <Route path="RS/edit/:refID" element={<EditReference/>}/>
+                            <Route path="RS/edit/rppicture/:trendID/:refID" element={<ReferenceEditRp/>}/>
+                            <Route path="RS/edit/explpicture/:trendID/:refID" element={<ReferenceEditExpl/>}/>
+                            <Route path="vpc/:trendID" element={<Vpc/>}/>
+                        </Routes>
+                    </BrowserRouter>
+                </ProjectContextProvider>
+                {/*</PromptContext.Provider>*/}
+            </ContextPromptProvider>
         </div>
 
     );

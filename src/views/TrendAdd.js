@@ -3,13 +3,16 @@ import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import FileUp from "../components/FileUp";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Prompt, useNavigate, useBlocker} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Account from "./Account";
 import LoginError from "../services/LoginError";
 import {ProjectContext} from "../components/ProjectContextProvider";
 import NavBar2 from "../components/NavBar2";
 import FileEdit from "../components/FileEdit";
+import {PromptContext} from "../components/ContextPromptProvider";
+import {usePrompt} from "../components/Prompt";
+import FileUpload from "../components/FileUpload";
 
 const TrendAdd = () => {
     const navigate = useNavigate();
@@ -22,14 +25,15 @@ const TrendAdd = () => {
         description: "",
         implication: "",
         picture: "",
-        probability: "",
-        impact: "",
-        maturity: "",
+        probability: "low",
+        impact: "low",
+        maturity: "low",
         category: "user",
     }
 
     const [trend, setTrend] = useState(initialTrendState);
     const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState("");
 
     //show Modal if wrong File uploaded
     const [show, setShow] = useState(false);
@@ -85,11 +89,12 @@ const TrendAdd = () => {
                     category: response.data.category,
                     project: response.data.project,
                 });
+                console.log(response.data)
+                setMessage(response.data.message)
                 setSubmitted(true);
-                console.log(response)
-                // setID(response.data.id);
             })
             .catch(e => {
+                setMessage(e.response.data.message)
                 LoginError(navigate, e)
             });
         // setID()
@@ -102,9 +107,28 @@ const TrendAdd = () => {
 
     const saveTrendPicture = () => {
         document.getElementById("fileUploadForm").submit();
-        
+
         // navigate("../../trend");
     }
+
+    //======================
+    //prompt page reload
+    //======================
+    const promptContext = useContext(PromptContext);
+
+    useEffect(() => {
+        return () => {
+            promptContext.setShowExitPrompt(true);
+        }
+    }, [])
+
+    //======================
+    //prompt page navigation
+    //======================
+
+    usePrompt('Are you sure you want to leave? All unsaved changes might be lost. ' +
+        'Complete form and submit trend to prevent data loss. ', !submitted);
+
 
     return (
         <div>
@@ -115,22 +139,23 @@ const TrendAdd = () => {
                         <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
                             <h5 style={{width: '100%'}}>Trend created successfully!</h5>
                             <div style={{width: '50%', marginTop: '2rem'}}>
-                                <FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}
-                                        submitted={submitted} show={show} setShow={setShow}
-                                        isValid={isValid} setIsValid={setIsValid}>Upload
-                                    Picture</FileUp>
+                                <FileUpload trendID={trend.id} refID={""} dest={"trendpicture"}></FileUpload>
+                                {/*<FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}*/}
+                                {/*        submitted={submitted} show={show} setShow={setShow}*/}
+                                {/*        isValid={isValid} setIsValid={setIsValid}>Upload*/}
+                                {/*    Picture</FileUp>*/}
                             </div>
                             <div style={{display: "flex", justifyContent: "center", width: '50%', marginTop: '2rem'}}>
-                                <button className="btn btn-success"
-                                        onClick={saveTrendPicture}
-                                        style={{paddingLeft: '1.5rem', paddingRight: '1.5rem', marginRight: '2rem'}}
-                                        disabled={!show && !isValid}
-                                >Save
-                                </button>
-                                <button className="btn btn-danger" onClick={() => {
+                                {/*<button className="btn btn-success"*/}
+                                {/*        onClick={saveTrendPicture}*/}
+                                {/*        style={{paddingLeft: '1.5rem', paddingRight: '1.5rem', marginRight: '2rem'}}*/}
+                                {/*        disabled={!show && !isValid}*/}
+                                {/*>Save*/}
+                                {/*</button>*/}
+                                <button className="btn btn-primary" onClick={() => {
                                     navigate("../../trend")
                                 }}
-                                >Cancel
+                                >Next
                                 </button>
                             </div>
                         </div>
@@ -212,6 +237,7 @@ const TrendAdd = () => {
                                     id={"low"}
                                     value={trend.probability}
                                     onChange={handleProbChange}
+                                    checked={"low" === trend.probability}
                                 />
                                 <Form.Check
                                     inline
@@ -221,6 +247,7 @@ const TrendAdd = () => {
                                     id={"medium"}
                                     value={trend.probability}
                                     onChange={handleProbChange}
+                                    checked={"medium" === trend.probability}
                                 />
                                 <Form.Check
                                     inline
@@ -230,6 +257,7 @@ const TrendAdd = () => {
                                     id={"high"}
                                     value={trend.probability}
                                     onChange={handleProbChange}
+                                    checked={"high" === trend.probability}
                                 />
                             </Form.Group>
                             <Form.Group className='mb-3'>
@@ -244,7 +272,7 @@ const TrendAdd = () => {
                                     id={"low"}
                                     value={trend.maturity}
                                     onChange={handleMatChange}
-
+                                    checked={"low" === trend.maturity}
                                 />
                                 <Form.Check
                                     inline
@@ -254,7 +282,7 @@ const TrendAdd = () => {
                                     id={"medium"}
                                     value={trend.maturity}
                                     onChange={handleMatChange}
-
+                                    checked={"medium" === trend.maturity}
                                 />
                                 <Form.Check
                                     inline
@@ -264,6 +292,7 @@ const TrendAdd = () => {
                                     id={"high"}
                                     value={trend.maturity}
                                     onChange={handleMatChange}
+                                    checked={"high" === trend.maturity}
                                 />
                             </Form.Group>
                             <Form.Group className='mb-3'
@@ -279,6 +308,7 @@ const TrendAdd = () => {
                                     id={"low"}
                                     value={trend.impact}
                                     onChange={handleImpactChange}
+                                    checked={"low" === trend.impact}
                                 />
                                 <Form.Check
                                     inline
@@ -288,6 +318,7 @@ const TrendAdd = () => {
                                     id={"medium"}
                                     value={trend.impact}
                                     onChange={handleImpactChange}
+                                    checked={"medium" === trend.impact}
                                 />
                                 <Form.Check
                                     inline
@@ -297,6 +328,7 @@ const TrendAdd = () => {
                                     id={"high"}
                                     value={trend.impact}
                                     onChange={handleImpactChange}
+                                    checked={"high" === trend.impact}
                                 />
                             </Form.Group>
                             {/*<label htmlFor="title">Picture</label>*/}
@@ -313,6 +345,7 @@ const TrendAdd = () => {
                             >
                                 Save Trend
                             </button>
+                            <div>{message}</div>
                         </Form>
                     )}
                 </div>

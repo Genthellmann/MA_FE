@@ -12,7 +12,7 @@ function ReferenceAddPage3(props) {
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
                     <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <h4>Add New Trend - Step 3/3</h4>
+                        <h4>Add Reference - Step 3/3</h4>
                         <div style={{height: '3rem'}}></div>
                         <h6>Choose Explanatory Picture or Drawing</h6>
                         <FileUpload trendID={trendID} refID={refID} dest={dest}></FileUpload>

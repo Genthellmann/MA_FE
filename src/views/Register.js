@@ -115,6 +115,7 @@ const Register = () => {
                                     value={username}
                                     onChange={onChangeUsername}
                                     validations={[required, vusername]}
+                                    style={{borderRadius: '1.078rem'}}
                                 />
                             </div>
                             <div className="form-group">
@@ -126,6 +127,7 @@ const Register = () => {
                                     value={email}
                                     onChange={onChangeEmail}
                                     validations={[required, validEmail]}
+                                    style={{borderRadius: '1.078rem'}}
                                 />
                             </div>
                             <div className="form-group">
@@ -137,6 +139,7 @@ const Register = () => {
                                     value={password}
                                     onChange={onChangePassword}
                                     validations={[required, vpassword]}
+                                    style={{borderRadius: '1.078rem'}}
                                 />
                             </div>
                             <div className="form-group" style={{
@@ -145,7 +148,10 @@ const Register = () => {
                                 alignItems: 'center',
                                 flexDirection: 'column'
                             }}>
-                                <button className="btn btn-primary btn-block">Sign Up</button>
+                                <button className="btn btn-primary"
+                                        style={{marginTop: '1rem'}}
+                                >Sign Up
+                                </button>
                             </div>
                         </div>
                     )}
@@ -159,6 +165,7 @@ const Register = () => {
                             <div
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
+                                style={{borderRadius: '1.078rem'}}
                             >
                                 {message} {successful ? (
                                 <Link to="/login"> Login </Link>

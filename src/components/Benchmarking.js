@@ -20,8 +20,11 @@ function Benchmarking(props) {
     const getReferences = () => {
         TrendDataService.getReference(trendID)
             .then(response => {
-                setReferences(response.data);
-                console.log(response.data)
+                if (response.data.length > 0) {
+                    setReferences(response.data);
+                } else {
+                    setReferences([{rproduct: "no references yet"}])
+                }
             })
             .catch(e => {
                 LoginError(navigate, e)
@@ -88,7 +91,6 @@ function Benchmarking(props) {
         setCreationSpace(true);
         console.log(references)
         setBenchmark({...benchmark, ux: "", rse: references[0].rproduct});
-
     }
 
     const handleCancel = () => {

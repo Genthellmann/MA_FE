@@ -93,12 +93,12 @@ const ReferenceEdit = () => {
                                 style={{borderRadius: '1.078rem'}}
                             />
                         </Form.Group>
-                        <Form.Label><strong>Reference Product Picture</strong></Form.Label>
-                        <div style={styles.PictureEdit}>
-                            <FileEditRp ID={currentReference.trendID} refID={refID}
-                            >Reference Product
-                                Picture</FileEditRp>
-                        </div>
+                        {/*<Form.Label><strong>Reference Product Picture</strong></Form.Label>*/}
+                        {/*<div style={styles.PictureEdit}>*/}
+                        {/*    <FileEditRp ID={currentReference.trendID} refID={refID}*/}
+                        {/*    >Reference Product*/}
+                        {/*        Picture</FileEditRp>*/}
+                        {/*</div>*/}
                         <Form.Group className="mb-3">
                             <Form.Label><strong>Reference System Elements</strong></Form.Label>
                             <Form.Control
@@ -127,17 +127,18 @@ const ReferenceEdit = () => {
                                 style={{borderRadius: '1.078rem', height: '30vh'}}
                             />
                         </Form.Group>
-                        <Form.Label><strong>Explanatory Picture or Drawing</strong></Form.Label>
-                        <div style={styles.PictureEdit}>
-                            <FileEditExpl ID={currentReference.trendID} refID={refID}
-                            >Reference Product Picture</FileEditExpl>
-                        </div>
+                        {/*<Form.Label><strong>Explanatory Picture or Drawing</strong></Form.Label>*/}
+                        {/*<div style={styles.PictureEdit}>*/}
+                        {/*    <FileEditExpl ID={currentReference.trendID} refID={refID}*/}
+                        {/*    >Reference Product Picture</FileEditExpl>*/}
+                        {/*</div>*/}
 
                         {/*<FileUp*/}
                         {/*    link={`http://localhost:3001/explpicture?trendID=${currentReference.trendID}&refID=${currentReference.id}`}*/}
                         {/*    ID={currentReference.id} submitted={true}*/}
                         {/*></FileUp>*/}
-                        <button onClick={updateReference} className="btn btn-success">
+                        <button onClick={updateReference} className="btn btn-success"
+                                style={{marginTop: '1rem'}}>
                             Submit
                         </button>
                     </Form>

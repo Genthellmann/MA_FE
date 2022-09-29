@@ -65,7 +65,7 @@ const ReferenceAdd = () => {
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
                     <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <h4>Add New Trend - Step 1/3</h4>
+                        <h4>Add Reference - Step 1/3</h4>
                         <Form style={{width: '100%'}}>
                             <Form.Group className="mb-3">
                                 <Form.Label><strong>Reference Product</strong></Form.Label>

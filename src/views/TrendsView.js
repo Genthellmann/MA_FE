@@ -49,10 +49,6 @@ export default function TrendsView() {
         retrieveTrends(currentProject.project)
     }, [])
 
-    React.useEffect(() => {
-        // console.log(currentTrend)
-    }, [currentTrend])
-
     //refresh List after Delete
     const refreshListad = () => {
         retrieveTrends(currentProject.project);
@@ -79,8 +75,6 @@ export default function TrendsView() {
     const setActiveTrend = (trend, index) => {
         setCurrentTrend(trend);
         sessionStorage.setItem("trend", JSON.stringify(trend))
-        console.log(filteredTrends)
-        console.log(trends)
     };
 
     const removeAllTrends = () => {
@@ -134,14 +128,16 @@ export default function TrendsView() {
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <Row style={styles.RowStyle}>
-                    <Col lg={8} style={styles.ColStyle}>
+                    <Col xxl={1} sm={0}></Col>
+                    <Col xxl={8} style={styles.ColStyle}>
                         <div>
                             <TrendRadar trends={trends} setTrends={setTrends} currentTrend={currentTrend}
                                         filteredTrends={filteredTrends}
                                         setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
                         </div>
                     </Col>
-                    <Col lg={4} style={styles.ColStyle}>
+                    <Col xxl={1} sm={0}></Col>
+                    <Col xxl={2} style={styles.ColStyle}>
                         <div>
                             <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
                             <TrendList trends={trends} setActiveTrend={setActiveTrend}

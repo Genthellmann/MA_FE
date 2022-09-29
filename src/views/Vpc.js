@@ -1,7 +1,4 @@
-import React, {useState} from 'react';
-import Account from "./Account";
-import Sidebar from "../components/Sidebar";
-import VpaCircle from "../components/VpaCircle";
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import Trend_service from "../services/trend_service";
 import LoginError from "../services/LoginError";
@@ -14,6 +11,11 @@ import Benchmarking from "../components/Benchmarking";
 import StrategicPositioning from "../components/StrategicPositioning";
 import NavBar2 from "../components/NavBar2";
 import * as PropTypes from "prop-types";
+import {RiEmotionHappyLine} from "react-icons/ri";
+import {RiEmotionUnhappyLine} from "react-icons/ri";
+import {BsListCheck} from "react-icons/bs";
+import {PromptContext} from "../components/ContextPromptProvider";
+import {usePrompt} from "../components/Prompt";
 
 
 function NewComponent(props) {
@@ -46,9 +48,8 @@ function NewComponent(props) {
 
 
                           style={{
-                              paddingTop: "5px",
-                              fontSize: "12pt",
-
+                              padding: '0.2rem',
+                              fontSize: "0.75rem",
                           }}>
             </Form.Control>
         </Form>
@@ -69,8 +70,39 @@ NewComponent.propTypes = {
 
 function Vpc(props) {
     const navigate = useNavigate();
-
     const {trendID} = useParams();
+
+
+    //======================
+    //prompt page and reload
+    //======================
+    const [unsavedChangesVPC, setUnsavedChangesVPC] = useState(false);
+    const [unsavedChangesSP, setUnsavedChangesSP] = useState(false);
+
+    const promptContext = useContext(PromptContext);
+
+    // useEffect(() => {
+    //     return () => {
+    //         promptContext.setShowExitPrompt(false);
+    //     }
+    // }, [])
+
+    useEffect(() => {
+        // return () => {
+        promptContext.setShowExitPrompt((unsavedChangesVPC || unsavedChangesSP));
+        // }
+    }, [unsavedChangesVPC, unsavedChangesSP, promptContext.showExitPrompt])
+
+    useEffect(() => {
+        console.log("showExitPrompt" + promptContext.showExitPrompt)
+        console.log("unsavedChangesVPC" + unsavedChangesVPC)
+        console.log("unsavedChangesSP" + unsavedChangesSP)
+    }, [promptContext.showExitPrompt])
+
+
+    usePrompt('Are you sure you want to leave? All unsaved changes might be lost.'
+        , (unsavedChangesVPC || unsavedChangesSP));
+
 
     const initialVpaElementState = {
         id: null,
@@ -121,6 +153,7 @@ function Vpc(props) {
                 console.log(e)
                 LoginError(navigate, e)
             })
+        setUnsavedChangesVPC(false);
     };
 
     //=================
@@ -165,6 +198,7 @@ function Vpc(props) {
                 }
             })
         })
+        setUnsavedChangesVPC(true);
     }
 
     const onDropCard = (e) => {
@@ -186,28 +220,12 @@ function Vpc(props) {
                 }
             })
         })
+        setUnsavedChangesVPC(true);
     };
 
     //=================
     //create new Card
     //=================
-
-    // const handleCreate = () => {
-    //     Trend_service.createVpaElement({
-    //         "trendID": trendID,
-    //         "content": "",
-    //         "xpos": 90,
-    //         "ypos": 90,
-    //     })
-    //         .then(response => {
-    //             console.log(response)
-    //             getVPAElements();
-    //         })
-    //         .catch(e => {
-    //             console.log(e)
-    //             LoginError(navigate, e)
-    //         });
-    // }
 
     const handleCreate = () => {
         setVpaElements(vpaElements => vpaElements.concat({
@@ -216,6 +234,8 @@ function Vpc(props) {
             "xpos": 10,
             "ypos": 95,
         }));
+        console.log("created")
+        setUnsavedChangesVPC(true);
     }
 
     // //=================
@@ -226,50 +246,12 @@ function Vpc(props) {
         const id = ve.id;
         setVpaElements(vpaElements.filter(el => el.id !== id))
         setIdstoDelete(idsToDelete => idsToDelete.concat([id]))
-
+        setUnsavedChangesVPC(true);
     };
 
     React.useEffect(() => {
         console.log(idsToDelete)
     }, [idsToDelete])
-
-    //=================
-    //Delete Card
-    //=================
-    // const useOutsideClick = (callback) => {
-    //     const ref = React.useRef();
-    //
-    //     React.useEffect(() => {
-    //         const handleClick = (event) => {
-    //             if (ref.current && !ref.current.contains(event.target)) {
-    //                 callback();
-    //             }
-    //         };
-    //
-    //         document.addEventListener('click', handleClick);
-    //
-    //         return () => {
-    //             document.removeEventListener('click', handleClick);
-    //         };
-    //     }, [ref]);
-    //
-    //     return ref;
-    // };
-    //
-    // const handleClickOutside = () => {
-    //     setCurrentVpaElement(null);
-    // };
-    //
-    // const ref = useOutsideClick(handleClickOutside);
-    //
-    // const handleClick = event => {
-    //     var {id} = event.target;
-    //     setCurrentVpaElement(id);
-    // };
-    //
-    // React.useEffect(() => {
-    //     console.log(currentVpaElement)
-    // }, [currentVpaElement])
 
 
     let radius = 90;
@@ -282,6 +264,7 @@ function Vpc(props) {
                     <Col lg={8}>
                         <Button className="btn btn-primary"
                                 onClick={handleSave}
+                                disabled={!unsavedChangesVPC}
                         >Save</Button>
                         <div style={{
                             display: "flex",
@@ -331,11 +314,51 @@ function Vpc(props) {
                                 aspectRatio: 1,
                                 zIndex: 1,
                             }}>
-                                <TrendCircle radius={radius} color={"rgb(210, 210, 213);"} position={0}/>
-                                <VpaSimpleArc/>
-                                <SeparatingLines length={radius / 2} angle={90}/>
-                                <SeparatingLines length={radius / 2} angle={210}/>
-                                <SeparatingLines length={radius / 2} angle={330}/>
+                                <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
+                                {/*<VpaSimpleArc/>*/}
+                                <div style={{
+                                    position: 'absolute',
+                                    marginBottom: '50%',
+                                    marginRight: '30%'
+                                }}>
+                                    <div style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center"
+                                    }}></div>
+                                    <RiEmotionHappyLine size={'7rem'}></RiEmotionHappyLine>
+                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Gains</strong>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    position: 'absolute',
+                                    marginTop: '50%',
+                                    marginRight: '30%'
+                                }}>
+                                    <div style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center"
+                                    }}></div>
+                                    <RiEmotionUnhappyLine size={'7rem'}></RiEmotionUnhappyLine>
+                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Pains</strong>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    position: 'absolute',
+                                    marginLeft: '50%'
+                                }}>
+                                    <div style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center"
+                                    }}></div>
+                                    <BsListCheck size={'7rem'}></BsListCheck>
+                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Jobs</strong></div>
+                                </div>
+                                <SeparatingLines length={radius / 2} angle={60}/>
+                                <SeparatingLines length={radius / 2} angle={180}/>
+                                <SeparatingLines length={radius / 2} angle={300}/>
                             </div>
                         </div>
                         <div style={{display: "flex", justifyContent: "flex-start"}}>
@@ -344,12 +367,12 @@ function Vpc(props) {
                             >
                                 Add Card
                             </Button>
-                            <Button onClick={() => console.log(idsToDelete)}>ids to delete</Button>
                         </div>
                     </Col>
                     <Col>
                         <Benchmarking/>
-                        <StrategicPositioning/>
+                        <StrategicPositioning unsavedChangesSP={unsavedChangesSP}
+                                              setUnsavedChangesSP={setUnsavedChangesSP}/>
                     </Col>
                 </Row>
             </div>

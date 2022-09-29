@@ -4,7 +4,9 @@ import Button from "react-bootstrap/Button";
 
 function Filter({filterMask, setFilterMask}) {
 
-    const category = ["user", "technology", "menv"];
+    const category = [{db: "user", label: "User"},
+        {db: "technology", label: "Technology"},
+        {db: "menv", label: "Market Environment"}];
     const maturity = ["low", "medium", "high"];
     const probability = ["low", "medium", "high"];
     const impact = ["low", "medium", "high"];
@@ -27,16 +29,16 @@ function Filter({filterMask, setFilterMask}) {
             <DropdownButton id="dropdown-basic-button" title="Filter" style={styles.FilterSortBtn}
                             variant="light">
                 <Form style={{paddingLeft: '8px'}}>
-                    <label>Category</label>
+                    <Form.Label><strong>Category</strong></Form.Label>
                     <br/>
                     {category.map((category) => (
-                        <Form.Check inline type='checkbox' key={`category-${category}`}
-                                    name="category" label={category} value={category}
-                                    onChange={handleFilterChange} checked={filterMask["category"].includes(category)}
+                        <Form.Check inline type='checkbox' key={`category-${category.db}`}
+                                    name="category" label={category.label} value={category.db}
+                                    onChange={handleFilterChange} checked={filterMask["category"].includes(category.db)}
                         />
                     ))}
                     <br/>
-                    <label>Probability</label>
+                    <Form.Label><strong>Probability</strong></Form.Label>
                     <br/>
                     {probability.map((probability) => (
                         <Form.Check inline type='checkbox' key={`probability-${probability}`}
@@ -46,7 +48,7 @@ function Filter({filterMask, setFilterMask}) {
                         />
                     ))}
                     <br/>
-                    <label>Maturity</label>
+                    <Form.Label><strong>Maturity</strong></Form.Label>
                     <br/>
                     {maturity.map((maturity) => (
                         <Form.Check inline type='checkbox' key={`maturity-${maturity}`}
@@ -55,7 +57,7 @@ function Filter({filterMask, setFilterMask}) {
                         />
                     ))}
                     <br/>
-                    <label>Impact</label>
+                    <Form.Label><strong>Impact</strong></Form.Label>
                     <br/>
                     {impact.map((impact) => (
                         <Form.Check inline type='checkbox' key={`impact-${impact}`}
@@ -76,6 +78,6 @@ const styles = {
     FilterSortBtn: {
         width: '6rem',
         flexGrow: 1,
-        
+
     }
 }

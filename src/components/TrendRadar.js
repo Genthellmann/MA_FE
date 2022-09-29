@@ -13,7 +13,7 @@ import * as PropTypes from "prop-types";
 import Tooltip from '@mui/material/Tooltip';
 
 function TrendCircleOverlay({
-                                key, trend, onClick,
+                                trend, onClick,
                                 id, radiusTrend,
                                 colorImpact
                             }) {
@@ -23,7 +23,8 @@ function TrendCircleOverlay({
     const [show, setShow] = useState(false)
 
     return (
-        <Tooltip title={trend.title} placement={"top"}>
+        <Tooltip title={trend.title} placement={"top"}
+        >
             <button className="btn btn-primary"
 
                     onMouseOver={(e) => {
@@ -56,16 +57,6 @@ function TrendCircleOverlay({
             >
 
             </button>
-            {/*{console.log(ref.current)}*/}
-            {/*<Overlay*/}
-            {/*    show={show}*/}
-            {/*    target={ref.current}*/}
-            {/*    placement="top">*/}
-            {/*    <Tooltip>*/}
-            {/*        {trend.title}*/}
-            {/*    </Tooltip>*/}
-
-            {/*</Overlay>*/}
         </Tooltip>);
 }
 
@@ -165,12 +156,13 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
         <div>
             <div
                 style={{
-                    'display': 'flex',
-                    'width': '90%',
-                    'position': 'relative',
-                    'justifyContent': 'center',
-                    "alignItems": "center",
-                    "aspectRatio": 1
+                    display: 'flex',
+                    maxWidth: '90vh',
+                    maxHeight: '90vw',
+                    position: 'relative',
+                    justifyContent: 'center',
+                    alignItems: "center",
+                    aspectRatio: 1
                 }}
             >
                 <TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>

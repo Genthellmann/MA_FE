@@ -11,10 +11,11 @@ export default function TrendDetails({currentTrend}) {
 
     return (
         <div>
-            {currentTrend ? (
+            {currentTrend.id ? (
                 <div>
                     <Row style={styles.RowStyles}>
                         <h4>{currentTrend.title}</h4>
+                        <div>{console.log(currentTrend)}</div>
                         <Col lg={5} style={styles.cardCol}>
                             <Card className="card border-secondary me-3"
                                   style={styles.CardStyle}>
@@ -74,7 +75,7 @@ export default function TrendDetails({currentTrend}) {
             ) : (
                 <div>
                     <br/>
-                    <p>Please click on a Trend...</p>
+                    <div>Please click on a Trend...</div>
                 </div>
             )}
         </div>

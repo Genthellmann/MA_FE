@@ -73,6 +73,7 @@ const Login = () => {
                             value={username}
                             onChange={onChangeUsername}
                             validations={[required]}
+                            style={{borderRadius: '1.078rem'}}
                         />
                     </div>
                     <div className="form-group">
@@ -84,6 +85,7 @@ const Login = () => {
                             value={password}
                             onChange={onChangePassword}
                             validations={[required]}
+                            style={{borderRadius: '1.078rem'}}
                         />
                     </div>
                     <div className="form-group" style={{

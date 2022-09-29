@@ -4,7 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import TrendService from "../services/trend_service";
 import LoginError from "../services/LoginError";
 
-function StrategicPositioning(props) {
+function StrategicPositioning({unsavedChangesSP, setUnsavedChangesSP}) {
     const navigate = useNavigate();
     const {trendID} = useParams();
 
@@ -18,8 +18,9 @@ function StrategicPositioning(props) {
     const getStratPos = id => {
         TrendService.getStratPos(id)
             .then(response => {
-                if (stratPos.data[0])
+                if (response.data[0])
                     setStratPos(response.data[0])
+                else setStratPos("")
                 console.log(response.data)
             })
             .catch(e => {
@@ -40,6 +41,7 @@ function StrategicPositioning(props) {
             .catch(e => {
                 LoginError(navigate, e);
             })
+        setUnsavedChangesSP(false);
     }
 
     React.useEffect(() => {
@@ -49,7 +51,7 @@ function StrategicPositioning(props) {
     const handleInputChange = event => {
         const {name, value} = event.target;
         setStratPos({...stratPos, [name]: value});
-        console.log(stratPos.trendID)
+        setUnsavedChangesSP(true);
     };
 
     const onSave = () => {
@@ -74,7 +76,9 @@ function StrategicPositioning(props) {
                 </Form.Group>
             </Form>
             <div style={{display: "flex", justifyContent: "center"}}>
-                <button className="btn btn-primary" onClick={onSave}>Save</button>
+                <button className="btn btn-primary" onClick={onSave}
+                        disabled={!unsavedChangesSP}>Save
+                </button>
             </div>
         </div>
     );
