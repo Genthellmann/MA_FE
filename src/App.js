@@ -18,12 +18,16 @@ import ReferenceAdd from "./views/ReferenceAdd";
 import EditReference from "./views/ReferenceEdit";
 import Vpc from "./views/Vpc";
 import FileUpload from "./components/FileUpload";
-import ReferenceAddPage2 from "./views/ReferenceAddPage2";
-import ReferenceAddPage3 from "./views/ReferenceAddPage3";
+import ReferenceAddPage2 from "./views/unused_views/ReferenceAddPage2";
+import ReferenceAddPage3 from "./views/unused_views/ReferenceAddPage3";
 import ReferenceEditRp from "./views/ReferenceEditRp";
 import ReferenceEditExpl from "./views/ReferenceEditExpl";
 import ExitPrompt from "./components/ExitPrompt";
 import {ContextPromptProvider} from "./components/ContextPromptProvider";
+import PageNotFound from "./views/PageNotFound";
+import TrendEditPage2 from "./views/TrendEditPage2";
+import ReferenceEditPage2 from "./views/ReferenceEditPage2";
+import ReferenceEditPage3 from "./views/ReferenceEditPage3";
 
 
 function App() {
@@ -36,8 +40,9 @@ function App() {
         <div style={styles.backgroundContainer}>
             {/*<PromptContext.Provider value={{showExitPrompt, setShowExitPrompt}}>*/}
 
-            <ContextPromptProvider>
-                <ProjectContextProvider>
+
+            <ProjectContextProvider>
+                <ContextPromptProvider>
                     <BrowserRouter getUserConfirmation={(message, callback) => {
                         const allowTransition = window.confirm(message)
                         callback(allowTransition)
@@ -45,27 +50,31 @@ function App() {
                     >
                         <Routes>
                             <Route path="/login" element={<Login/>}></Route>
-                            {/*<Route path="/register" element={<Register/>}></Route>*/}
+                            <Route path="/register" element={<Register/>}></Route>
                             <Route path="/profile" eement={<Profile/>}></Route>
                             <Route path="/" element={<Login/>}/>
                             <Route path="/trend" element={<TrendsView/>}/>
                             <Route path="/add" element={<TrendAdd/>}/>
                             <Route path="/trend/:id" element={<TrendEdit/>}/>
+                            <Route path="/trendEditPage2" element={<TrendEditPage2/>}/>
                             <Route path="/welcome" element={<Welcome/>}/>
                             <Route path="/newproject" element={<ProjectAdd/>}/>
                             <Route path="/RS/:trendID" element={<ReferenceSystem/>}/>
                             <Route path="/RS/add/:trendID" element={<ReferenceAdd/>}/>
-                            <Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>
-                            <Route path="/RS/add/page3/:trendID/:refID/:dest" element={<ReferenceAddPage3/>}/>
-                            <Route path="RS/edit/:refID" element={<EditReference/>}/>
+                            {/*<Route path="/RS/add/page2/:trendID/:refID/:dest" element={<ReferenceAddPage2/>}/>*/}
+                            {/*<Route path="/RS/add/page3/:trendID/:refID/:dest" element={<ReferenceAddPage3/>}/>*/}
+                            <Route path="RS/edit/:trendID/:refID" element={<EditReference/>}/>
+                            <Route path="RS/edit/page2/:trendID/:refID" element={<ReferenceEditPage2/>}/>
+                            <Route path="RS/edit/page3/:trendID/:refID" element={<ReferenceEditPage3/>}/>
                             <Route path="RS/edit/rppicture/:trendID/:refID" element={<ReferenceEditRp/>}/>
                             <Route path="RS/edit/explpicture/:trendID/:refID" element={<ReferenceEditExpl/>}/>
                             <Route path="vpc/:trendID" element={<Vpc/>}/>
+                            <Route path="*" element={<PageNotFound/>}/>
                         </Routes>
                     </BrowserRouter>
-                </ProjectContextProvider>
-                {/*</PromptContext.Provider>*/}
-            </ContextPromptProvider>
+                </ContextPromptProvider>
+            </ProjectContextProvider>
+            {/*</PromptContext.Provider>*/}
         </div>
 
     );

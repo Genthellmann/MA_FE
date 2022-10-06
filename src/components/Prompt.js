@@ -3,11 +3,10 @@
  */
 import {useContext, useEffect, useCallback} from 'react';
 import {UNSAFE_NavigationContext as NavigationContext} from 'react-router-dom';
+import {PromptContext} from "./ContextPromptProvider";
 
 /**
- * Blocks all navigation attempts. This is useful for preventing the page from
- * changing until some condition is met, like saving form data.
- *
+ * Blocks all navigation attempts.
  * @param  blocker
  * @param  when
  * @see https://reactrouter.com/api/useBlocker
@@ -34,24 +33,29 @@ export function useBlocker(blocker, when = true) {
             blocker(autoUnblockingTx);
         });
 
+
         return unblock;
     }, [navigator, blocker, when]);
 }
 
+
 /**
  * Prompts the user with an Alert before they leave the current screen.
- *
  * @param  message
  * @param  when
  */
-export function usePrompt(message, when = true) {
+
+export function usePrompt(message, when = true, setShowExitPrompt) {
     const blocker = useCallback(
         (tx) => {
             // eslint-disable-next-line no-alert
             if (window.confirm(message)) tx.retry();
+            setShowExitPrompt(false);
         },
         [message]
     );
 
     useBlocker(blocker, when);
+
+
 }

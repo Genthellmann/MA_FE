@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import TrendDataService from "../services/trend_service";
 import LoginError from "../services/LoginError";
 import http from "../http-common";
+import FileEdit2 from "../components/FileEdit2";
 
 function ReferenceEditRp(props) {
 
@@ -89,7 +90,8 @@ function ReferenceEditRp(props) {
                         <h4>Edit Reference Product Picture</h4>
                         <div style={{height: '3rem'}}></div>
                         <h6>Choose Reference Product Picture</h6>
-                        <FileUpload trendID={trendID} refID={refID} dest="rppicture"></FileUpload>
+                        <FileEdit2 refID={refID} trendID={trendID} dest="rppicture"></FileEdit2>
+                        {/*<FileUpload trendID={trendID} refID={refID} dest="rppicture"></FileUpload>*/}
                     </div>
                     <div style={{
                         display: 'flex',

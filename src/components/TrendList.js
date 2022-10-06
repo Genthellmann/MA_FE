@@ -89,41 +89,61 @@ export default function TrendList({
                 <Filter filterMask={filterMask} setFilterMask={setFilterMask}></Filter>
             </Container>
             <div className="card border-secondary mt-3" style={styles.ListContainer}>
-                <ul className="list-group" style={styles.ListGroup}>
-                    {filteredTrends &&
-                        filteredTrends.sort((a, b) => sortHandler(a, b, sorting)).map((trend, index) => (
-                            <li
-                                className={
-                                    "list-group-item " + (trend.id == currentTrend.id ? "active" : "")
-                                }
-                                onClick={() => setActiveTrend(trend, index)}
-                                key={index}
-                                style={styles.ListItem}
-                            >
-                                {trend.title}
-                            </li>
-                        ))}
-                </ul>
+                {(filteredTrends.length > 0) ? (
+                    <ul className="list-group" style={styles.ListGroup}>
+                        {filteredTrends &&
+                            filteredTrends.sort((a, b) => sortHandler(a, b, sorting)).map((trend, index) => (
+                                <li
+                                    className={
+                                        "list-group-item " + (trend.id == currentTrend.id ? "active" : "")
+                                    }
+                                    onClick={() => setActiveTrend(trend, index)}
+                                    key={index}
+                                    style={styles.ListItem}
+                                >
+                                    {trend.title}
+                                </li>
+                            ))}
+                    </ul>
+                ) : (
+                    <ul className='list-group' style={styles.ListGroup}>
+                        <li style={{padding: '1rem'}}>list ist empty</li>
+                    </ul>
+                )}
             </div>
             <div style={styles.BtnContainer}>
                 <button class='btn btn-outline-primary' onClick={(e) => {
                     navigate("/trend/" + currentTrend.id)
                 }}
-                        disabled={!currentTrend}
-                        style={{paddingLeft: "3em", paddingRight: "3em"}}
+                        disabled={!currentTrend.id}
+                        style={{
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                            width: '5rem',
+                        }}
                 > Edit
                 </button>
-                <button class="btn btn-outline-warning" style={{paddingLeft: "2.5em", paddingRight: "2.5em"}}
+                <button class="btn btn-outline-warning"
                         onClick={() => deleteTrend()}
-                        disabled={!currentTrend}
+                        disabled={!currentTrend.id}
+                        style={{
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                            width: '5rem',
+                        }}
                 >
                     Delete
                 </button>
                 <button class="btn btn-outline-danger"
                         onClick={() => removeAllTrends()}
                         disabled={true}
+                        style={{
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                            width: '5rem',
+                        }}
                 >
-                    Remove All
+                    Delete All
                 </button>
             </div>
             <div className="mt-3" style={{display: "flex", justifyContent: "center"}}>
@@ -151,7 +171,7 @@ const styles = {
         marginBottom: '2rem',
         display: "flex",
         justifyContent: "center",
-        maxHeight: '60vh',
+        maxHeight: '42vh',
         borderRadius: '1.078rem',
         padding: 0,
 

@@ -7,6 +7,11 @@ const LoginError = (navigate, e) => {
         navigate("/login");
         window.location.reload();
     }
+
+    if (e.response.status === 400) {
+
+    }
+
     return
 }
 

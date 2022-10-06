@@ -2,17 +2,10 @@ import React, {useState, useEffect, useMemo, useContext} from "react";
 import {useParams, useNavigate} from 'react-router-dom';
 import TrendDataService from "../services/trend_service";
 import {Form} from "react-bootstrap";
-import FileReturn from "../components/FileReturn";
-import FileEdit from "../components/FileEdit";
-import FileUp from "../components/FileUp";
-import ExpendableText from "../components/ExpendableText";
-import RichText from "../temp_comps/richText";
 import HelperPositioning from "../services/HelperPositioning";
 import LoginError from "../services/LoginError";
-import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
 import NavBar2 from "../components/NavBar2";
-import FileEditTrend from "../components/FileEditTrend";
 
 const TrendEdit = props => {
     const {id} = useParams();
@@ -89,13 +82,14 @@ const TrendEdit = props => {
     }
 
     const updateTrend = () => {
+        sessionStorage.setItem("trend", JSON.stringify(currentTrend))
+
         if ((currentTrend.category !== prevTrendConfig.category) || (currentTrend.probability !== prevTrendConfig.probability)) {
             let position = HelperPositioning(currentTrend.category, currentTrend.probability);
             TrendDataService.update(currentTrend.id, {...currentTrend, ["xpos"]: position[0], ["ypos"]: position[1]}
             )
                 .then(response => {
                     setMessage("The trend was updated successfully!");
-                    navigate("/trend")
                 })
                 .catch(e => {
                     console.log(e);
@@ -106,7 +100,6 @@ const TrendEdit = props => {
             TrendDataService.update(currentTrend.id, currentTrend)
                 .then(response => {
                     setMessage("The trend was updated successfully!");
-                    navigate("/trend")
                 })
                 .catch(e => {
                     console.log(e);
@@ -114,7 +107,8 @@ const TrendEdit = props => {
                     LoginError(navigate, e)
                 });
         }
-        document.getElementById("fileUploadForm").submit()
+        navigate("../TrendEditPage2");
+        // document.getElementById("fileUploadForm").submit()
     };
 
     const deleteTrend = () => {
@@ -308,15 +302,15 @@ const TrendEdit = props => {
                                     checked={"high" === currentTrend.impact}
                                 />
                             </Form.Group>
-                            <Form.Label><strong>Picture</strong></Form.Label>
-                            <div style={{width: '50%'}}>
-                                <FileEditTrend ID={id}
-                                               submitted={true}
-                                               show={show} setShow={setShow}
-                                               isValid={isValid} setIsValid={setIsValid}>FileUpload</FileEditTrend>
-                            </div>
+                            {/*<Form.Label><strong>Picture</strong></Form.Label>*/}
+                            {/*<div style={{width: '50%'}}>*/}
+                            {/*    <FileEditTrend ID={id}*/}
+                            {/*                   submitted={true}*/}
+                            {/*                   show={show} setShow={setShow}*/}
+                            {/*                   isValid={isValid} setIsValid={setIsValid}>FileUpload</FileEditTrend>*/}
+                            {/*</div>*/}
 
-                            <br/>
+                            {/*<br/>*/}
                             <button
                                 type="button"
                                 class="btn btn-dark"

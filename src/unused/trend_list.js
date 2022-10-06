@@ -2,7 +2,7 @@
 // import TrendDataService from "../services/trend_service";
 // import { Link } from "react-router-dom";
 // import SeparatingLines from "../components/SeparatingLines";
-// import TrendCircle from "../components/TrendCircle";
+// import VPCCircle from "../components/VPCCircle";
 // import Button from 'react-bootstrap/Button';
 // import {Col, Container, Row} from "react-bootstrap";
 // import SimpleArc from "../components/SimpleArc";
@@ -116,9 +116,9 @@
 //                     <div>
 //                     <div style={{'display':'flex','width':'90%','position':'absolute','justifyContent':'center', "alignItems": "center", "aspectRatio":1}}
 //                     >
-//                     <TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>
-//                     <TrendCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>
-//                     <TrendCircle radius={radius.radius3} color={"#999797"} position={2}/>
+//                     <VPCCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>
+//                     <VPCCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>
+//                     <VPCCircle radius={radius.radius3} color={"#999797"} position={2}/>
 //                     <SimpleArc />
 //                     <SeparatingLines length={radius.radius1/2} angle={90}/>
 //                     <SeparatingLines length={radius.radius1/2} angle={210}/>

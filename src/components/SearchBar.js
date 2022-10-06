@@ -23,7 +23,7 @@ const SearchBar = ({searchTitle, setSearchTitle}) => {
                 placeholder="Search"
                 value={searchTitle}
                 onChange={onChangeSearchTitle}
-                style={{borderRadius: '1em', marginRight: 0}}
+                style={{borderRadius: '1em', marginRight: 0, marginTop: '1rem'}}
             />
         </div>
     )

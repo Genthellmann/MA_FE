@@ -2,7 +2,7 @@
 // import TrendDataService from "../services/trend_service";
 // import { Link } from "react-router-dom";
 // import SeparatingLines from "../components/SeparatingLines";
-// import TrendRadar from "../components/TrendCircle";
+// import TrendRadar from "../components/VPCCircle";
 // import Button from 'react-bootstrap/Button';
 // import {Container, Row} from "react-bootstrap";
 //

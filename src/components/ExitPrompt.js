@@ -29,6 +29,7 @@ function ExitPrompt(bool) {
         initBeforeUnLoad(showExitPrompt);
     }, [showExitPrompt]);
 
+
     return (
         [showExitPrompt, setShowExitPrompt]
     );

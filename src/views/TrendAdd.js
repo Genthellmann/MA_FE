@@ -40,6 +40,7 @@ const TrendAdd = () => {
     const [isValid, setIsValid] = useState(false);
 
     const handleInputChange = event => {
+        setMessage(false)
         const {name, value} = event.target;
         setTrend({...trend, [name]: value});
     };
@@ -127,7 +128,7 @@ const TrendAdd = () => {
     //======================
 
     usePrompt('Are you sure you want to leave? All unsaved changes might be lost. ' +
-        'Complete form and submit trend to prevent data loss. ', !submitted);
+        'Complete form and submit trend to prevent data loss. ', !submitted, promptContext.setShowExitPrompt);
 
 
     return (
@@ -138,25 +139,16 @@ const TrendAdd = () => {
                     {submitted ? (
                         <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
                             <h5 style={{width: '100%'}}>Trend created successfully!</h5>
-                            <div style={{width: '50%', marginTop: '2rem'}}>
-                                <FileUpload trendID={trend.id} refID={""} dest={"trendpicture"}></FileUpload>
-                                {/*<FileUp link={`http://localhost:3001/web/upload?trendID=${trend.id}`} ID={trend.id}*/}
-                                {/*        submitted={submitted} show={show} setShow={setShow}*/}
-                                {/*        isValid={isValid} setIsValid={setIsValid}>Upload*/}
-                                {/*    Picture</FileUp>*/}
-                            </div>
-                            <div style={{display: "flex", justifyContent: "center", width: '50%', marginTop: '2rem'}}>
-                                {/*<button className="btn btn-success"*/}
-                                {/*        onClick={saveTrendPicture}*/}
-                                {/*        style={{paddingLeft: '1.5rem', paddingRight: '1.5rem', marginRight: '2rem'}}*/}
-                                {/*        disabled={!show && !isValid}*/}
-                                {/*>Save*/}
-                                {/*</button>*/}
-                                <button className="btn btn-primary" onClick={() => {
-                                    navigate("../../trend")
-                                }}
-                                >Next
-                                </button>
+                            <div style={{width: '50%', marginTop: '2rem', display: "flex"}}>
+                                <FileUpload trendID={trend.id} refID={""} dest={"trendpicture"}
+                                            navigateTo="../../trend"></FileUpload>
+                                <div style={{marginLeft: '2rem'}}>
+                                    <button className="btn btn-secondary" onClick={() => {
+                                        navigate("../../trend")
+                                    }}
+                                    >Skip
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ) : (
@@ -186,7 +178,7 @@ const TrendAdd = () => {
                                     name="description"
                                     value={trend.description}
                                     onChange={handleInputChange}
-                                    style={{borderRadius: '1.078rem', height: '30vh'}}
+                                    style={{borderRadius: '1.078rem', height: '10rem'}}
 
 
                                 />
@@ -202,7 +194,7 @@ const TrendAdd = () => {
                                     name="implication"
                                     value={trend.implication}
                                     onChange={handleInputChange}
-                                    style={{borderRadius: '1.078rem', height: '30vh'}}
+                                    style={{borderRadius: '1.078rem', height: '10rem'}}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
@@ -345,7 +337,13 @@ const TrendAdd = () => {
                             >
                                 Save Trend
                             </button>
-                            <div>{message}</div>
+                            {message && (
+                                <div className="form-group">
+                                    <div className="alert alert-danger" role="alert">
+                                        {message}
+                                    </div>
+                                </div>
+                            )}
                         </Form>
                     )}
                 </div>
@@ -368,6 +366,7 @@ const styles = {
         paddingLeft: '1vw',
         paddingRight: '1vw',
         paddingTop: '2vw',
+        paddingBottom: "2vw",
         display: 'flex',
         justifyContent: 'center'
     },

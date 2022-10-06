@@ -1,4 +1,6 @@
 import React from 'react';
+import {RiEmotionHappyLine, RiEmotionUnhappyLine} from "react-icons/ri";
+import {BsListCheck} from "react-icons/bs";
 
 export default function TrendCircle({radius, color, pos}) {
 
@@ -25,7 +27,10 @@ export default function TrendCircle({radius, color, pos}) {
                  position: 'absolute',
                  borderStyle: 'solid',
                  borderWidth: '0.1px',
-                 borderColor: 'red'
+                 borderColor: 'red',
+                 display: "flex",
+                 justifyContent: "center",
+                 alignItems: "center",
 
              }}>
         </div>

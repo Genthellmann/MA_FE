@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import LoginError from "../services/LoginError";
 import {useNavigate, useParams} from "react-router-dom";
-import {Alert, Modal, Toast} from "react-bootstrap";
+import {Alert, Modal} from "react-bootstrap";
 import TrendDataService from "../services/trend_service";
 import NavBar2 from "./NavBar2";
 
@@ -15,7 +15,7 @@ const host = "http://localhost:3001"
 // const host = "https://api.ux-trendradar.de"
 
 
-function FileUpload({dest, trendID, refID, navigateTo}) {
+function FileEdit2({dest, trendID, refID}) {
     const navigate = useNavigate();
 
 
@@ -91,12 +91,8 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
 
     const handleSubmit = e => {
         setUploaded(true)
-        // setInfo("File Uploaded successfully!")
-        setShowUploaded(true)
+        setInfo("File Uploaded successfully!")
         setIsValid(false)
-        setTimeout(() => {
-            navigate(navigateTo)
-        }, "1750")
     }
 
     const handleCancel = () => {
@@ -131,15 +127,63 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
     }, [link])
 
 
-    //=========================
-    //Toast to show file upload completeted
-    //=========================
+    //======================
+    //return current Picture
+    //======================
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
 
-    const [showUploaded, setShowUploaded] = useState(false);
+    React.useEffect(() => {
+        switch (dest) {
+            case "rppicture":
+                TrendDataService.getRpPicture(refID)
+                    .then(response => {
+                        console.log(response.data)
+                        const picType = response.data[0].data.type;
+                        const b64 = arrayBufferToBase64(response.data[0].data.data);
+                        setImgData(`data:${picType};base64,${b64}`)
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        setImgData(require("../images/img_placeholder.png"))
+                    });
+                break;
+            case "explpicture":
+                TrendDataService.getExplPicture(refID)
+                    .then(response => {
+                        const picType = response.data[0].data.type;
+                        const b64 = arrayBufferToBase64(response.data[0].data.data);
+                        setImgData(`data:${picType};base64,${b64}`)
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        setImgData(require("../images/img_placeholder.png"))
+                    });
+                break;
+            case "trendpicture":
+                TrendDataService.getPicture(trendID)
+                    .then(response => {
+                        const picType = response.data[0].data.type;
+                        const b64 = arrayBufferToBase64(response.data[0].data.data);
+                        setImgData(`data:${picType};base64,${b64}`)
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        setImgData(require("../images/img_placeholder.png"))
+                    });
+                break;
+
+
+        }
+    }, [])
 
 
     return (
-        <div style={{width: '70%', display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
+        <div style={{width: '100%', display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
             <form
                 id="fileUploadForm"
                 action={link}
@@ -157,8 +201,8 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
                         // name={ID}
                         name="file"
                         id="input-files"
-                        className="form-control"
-                        style={{borderRadius: '1.078rem',}}
+                        className="form-control border"
+                        style={{borderRadius: '1.078rem'}}
                         onChange={onChangePicture}
                         placeholder="ddd"
                     />
@@ -171,12 +215,17 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
                 </Modal>
                 <div style={{width: '100%'}}>
                     <img className="rounded" src={imgData}
-                         style={{width: '100%', marginTop: '1rem', marginBottom: '1rem'}}></img>
+                         style={{width: '10rem', marginTop: '1rem', marginBottom: '1rem'}}></img>
                     {/*<span style={{fontStyle: 'italic'}}>To Change Picture Choose File...</span>*/}
                 </div>
                 <span></span>
+                {/*<button type="submit" className="btn btn-primary"*/}
+                {/*        disabled={!submitted}*/}
+                {/*>Upload*/}
+                {/*</button>*/}
+                {/*<br/>*/}
                 <iframe id="iFrameFileUpload" name="file_upload" hidden={true}></iframe>
-                {/*<p>{info}</p>*/}
+                <p>{info}</p>
                 <div style={{
                     display: "flex",
                     justifyContent: "flex-start",
@@ -206,27 +255,18 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
 
                     >Cancel
                     </button>
+                    {/*<button className="btn btn-danger" onClick={deletePicture}*/}
+                    {/*        hidden={!uploaded}*/}
+                    {/*>Delete*/}
+                    {/*</button>*/}
                 </div>
             </form>
-            <Toast onClose={() => setShowUploaded(false)}
-                   show={showUploaded}
-                // delay={1000}
-                // autohide
-                   style={{
-                       marginTop: "2rem",
-                   }}
-            >
-                <Toast.Header>
-                    <strong className="me-auto">File Upload</strong>
-                </Toast.Header>
-                <Toast.Body>Your file was uploaded successfully!</Toast.Body>
-            </Toast>
         </div>
     );
 
 }
 
-export default FileUpload;
+export default FileEdit2;
 
 
 const styles = {

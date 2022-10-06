@@ -3,19 +3,17 @@ import {useNavigate, useParams} from "react-router-dom";
 import Trend_service from "../services/trend_service";
 import LoginError from "../services/LoginError";
 import {Card, Col, Form, InputGroup, Row} from "react-bootstrap";
-import TrendCircle from "../components/TrendCircle";
-import VpaSimpleArc from "../components/SimpleArc/VpaSimpleArc";
+import VPCCircle from "../components/VPCCircle";
 import SeparatingLines from "../components/SeparatingLines";
 import Button from "react-bootstrap/Button";
-import Benchmarking from "../components/Benchmarking";
 import StrategicPositioning from "../components/StrategicPositioning";
 import NavBar2 from "../components/NavBar2";
 import * as PropTypes from "prop-types";
-import {RiEmotionHappyLine} from "react-icons/ri";
-import {RiEmotionUnhappyLine} from "react-icons/ri";
-import {BsListCheck} from "react-icons/bs";
+
 import {PromptContext} from "../components/ContextPromptProvider";
 import {usePrompt} from "../components/Prompt";
+import {AiOutlineArrowRight} from "react-icons/ai";
+import Actions from "../components/Actions";
 
 
 function NewComponent(props) {
@@ -81,11 +79,6 @@ function Vpc(props) {
 
     const promptContext = useContext(PromptContext);
 
-    // useEffect(() => {
-    //     return () => {
-    //         promptContext.setShowExitPrompt(false);
-    //     }
-    // }, [])
 
     useEffect(() => {
         // return () => {
@@ -101,7 +94,7 @@ function Vpc(props) {
 
 
     usePrompt('Are you sure you want to leave? All unsaved changes might be lost.'
-        , (unsavedChangesVPC || unsavedChangesSP));
+        , (unsavedChangesVPC || unsavedChangesSP), promptContext.setShowExitPrompt);
 
 
     const initialVpaElementState = {
@@ -111,6 +104,10 @@ function Vpc(props) {
         xpos: 0,
         ypos: 0,
     };
+
+    //======================
+    //VPC Cards
+    //======================
 
     const [vpaElements, setVpaElements] = useState(null);
     const [currentVpaElement, setCurrentVpaElement] = useState(initialVpaElementState);
@@ -232,7 +229,7 @@ function Vpc(props) {
             "trendID": trendID,
             "content": "",
             "xpos": 10,
-            "ypos": 95,
+            "ypos": 10,
         }));
         console.log("created")
         setUnsavedChangesVPC(true);
@@ -261,11 +258,21 @@ function Vpc(props) {
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <Row style={styles.RowStyle}>
-                    <Col lg={8}>
-                        <Button className="btn btn-primary"
-                                onClick={handleSave}
-                                disabled={!unsavedChangesVPC}
-                        >Save</Button>
+                    <Col xl={1} sm={0}></Col>
+                    <Col xl={6} style={styles.ColStyle}>
+                        <div style={{display: "flex", justifyContent: "flex-start"}}>
+                            <Button className="btn btn-primary"
+                                    onClick={handleSave}
+                                    disabled={!unsavedChangesVPC}
+                                    style={{width: '6.5rem'}}
+                            >Save</Button>
+                            <Button className="btn btn-success"
+                                    onClick={handleCreate}
+                                    style={{marginLeft: '1rem', width: '6.5rem'}}
+                            >
+                                Add Card
+                            </Button>
+                        </div>
                         <div style={{
                             display: "flex",
                             position: "relative",
@@ -296,9 +303,12 @@ function Vpc(props) {
                                 ></div>
 
                                 {vpaElements && vpaElements.map((ve, index) => (
-                                    <NewComponent key={index} onDragStart={(e) => onDragStart(e, ve)}
-                                                  onDragOver={(e) => onCardDragOver(e)} onDrop={(e) => onDropCard(e)}
-                                                  ve={ve} onChange={handleInputChange}
+                                    <NewComponent key={index}
+                                                  onDragStart={(e) => onDragStart(e, ve)}
+                                                  onDragOver={(e) => onCardDragOver(e)}
+                                                  onDrop={(e) => onDropCard(e)}
+                                                  ve={ve}
+                                                  onChange={handleInputChange}
                                                   id={index}
                                                   onClick={(e) => handleDelete(e, ve)}
                                     />
@@ -314,65 +324,51 @@ function Vpc(props) {
                                 aspectRatio: 1,
                                 zIndex: 1,
                             }}>
-                                <TrendCircle radius={radius} color={"#d2d2d5"} position={0}/>
-                                {/*<VpaSimpleArc/>*/}
-                                <div style={{
-                                    position: 'absolute',
-                                    marginBottom: '50%',
-                                    marginRight: '30%'
-                                }}>
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center"
-                                    }}></div>
-                                    <RiEmotionHappyLine size={'7rem'}></RiEmotionHappyLine>
-                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Gains</strong>
-                                    </div>
-                                </div>
-                                <div style={{
-                                    position: 'absolute',
-                                    marginTop: '50%',
-                                    marginRight: '30%'
-                                }}>
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center"
-                                    }}></div>
-                                    <RiEmotionUnhappyLine size={'7rem'}></RiEmotionUnhappyLine>
-                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Pains</strong>
-                                    </div>
-                                </div>
-                                <div style={{
-                                    position: 'absolute',
-                                    marginLeft: '50%'
-                                }}>
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center"
-                                    }}></div>
-                                    <BsListCheck size={'7rem'}></BsListCheck>
-                                    <div style={{display: "flex", justifyContent: "center"}}><strong>Jobs</strong></div>
-                                </div>
+                                <VPCCircle radius={radius} color={"#ffff88"} position={0}/>
                                 <SeparatingLines length={radius / 2} angle={60}/>
                                 <SeparatingLines length={radius / 2} angle={180}/>
                                 <SeparatingLines length={radius / 2} angle={300}/>
                             </div>
                         </div>
-                        <div style={{display: "flex", justifyContent: "flex-start"}}>
-                            <Button className="btn btn-success"
-                                    onClick={handleCreate}
-                            >
-                                Add Card
-                            </Button>
-                        </div>
                     </Col>
-                    <Col>
-                        <Benchmarking/>
+                    <Col lg={1} sm={0}></Col>
+                    <Col lg={3} style={styles.ColStyle}>
+                        {/*<Benchmarking/>*/}
                         <StrategicPositioning unsavedChangesSP={unsavedChangesSP}
                                               setUnsavedChangesSP={setUnsavedChangesSP}/>
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-end",
+                            marginTop: '2rem',
+                        }}>
+                            <h4>Actions</h4>
+                            <button className="btn btn-lg btn-outline-secondary"
+                                    onClick={() => navigate("/trend")}
+                                    style={styles.actionBtn}>
+                                <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
+                                >Trend Radar <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
+                                </div>
+                            </button>
+                            <button className="btn btn-lg btn-outline-secondary"
+                                    onClick={() => navigate(`/RS/${trendID}`)}
+                                    style={styles.actionBtn}>
+                                <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
+                                >Reference System<AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
+                                </div>
+                            </button>
+                            <button className="btn btn-lg btn-outline-secondary"
+                                    onClick={() => navigate(`/RS/${trendID}`)}
+                                    style={styles.actionBtn}>
+                                <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
+                                >Benchmarking <AiOutlineArrowRight size='1.75rem'
+                                                                   style={{
+                                                                       marginLeft: '0.5rem',
+                                                                   }}/>
+                                </div>
+                                <Actions Trend="true" UB="true" SP="true"></Actions>
+                            </button>
+                        </div>
                     </Col>
                 </Row>
             </div>
@@ -396,5 +392,11 @@ const styles = {
     },
     ColStyle: {
         padding: 0
+    },
+    actionBtn: {
+        width: '18rem',
+        display: "flex",
+        justifyContent: "center",
+        marginBottom: '1rem'
     }
 }

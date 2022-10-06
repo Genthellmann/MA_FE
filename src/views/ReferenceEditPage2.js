@@ -2,14 +2,16 @@ import React from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import NavBar2 from "../components/NavBar2";
 import FileUpload from "../components/FileUpload";
+import {useEffect, useState} from "react";
+import TrendDataService from "../services/trend_service";
+import LoginError from "../services/LoginError";
+import http from "../http-common";
 import FileEdit2 from "../components/FileEdit2";
 
-
-function ReferenceEditExpl(props) {
+function ReferenceEditRp(props) {
 
     const navigate = useNavigate();
     const {trendID, refID, dest} = useParams();
-
 
     //Convert to binary data string
     const arrayBufferToBase64 = (buffer) => {
@@ -19,18 +21,29 @@ function ReferenceEditExpl(props) {
         return window.btoa(binary);
     };
 
+    //const [rpPictures, setRpPictures] = useState(null);
+    const [rpImgUrl, setRpImgUrl] = useState(false);
+    const [rpPicType, setRpPicType] = useState(false);
 
     return (
         <div>
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
+                    <div style={{display: "flex", width: '100%', marginBottom: "2rem"}}>
+                        <button className="btn btn-secondary btn-sm"
+                                onClick={() => {
+                                    navigate(`../RS/edit/${trendID}/${refID}`, {replace: true})
+                                }}
+                        >back
+                        </button>
+                    </div>
                     <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <h4>Edit Reference Product Picture</h4>
+                        <h4>Step 2/3 - Reference Product Picture</h4>
                         <div style={{height: '3rem'}}></div>
                         <h6>Choose Reference Product Picture</h6>
-                        <FileEdit2 trendID={trendID} refID={refID} dest="explpicture"></FileEdit2>
-                        {/*<FileUpload trendID={trendID} refID={refID} dest="explpicture"></FileUpload>*/}
+                        <FileEdit2 refID={refID} trendID={trendID} dest="rppicture"></FileEdit2>
+                        {/*<FileUpload trendID={trendID} refID={refID} dest="rppicture"></FileUpload>*/}
                     </div>
                     <div style={{
                         display: 'flex',
@@ -41,8 +54,8 @@ function ReferenceEditExpl(props) {
                         <div style={{height: '3rem'}}></div>
                         <div style={{display: 'flex', width: '50%'}}>
                             <button className="btn btn-primary"
-                                    onClick={() => navigate(`../../RS/${trendID}`)}
-                                    style={{paddingLeft: "1.5rem", paddingRight: "1.5rem", marginRight: "2rem"}}>Done
+                                    onClick={() => navigate(`../RS/edit/page3/${trendID}/${refID}`, {replace: true})}
+                                    style={{paddingLeft: "1.5rem", paddingRight: "1.5rem", marginRight: "2rem"}}>Skip
                             </button>
                         </div>
                     </div>
@@ -52,7 +65,7 @@ function ReferenceEditExpl(props) {
     );
 }
 
-export default ReferenceEditExpl;
+export default ReferenceEditRp;
 
 const styles = {
     mainContainer: {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Container, Modal, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Container, Image, Modal, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {ProjectContext} from "./ProjectContextProvider";
@@ -53,7 +53,10 @@ function NavBar2(props) {
         <>
             <Navbar collapseOnSelect expand="lg" bg="light" sticky="top">
                 <Container style={styles.NavBar}>
-                    <Navbar.Brand href="/trend">trendRadar</Navbar.Brand>
+                    <Navbar.Brand href="/trend" style={{padding: 0}}>
+                        <Image src={require("../images/trendRadarLogo.png")} style={{width: "10rem", padding: 0}}
+                        ></Image>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">

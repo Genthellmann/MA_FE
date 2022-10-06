@@ -4,19 +4,31 @@ import LoginError from "../services/LoginError";
 import {useNavigate} from "react-router-dom";
 import {ProjectContext} from "../components/ProjectContextProvider";
 import AuthService from "../services/auth.service";
-import Account from "./Account";
 import Button from "react-bootstrap/Button";
 import NavBarWelcome from "../components/NavBarWelcome";
 import {Col, Row} from "react-bootstrap";
+import {PromptContext} from "../components/ContextPromptProvider";
 
 
 function Welcome(props) {
     const navigate = useNavigate();
     const currentProject = useContext(ProjectContext);
+
+    //======================
+    //reload prompt disable from previous state
+    //======================
+
+    const promptContext = useContext(PromptContext);
+    // React.useEffect(() => {
+    //     promptContext.setShowExitPrompt(false);
+    // }, [])
+
+    //======================
+    //retrieve Projects
+    //======================
+
     const currentUserId = AuthService.getCurrentUser().id;
-
     const [projects, setProjects] = useState([])
-
     const [projectSelected, setProjectSelected] = useState(false);
 
     //method to return all projects of user
@@ -34,9 +46,6 @@ function Welcome(props) {
     React.useEffect(() => {
         retrieveProjects(currentUserId);
     }, [currentUserId]);
-
-    React.useEffect(() => {
-    }, [projects])
 
 
     const handleAddNew = () => {
@@ -72,42 +81,6 @@ function Welcome(props) {
         <div>
             <NavBarWelcome/>
             <div style={styles.backgroundContainer}>
-                {/*{projects.length > 0 ? (*/}
-                {/*    <div>*/}
-                {/*        <h2>Welcome!</h2>*/}
-                {/*        <br/>*/}
-                {/*        {(currentProject.project != null) ? (*/}
-                {/*            <h2>{`Project ID: ${currentProject?.project}`}</h2>*/}
-                {/*        ) : ("Select or Create Project to Continue"*/}
-                {/*        )}*/}
-                {/*        <br/>*/}
-                {/*        <Button onClick={() => navigate("/trend")}*/}
-                {/*                disabled={currentProject.project == null}>Continue</Button>*/}
-                {/*        <Button variant="success" onClick={handleAddNew}>Add new</Button>*/}
-                {/*        <div>*/}
-                {/*            {projects.map((project, index) => (*/}
-                {/*                <ul key={index} className="list-group">*/}
-                {/*                    <li key={index} className="list-group-item">*/}
-                {/*                        <h3>{project.title}</h3>*/}
-                {/*                        <span>Project ID: {project.id}</span>*/}
-                {/*                        <Button variant='primary'*/}
-                {/*                                onClick={() => handleClick(project)}>select</Button>*/}
-                {/*                        <Button variant='danger'*/}
-                {/*                                onClick={() => handleDelete(project.id)}>delete*/}
-                {/*                        </Button>*/}
-                {/*                    </li>*/}
-                {/*                </ul>*/}
-                {/*            ))}*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*) : (*/}
-                {/*    <div>*/}
-                {/*        <span> Welcome! Create a new Project</span>*/}
-                {/*        <br/>*/}
-                {/*        <Button variant="success" onClick={handleAddNew}>Add new</Button>*/}
-                {/*    </div>*/}
-                {/*)*/}
-                {/*}*/}
                 <Row style={{display: "flex", justifyContent: "center"}}>
                     <Col lg={8}>
                         <div style={{display: "flex", justifyContent: "flex-start", width: '100%'}}>

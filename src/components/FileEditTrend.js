@@ -7,6 +7,14 @@ import {useState} from 'react'
 import {useParams} from "react-router-dom";
 import FileReturn from "./FileReturn";
 
+//===========================
+//Change this when host switches
+//===========================
+
+const link = "http://localhost:3001/"
+
+// const link = "https://ux-trendradar.de"
+
 function FileEditTrend({ID, show, setShow, isValid, setIsValid}) {
     const [edit, setEdit] = useState(false);
     const {id} = useParams();
@@ -57,7 +65,7 @@ function FileEditTrend({ID, show, setShow, isValid, setIsValid}) {
         <div>
             {edit ? (
                 <div>
-                    <FileUp link={`http://localhost:3001/web/upload?trendID=${id}`}
+                    <FileUp link={link + `web/upload?trendID=${id}`}
                             submitted={true} isValid={isValid} setIsValid={setIsValid} show={show}
                             setShow={setShow}></FileUp>
                     {/*<Button onClick={() => setEdit(false)}>Cancel</Button>*/}

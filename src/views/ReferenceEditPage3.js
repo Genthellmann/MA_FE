@@ -5,7 +5,7 @@ import FileUpload from "../components/FileUpload";
 import FileEdit2 from "../components/FileEdit2";
 
 
-function ReferenceEditExpl(props) {
+function ReferenceEditPage3(props) {
 
     const navigate = useNavigate();
     const {trendID, refID, dest} = useParams();
@@ -25,8 +25,16 @@ function ReferenceEditExpl(props) {
             <NavBar2/>
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
+                    <div style={{display: "flex", width: '100%', marginBottom: "2rem"}}>
+                        <button className="btn btn-secondary btn-sm"
+                                onClick={() => {
+                                    navigate(`../RS/edit/page2/${trendID}/${refID}`, {replace: true})
+                                }}
+                        >back
+                        </button>
+                    </div>
                     <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <h4>Edit Reference Product Picture</h4>
+                        <h4>Step 3/3 - Explanatory Picture</h4>
                         <div style={{height: '3rem'}}></div>
                         <h6>Choose Reference Product Picture</h6>
                         <FileEdit2 trendID={trendID} refID={refID} dest="explpicture"></FileEdit2>
@@ -41,8 +49,8 @@ function ReferenceEditExpl(props) {
                         <div style={{height: '3rem'}}></div>
                         <div style={{display: 'flex', width: '50%'}}>
                             <button className="btn btn-primary"
-                                    onClick={() => navigate(`../../RS/${trendID}`)}
-                                    style={{paddingLeft: "1.5rem", paddingRight: "1.5rem", marginRight: "2rem"}}>Done
+                                    onClick={() => navigate(`../../RS/${trendID}`, {replace: true})}
+                                    style={{paddingLeft: "1.5rem", paddingRight: "1.5rem", marginRight: "2rem"}}>Skip
                             </button>
                         </div>
                     </div>
@@ -52,7 +60,7 @@ function ReferenceEditExpl(props) {
     );
 }
 
-export default ReferenceEditExpl;
+export default ReferenceEditPage3;
 
 const styles = {
     mainContainer: {

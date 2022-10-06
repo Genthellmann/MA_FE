@@ -103,7 +103,6 @@ const createReference = data => {
 }
 
 const updateReference = data => {
-    console.log(data.id)
     return http.put(`/reference/${data.id}`, data);
 }
 
@@ -119,12 +118,20 @@ const deleteRpPicture = id => {
     return http.delete(`/rppicture/${id}`);
 }
 
+const getRpPicture = id => {
+    return http.get(`/rppicture?trendID=${id}`)
+}
+
 //============================
 //Explpictures
 //============================
 
 const deleteExplPicture = id => {
     return http.delete(`/explpicture/${id}`);
+}
+
+const getExplPicture = id => {
+    return http.get(`/explpicture?trendID=${id}`)
 }
 
 //============================
@@ -217,7 +224,9 @@ const TrendService = {
     updateReference,
     deleteReference,
     deleteRpPicture,
+    getRpPicture,
     deleteExplPicture,
+    getExplPicture,
     getVpaElements,
     createVpaElement,
     updateVpaElement,

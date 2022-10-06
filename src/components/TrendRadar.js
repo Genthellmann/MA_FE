@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import TrendCircle from "./TrendCircle";
+import VPCCircle from "./VPCCircle";
 import SimpleArc from "./SimpleArc/SimpleArc";
 import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
@@ -11,6 +11,7 @@ import LoginError from "../services/LoginError";
 import * as PropTypes from "prop-types";
 
 import Tooltip from '@mui/material/Tooltip';
+import TrendCircle from "./TrendCircle";
 
 function TrendCircleOverlay({
                                 trend, onClick,
@@ -153,51 +154,50 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
     const target = useRef(null);
 
     return (
-        <div>
-            <div
-                style={{
-                    display: 'flex',
-                    maxWidth: '90vh',
-                    maxHeight: '90vw',
-                    position: 'relative',
-                    justifyContent: 'center',
-                    alignItems: "center",
-                    aspectRatio: 1
-                }}
-            >
-                <TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>
-                <TrendCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>
-                <TrendCircle radius={radius.radius3} color={"#999797"} position={2}/>
-                <SimpleArc/>
-                <SeparatingLines length={radius.radius1 / 2} angle={90}/>
-                <SeparatingLines length={radius.radius1 / 2} angle={210}/>
-                <SeparatingLines length={radius.radius1 / 2} angle={330}/>
+        <div
+            style={{
+                display: 'flex',
+                // maxWidth: '80vh',
+                // maxHeight: '80vw',
+                // position: 'relative',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: "center",
+                aspectRatio: 1
+            }}
+        >
+            <TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>
+            <TrendCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>
+            <TrendCircle radius={radius.radius3} color={"#999797"} position={2}/>
+            <SimpleArc/>
+            <SeparatingLines length={radius.radius1 / 2} angle={90}/>
+            <SeparatingLines length={radius.radius1 / 2} angle={210}/>
+            <SeparatingLines length={radius.radius1 / 2} angle={330}/>
 
-                {/*<div id={'targetDiv'}*/}
-                {/*     onDragOver={(e) => onDragOver(e)}*/}
-                {/*     onDrop={(e) => onDrop(e)}*/}
-                {/*     style={{'width': '100%', 'position': 'absolute', "aspectRatio": 1, 'zIndex': '100'}}>*/}
-                {/*</div>*/}
+            {/*<div id={'targetDiv'}*/}
+            {/*     onDragOver={(e) => onDragOver(e)}*/}
+            {/*     onDrop={(e) => onDrop(e)}*/}
+            {/*     style={{'width': '100%', 'position': 'absolute', "aspectRatio": 1, 'zIndex': '100'}}>*/}
+            {/*</div>*/}
 
-                {filteredTrends &&
-                    filteredTrends.map((trend, index) => {
+            {filteredTrends &&
+                filteredTrends.map((trend, index) => {
 
-                        return (
-                            // <OverlayTrigger
-                            //     key='top'
-                            //     placement='top'
-                            //     overlay={
-                            //         <Tooltip id={`${trend.id}-top`}>
-                            //             {trend.title}
-                            //         </Tooltip>
-                            //     }
-                            // >
-                            <TrendCircleOverlay key={trend.id} trend={trend} onClick={() => setActiveTrend(trend)}
-                                                id={currentTrend.id} radiusTrend={radius_trend}
-                                                colorImpact={color_impact}/>
-                        );
-                    })}
-            </div>
+                    return (
+                        // <OverlayTrigger
+                        //     key='top'
+                        //     placement='top'
+                        //     overlay={
+                        //         <Tooltip id={`${trend.id}-top`}>
+                        //             {trend.title}
+                        //         </Tooltip>
+                        //     }
+                        // >
+                        <TrendCircleOverlay key={trend.id} trend={trend} onClick={() => setActiveTrend(trend)}
+                                            id={currentTrend.id} radiusTrend={radius_trend}
+                                            colorImpact={color_impact}/>
+                    );
+                })}
         </div>
     )
 }

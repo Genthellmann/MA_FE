@@ -14,6 +14,9 @@ import {Button as BootstrapButton} from "react-bootstrap/Button";
 import NavBar from "../unused/NavBar";
 import Button from '@mui/material/Button';
 import NavBar2 from "../components/NavBar2";
+import {AiOutlineArrowRight} from "react-icons/ai";
+import CStyles from "../components/customTheme/ComponentStyles";
+import Actions from "../components/Actions";
 
 
 export default function TrendsView() {
@@ -56,10 +59,10 @@ export default function TrendsView() {
         // setCurrentIndex(-1);
     };
 
-    //refresh List after Delete
-    const refreshList = () => {
-        retrieveTrends(currentProject.project);
-    };
+    // //refresh List after Delete
+    // const refreshList = () => {
+    //     retrieveTrends(currentProject.project);
+    // };
 
     // const setActiveTrend = (trend, index) => {
     //     setCurrentTrend(trend);
@@ -93,6 +96,9 @@ export default function TrendsView() {
         TrendDataService.remove(currentTrend.id)
             .then(response => {
                 refreshListad();
+                sessionStorage.clear();
+                setCurrentTrend(initStoredTrend)
+                // setCurrentTrend(false);
             })
             .catch(e => {
                 console.log(e);
@@ -126,18 +132,26 @@ export default function TrendsView() {
     return (
         <div>
             <NavBar2/>
-            <div style={styles.backgroundContainer}>
+            <div style={CStyles.backgroundContainer}>
                 <Row style={styles.RowStyle}>
-                    <Col xxl={1} sm={0}></Col>
-                    <Col xxl={8} style={styles.ColStyle}>
-                        <div>
+                    <Col xl={1} sm={0}></Col>
+                    <Col xl={6} style={styles.ColStyle}>
+                        <div style={{
+                            display: 'flex',
+                            position: 'relative',
+                            justifyContent: 'center',
+                            alignItems: "center",
+                            flexDirection: "column",
+                            aspectRatio: 1
+                        }}>
                             <TrendRadar trends={trends} setTrends={setTrends} currentTrend={currentTrend}
                                         filteredTrends={filteredTrends}
                                         setActiveTrend={setActiveTrend} currentIndex={currentIndex}/>
                         </div>
+                        <TrendDetails currentTrend={currentTrend}/>
                     </Col>
-                    <Col xxl={1} sm={0}></Col>
-                    <Col xxl={2} style={styles.ColStyle}>
+                    <Col xl={1} sm={0}></Col>
+                    <Col xl={3} style={styles.ColStyle}>
                         <div>
                             <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
                             <TrendList trends={trends} setActiveTrend={setActiveTrend}
@@ -147,15 +161,49 @@ export default function TrendsView() {
                                        setFilterMask={setFilterMask} deleteTrend={deleteTrend}
                                        style={{width: '45%'}}/>
                         </div>
+                        <Actions RS="true" BM="true" UB="true" SP="true"></Actions>
+                        {/*<div style={{*/}
+                        {/*    display: "flex",*/}
+                        {/*    flexDirection: "column",*/}
+                        {/*    justifyContent: "flex-end",*/}
+                        {/*    marginTop: '2rem',*/}
+                        {/*}}>*/}
+                        {/*    <h4>Actions</h4>*/}
+                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
+                        {/*            onClick={() => navigate(`/RS/${currentTrend.id}`)}*/}
+                        {/*            style={styles.actionBtn}>*/}
+                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
+                        {/*        >Reference System <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>*/}
+                        {/*        </div>*/}
+                        {/*    </button>*/}
+                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
+                        {/*            onClick={() => navigate(`/RS/${currentTrend.id}`)}*/}
+                        {/*            style={styles.actionBtn}>*/}
+                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
+                        {/*        >Benchmarking <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>*/}
+                        {/*        </div>*/}
+                        {/*    </button>*/}
+                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
+                        {/*            onClick={() => navigate(`/vpc/${currentTrend.id}`)}*/}
+                        {/*            style={styles.actionBtn}>*/}
+                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
+                        {/*        >Strategic Positioning <AiOutlineArrowRight size='1.75rem'*/}
+                        {/*                                                    style={{*/}
+                        {/*                                                        marginLeft: '0.5rem',*/}
+                        {/*                                                    }}/>*/}
+                        {/*        </div>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </Col>
+                    <Col xl={1} sm={0}></Col>
                 </Row>
-                <Row style={styles.RowStyle}>
-                    <Col style={styles.ColStyle}>
-                        <div>
-                            <TrendDetails currentTrend={currentTrend}/>
-                        </div>
-                    </Col>
-                </Row>
+                {/*<Row style={styles.RowStyle}>*/}
+                {/*    <Col style={styles.ColStyle}>*/}
+                {/*        <div>*/}
+                {/*            <TrendDetails currentTrend={currentTrend}/>*/}
+                {/*        </div>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </div>
         </div>
     )
@@ -174,6 +222,16 @@ const styles = {
         margin: 0
     },
     ColStyle: {
-        padding: 0
+        padding: 0,
+        // display: "flex",
+        // justifyContent: "center",
+        // flexDirection: "column",
+        // alignItems: "center"
+    },
+    actionBtn: {
+        width: '18rem',
+        display: "flex",
+        justifyContent: "center",
+        marginBottom: '1rem'
     }
 }
