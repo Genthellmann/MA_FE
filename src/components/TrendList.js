@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import TrendDataService from "../services/trend_service";
 import Button from "react-bootstrap/Button";
-import {Container, DropdownButton, Form} from "react-bootstrap";
+import {Container, DropdownButton, Form, Modal} from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Filter from "./Filter";
 import {ProjectContext} from "./ProjectContextProvider";
@@ -18,6 +18,7 @@ export default function TrendList({
                                       filterMask,
                                       setFilterMask,
                                       deleteTrend,
+                                      handleShow, handleClose
                                   }) {
     let navigate = useNavigate();
     const currentProject = React.useContext(ProjectContext);
@@ -135,8 +136,8 @@ export default function TrendList({
                     Delete
                 </button>
                 <button class="btn btn-outline-danger"
-                        onClick={() => removeAllTrends()}
-                        disabled={true}
+                        onClick={handleShow}
+                    // disabled={!currentTrend.id}
                         style={{
                             paddingLeft: 0,
                             paddingRight: 0,
@@ -171,7 +172,7 @@ const styles = {
         marginBottom: '2rem',
         display: "flex",
         justifyContent: "center",
-        maxHeight: '42vh',
+        maxHeight: '20rem',
         borderRadius: '1.078rem',
         padding: 0,
 

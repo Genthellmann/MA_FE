@@ -10,9 +10,9 @@ import NavBar2 from "./NavBar2";
 //change when switching host
 //=========================
 
-const host = "http://localhost:3001"
+// const host = "http://localhost:3001"
 
-// const host = "https://api.ux-trendradar.de"
+const host = "https://api.ux-trendradar.de"
 
 
 function FileUpload({dest, trendID, refID, navigateTo}) {
@@ -96,7 +96,7 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
         setIsValid(false)
         setTimeout(() => {
             navigate(navigateTo)
-        }, "1750")
+        }, "1500")
     }
 
     const handleCancel = () => {
@@ -171,7 +171,7 @@ function FileUpload({dest, trendID, refID, navigateTo}) {
                 </Modal>
                 <div style={{width: '100%'}}>
                     <img className="rounded" src={imgData}
-                         style={{width: '100%', marginTop: '1rem', marginBottom: '1rem'}}></img>
+                         style={{width: '20rem', marginTop: '1rem', marginBottom: '1rem',}}></img>
                     {/*<span style={{fontStyle: 'italic'}}>To Change Picture Choose File...</span>*/}
                 </div>
                 <span></span>

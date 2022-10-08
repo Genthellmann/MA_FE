@@ -15,7 +15,7 @@ export default function TrendDetails({currentTrend}) {
 
 
     return (
-        <div>
+        <div style={{marginTop: "2rem"}}>
             {currentTrend.id ? (
                 <Row style={styles.RowStyles}>
                     <h4>{currentTrend.title}</h4>

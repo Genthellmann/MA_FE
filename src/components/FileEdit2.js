@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import LoginError from "../services/LoginError";
 import {useNavigate, useParams} from "react-router-dom";
-import {Alert, Modal} from "react-bootstrap";
+import {Alert, Image, Modal, Toast} from "react-bootstrap";
 import TrendDataService from "../services/trend_service";
 import NavBar2 from "./NavBar2";
 
@@ -10,12 +10,14 @@ import NavBar2 from "./NavBar2";
 //change when switching host
 //=========================
 
-const host = "http://localhost:3001"
+// const host = "http://localhost:3001"
 
-// const host = "https://api.ux-trendradar.de"
+const host = "https://api.ux-trendradar.de"
 
 
-function FileEdit2({dest, trendID, refID}) {
+function FileEdit2({dest, trendID, refID, navigateTo}) {
+
+
     const navigate = useNavigate();
 
 
@@ -91,8 +93,12 @@ function FileEdit2({dest, trendID, refID}) {
 
     const handleSubmit = e => {
         setUploaded(true)
-        setInfo("File Uploaded successfully!")
+        // setInfo("File Uploaded successfully!")
+        setShowUploaded(true)
         setIsValid(false)
+        setTimeout(() => {
+            navigate(navigateTo)
+        }, "1750")
     }
 
     const handleCancel = () => {
@@ -140,11 +146,11 @@ function FileEdit2({dest, trendID, refID}) {
     React.useEffect(() => {
         switch (dest) {
             case "rppicture":
-                TrendDataService.getRpPicture(refID)
+                TrendDataService.getOneRpPicture(refID)
                     .then(response => {
                         console.log(response.data)
-                        const picType = response.data[0].data.type;
-                        const b64 = arrayBufferToBase64(response.data[0].data.data);
+                        const picType = response.data.data.type;
+                        const b64 = arrayBufferToBase64(response.data.data.data);
                         setImgData(`data:${picType};base64,${b64}`)
                     })
                     .catch(e => {
@@ -153,10 +159,10 @@ function FileEdit2({dest, trendID, refID}) {
                     });
                 break;
             case "explpicture":
-                TrendDataService.getExplPicture(refID)
+                TrendDataService.getOneExplPicture(refID)
                     .then(response => {
-                        const picType = response.data[0].data.type;
-                        const b64 = arrayBufferToBase64(response.data[0].data.data);
+                        const picType = response.data.data.type;
+                        const b64 = arrayBufferToBase64(response.data.data.data);
                         setImgData(`data:${picType};base64,${b64}`)
                     })
                     .catch(e => {
@@ -180,6 +186,12 @@ function FileEdit2({dest, trendID, refID}) {
 
         }
     }, [])
+
+    //=========================
+    //Toast to show file upload completeted
+    //=========================
+
+    const [showUploaded, setShowUploaded] = useState(false);
 
 
     return (
@@ -214,9 +226,10 @@ function FileEdit2({dest, trendID, refID}) {
                     <Modal.Body>Please select .jpg, .jpeg or .png</Modal.Body>
                 </Modal>
                 <div style={{width: '100%'}}>
-                    <img className="rounded" src={imgData}
-                         style={{width: '10rem', marginTop: '1rem', marginBottom: '1rem'}}></img>
-                    {/*<span style={{fontStyle: 'italic'}}>To Change Picture Choose File...</span>*/}
+                    <Image src={imgData}
+                           style={{width: '20rem', marginTop: '1rem', marginBottom: '1rem', borderRadius: "1.078rem"}}>
+
+                    </Image>
                 </div>
                 <span></span>
                 {/*<button type="submit" className="btn btn-primary"*/}
@@ -225,7 +238,7 @@ function FileEdit2({dest, trendID, refID}) {
                 {/*</button>*/}
                 {/*<br/>*/}
                 <iframe id="iFrameFileUpload" name="file_upload" hidden={true}></iframe>
-                <p>{info}</p>
+                {/*<p>{info}</p>*/}
                 <div style={{
                     display: "flex",
                     justifyContent: "flex-start",
@@ -260,7 +273,21 @@ function FileEdit2({dest, trendID, refID}) {
                     {/*>Delete*/}
                     {/*</button>*/}
                 </div>
+
             </form>
+            <Toast onClose={() => setShowUploaded(false)}
+                   show={showUploaded}
+                // delay={1000}
+                // autohide
+                   style={{
+                       marginTop: "2rem",
+                   }}
+            >
+                <Toast.Header>
+                    <strong className="me-auto">File Upload</strong>
+                </Toast.Header>
+                <Toast.Body>Your file was uploaded successfully!</Toast.Body>
+            </Toast>
         </div>
     );
 

@@ -449,7 +449,7 @@ function ReferenceSystem() {
                     <Col xl={9} sm={0}></Col>
                     <Col xl={3}>
 
-                        <Actions Trend="true" UB="true" SP="true"></Actions>
+                        <Actions Trend="true" BS="true"></Actions>
                     </Col>
                 </Row>
             </div>

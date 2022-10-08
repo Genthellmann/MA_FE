@@ -32,7 +32,7 @@ const ReferenceAdd = () => {
         trendID: trendID,
         rproduct: "",
         rsystemelements: "",
-        usabilityattributes: [{feature: "", expression: ""}, {feature: "", expression: ""}],
+        usabilityattributes: [{feature: "", expression: ""}],
         prior: 1000,
     }
 
@@ -135,8 +135,6 @@ const ReferenceAdd = () => {
     const [selected, setSelected] = useState([]);
 
     const handleAttrChangewithAC = (text, event, index) => {
-        console.log(index)
-        console.log(text)
 
         setReference({
             ...reference, ["usabilityattributes"]: reference.usabilityattributes.map((el, elindex) => {
@@ -180,11 +178,11 @@ const ReferenceAdd = () => {
     const saveReference = () => {
         // const referenceToSave = reference;
         // referenceToSave.usabilityattributes = JSON.stringify(referenceToSave.usabilityattributes)
+        promptContext.setShowExitPrompt(false)
         TrendDataService.createReference(reference)
             .then(response => {
                     setReference(response.data)
                     setSubmitted(true);
-                    navigate(`../../RS/edit/page2/${reference.trendID}/${response.data.id}`, {replace: true})
                 }
             )
             .catch(e => {
@@ -193,15 +191,19 @@ const ReferenceAdd = () => {
             });
     };
 
+    useEffect(() => {
+        if (submitted || reference.id != null) {
+            navigate(`../../RS/edit/page2/${reference.trendID}/${reference.id}`, {replace: true})
+        }
+    }, [submitted, reference])
+
     //======================
     //prompt page reload
     //======================
     const promptContext = useContext(PromptContext);
 
     useEffect(() => {
-        return () => {
-            promptContext.setShowExitPrompt(true);
-        }
+        promptContext.setShowExitPrompt(true);
     }, [])
 
     //======================
@@ -244,9 +246,8 @@ const ReferenceAdd = () => {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
-                                <Form.Label><strong>Reference System Elements</strong></Form.Label>
+                                <Form.Label><strong>Reference System Element</strong></Form.Label>
                                 <Form.Control
-                                    as="textarea"
                                     type="text"
                                     className="form-control"
                                     id="rsystemelements"
@@ -254,7 +255,7 @@ const ReferenceAdd = () => {
                                     value={reference.rsystemelements}
                                     onChange={handleInputChange}
                                     name="rsystemelements"
-                                    style={{borderRadius: '1.078rem', minHeight: '5rem'}}
+                                    style={{borderRadius: '1.078rem'}}
                                     // disabled={!submitted}
                                 />
                             </Form.Group>

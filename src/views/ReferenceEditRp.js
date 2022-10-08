@@ -90,24 +90,20 @@ function ReferenceEditRp(props) {
                         <h4>Edit Reference Product Picture</h4>
                         <div style={{height: '3rem'}}></div>
                         <h6>Choose Reference Product Picture</h6>
-                        <FileEdit2 refID={refID} trendID={trendID} dest="rppicture"></FileEdit2>
-                        {/*<FileUpload trendID={trendID} refID={refID} dest="rppicture"></FileUpload>*/}
                     </div>
-                    <div style={{
-                        display: 'flex',
-                        width: '100%',
-                        flexDirection: "column",
-                        justifyContent: "center"
-                    }}>
-                        <div style={{height: '3rem'}}></div>
-                        <div style={{display: 'flex', width: '50%'}}>
-                            <button className="btn btn-primary"
-                                    onClick={() => navigate(`../../RS/${trendID}`)}
-                                    style={{paddingLeft: "1.5rem", paddingRight: "1.5rem", marginRight: "2rem"}}>Done
+                    <div style={{width: '100%', display: "flex"}}>
+                        <FileEdit2 trendID={trendID} refID={refID} dest="explpicture"
+                                   navigateTo={`../RS/${trendID}`}
+                        ></FileEdit2>
+                        <div style={{marginLeft: "2rem"}}>
+                            <button className="btn btn-secondary"
+                                    onClick={() => navigate(`../RS/${trendID}`, {replace: true})}
+                                    style={{
+                                        paddingLeft: "1.5rem",
+                                        paddingRight: "1.5rem",
+                                        marginRight: "2rem"
+                                    }}>Done
                             </button>
-                            {/*<button className="btn btn-danger"*/}
-                            {/*        onClick={() => navigate(`../../RS/${currentReference.trendID}`)}>Cancel*/}
-                            {/*</button>*/}
                         </div>
                     </div>
                 </div>

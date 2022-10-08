@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {Col, Container, Row} from "react-bootstrap";
+import React, {useState, useEffect, useContext} from "react";
+import {Col, Container, Modal, Row} from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import TrendDataService from "../services/trend_service";
 import TrendRadar from "../components/TrendRadar";
@@ -10,13 +10,14 @@ import LoginError from "../services/LoginError";
 import Account from "./Account";
 import Sidebar from "../components/Sidebar";
 import {ProjectContext} from "../components/ProjectContextProvider";
-import {Button as BootstrapButton} from "react-bootstrap/Button";
 import NavBar from "../unused/NavBar";
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import NavBar2 from "../components/NavBar2";
 import {AiOutlineArrowRight} from "react-icons/ai";
 import CStyles from "../components/customTheme/ComponentStyles";
 import Actions from "../components/Actions";
+import Button from "react-bootstrap/Button";
+import {PromptContext} from "../components/ContextPromptProvider";
 
 
 export default function TrendsView() {
@@ -27,6 +28,16 @@ export default function TrendsView() {
     var stored_trend = sessionStorage.getItem("trend");
 
     var stored_index = sessionStorage.getItem("index");
+
+    //======================
+    //prompt page reload
+    //======================
+    const promptContext = useContext(PromptContext);
+    useEffect(() => {
+        return () => {
+            promptContext.setShowExitPrompt(false);
+        }
+    }, [])
 
     const initStoredTrend = {
         id: null
@@ -85,6 +96,7 @@ export default function TrendsView() {
         TrendDataService.removeAll(currentProject.project)
             .then(response => {
                 refreshListad();
+                setShow(false);
             })
             .catch(e => {
                 console.log(e);
@@ -129,6 +141,14 @@ export default function TrendsView() {
     }, [filterMask, trends, searchTitle]);
 
 
+    //=================
+    //Modal Delete All
+    //================
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
     return (
         <div>
             <NavBar2/>
@@ -152,50 +172,36 @@ export default function TrendsView() {
                     </Col>
                     <Col xl={1} sm={0}></Col>
                     <Col xl={3} style={styles.ColStyle}>
-                        <div>
+                        <div style={{marginBottom: "5rem"}}>
                             <SearchBar searchTitle={searchTitle} setSearchTitle={setSearchTitle}/>
                             <TrendList trends={trends} setActiveTrend={setActiveTrend}
                                        currentIndex={currentIndex} currentTrend={currentTrend}
                                        filteredTrends={filteredTrends} setFilteredTrends={setFilteredTrends}
                                        removeAllTrends={removeAllTrends} filterMask={filterMask}
                                        setFilterMask={setFilterMask} deleteTrend={deleteTrend}
+                                       handleClose={handleClose} handleShow={handleShow}
                                        style={{width: '45%'}}/>
                         </div>
-                        <Actions RS="true" BM="true" UB="true" SP="true"></Actions>
-                        {/*<div style={{*/}
-                        {/*    display: "flex",*/}
-                        {/*    flexDirection: "column",*/}
-                        {/*    justifyContent: "flex-end",*/}
-                        {/*    marginTop: '2rem',*/}
-                        {/*}}>*/}
-                        {/*    <h4>Actions</h4>*/}
-                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
-                        {/*            onClick={() => navigate(`/RS/${currentTrend.id}`)}*/}
-                        {/*            style={styles.actionBtn}>*/}
-                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
-                        {/*        >Reference System <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>*/}
-                        {/*        </div>*/}
-                        {/*    </button>*/}
-                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
-                        {/*            onClick={() => navigate(`/RS/${currentTrend.id}`)}*/}
-                        {/*            style={styles.actionBtn}>*/}
-                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
-                        {/*        >Benchmarking <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>*/}
-                        {/*        </div>*/}
-                        {/*    </button>*/}
-                        {/*    <button className="btn btn-lg btn-outline-secondary"*/}
-                        {/*            onClick={() => navigate(`/vpc/${currentTrend.id}`)}*/}
-                        {/*            style={styles.actionBtn}>*/}
-                        {/*        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}*/}
-                        {/*        >Strategic Positioning <AiOutlineArrowRight size='1.75rem'*/}
-                        {/*                                                    style={{*/}
-                        {/*                                                        marginLeft: '0.5rem',*/}
-                        {/*                                                    }}/>*/}
-                        {/*        </div>*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
+                        <Actions RB="true" BS="true"></Actions>
                     </Col>
                     <Col xl={1} sm={0}></Col>
+                    <div>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Warning</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Are you sure you want to delete all trends? This step can not be
+                                undone.</Modal.Body>
+                            <Modal.Footer>
+                                <Button className="btn btn-secondary" onClick={handleClose}>
+                                    Cancel
+                                </Button>
+                                <Button className="btn btn-danger" onClick={() => removeAllTrends()}>
+                                    Delete All
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
                 </Row>
                 {/*<Row style={styles.RowStyle}>*/}
                 {/*    <Col style={styles.ColStyle}>*/}

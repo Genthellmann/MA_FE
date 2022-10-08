@@ -19,8 +19,10 @@ function TrendEditPage2(props) {
             <div style={styles.backgroundContainer}>
                 <div style={styles.FormContainer}>
                     <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <h5 style={{width: '100%'}}>Trend created successfully!</h5>
-                        <div style={{width: '50%', marginTop: '2rem'}}>
+                        <h3 style={{width: '100%', marginTop: "2rem"}}>Trend Edit - Step 2/2</h3>
+
+                        <h5 style={{width: '100%', marginTop: "2rem"}}>Edit Trend Picture</h5>
+                        <div style={{width: '70%'}}>
                             <FileEdit2 trendID={currentTrend.id} refID={""} dest={"trendpicture"}></FileEdit2>
                             {/*<FileUpload trendID={currentTrend.id} refID={""} dest={"trendpicture"}></FileUpload>*/}
                         </div>

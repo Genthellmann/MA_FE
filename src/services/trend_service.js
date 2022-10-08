@@ -122,6 +122,10 @@ const getRpPicture = id => {
     return http.get(`/rppicture?trendID=${id}`)
 }
 
+const getOneRpPicture = id => {
+    return http.get(`/rppicture/${id}`)
+}
+
 //============================
 //Explpictures
 //============================
@@ -132,6 +136,10 @@ const deleteExplPicture = id => {
 
 const getExplPicture = id => {
     return http.get(`/explpicture?trendID=${id}`)
+}
+
+const getOneExplPicture = id => {
+    return http.get(`/explpicture/${id}`)
 }
 
 //============================
@@ -214,28 +222,38 @@ const TrendService = {
     deletePicture,
     deleteAllPictures,
     getAllCond,
+
     createProject,
     getAllProjects,
     updateProject,
     deleteProject,
+
     getReference,
     getOneReference,
     createReference,
     updateReference,
     deleteReference,
+
     deleteRpPicture,
     getRpPicture,
+    getOneRpPicture,
+
     deleteExplPicture,
     getExplPicture,
+    getOneExplPicture,
+
     getVpaElements,
     createVpaElement,
     updateVpaElement,
+
     bulkUpdate,
     multipleDelete,
+
     getBenchmarks,
     createBenchmark,
     updateBenchmark,
     deleteBenchmark,
+
     getStratPos,
     updateStratPos,
     deleteStratPos

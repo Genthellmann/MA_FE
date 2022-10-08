@@ -273,40 +273,20 @@ function Vpc(props) {
 
     const handleCreate = () => {
         setLoading(true);
-        Trend_service.bulkUpdate(vpaElements.concat({
+
+
+        setVpaElements(vpaElements => vpaElements.concat({
             "trendID": trendID,
             "content": "",
             "xpos": 10,
             "ypos": 10,
-        }))
-            .then(response => {
-                getVPAElements()
-            })
-            .then(setLoading(false))
-            .catch(e => {
-                console.log(e)
-                LoginError(navigate, e)
-            })
-        const dataIdsToDelete = {
-            'ids': idsToDelete
-        }
-        Trend_service.multipleDelete(dataIdsToDelete)
-            .then(response => {
-            })
-            .catch(e => {
-                console.log(e)
-                LoginError(navigate, e)
-            })
-        setUnsavedChangesVPC(false);
-
-        // setVpaElements(vpaElements => vpaElements.concat({
-        //     "trendID": trendID,
-        //     "content": "",
-        //     "xpos": 10,
-        //     "ypos": 10,
-        // }));
+        }));
         console.log("created")
     }
+
+    React.useEffect(() => {
+        getVPAElements()
+    }, [vpaElements.length])
 
 
     // //=================
@@ -413,7 +393,7 @@ function Vpc(props) {
                         {/*<Benchmarking/>*/}
                         <StrategicPositioning unsavedChangesSP={unsavedChangesSP}
                                               setUnsavedChangesSP={setUnsavedChangesSP}/>
-                        <Actions Trend="true" RB="true"></Actions>
+                        <Actions Trend="true" BS="true"></Actions>
                     </Col>
                 </Row>
             </div>

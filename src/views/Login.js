@@ -17,6 +17,7 @@ const required = (value) => {
         );
     }
 };
+
 const Login = () => {
     let navigate = useNavigate();
     const form = useRef();
@@ -25,6 +26,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+
     const onChangeUsername = (e) => {
         const username = e.target.value;
         setUsername(username);

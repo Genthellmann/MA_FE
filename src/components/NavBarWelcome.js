@@ -5,13 +5,16 @@ import {useContext} from "react";
 import {ProjectContext} from "./ProjectContextProvider";
 import {AiOutlineUser} from "react-icons/ai";
 import {useState} from "react";
+import AuthService from "../services/auth.service";
 
 
 function NavBarWelcome(props) {
     const navigate = useNavigate();
-    const username = useContext(ProjectContext).user.username;
-    const email = useContext(ProjectContext).user.email;
 
+    let user = localStorage.getItem("user")
+    let json_user = JSON.parse(user)
+    let username = json_user.username;
+    let email = json_user.email;
 
     const [show, setShow] = useState(false);
 
@@ -42,10 +45,12 @@ function NavBarWelcome(props) {
     const handleCloseUA = () => setShowUA(false);
     const handleShowUA = () => setShowUA(true);
 
-    //User Logout
-    const handleLogOut = () => {
-        localStorage.clear()
-        navigate("../../")
+    const logout = () => {
+        //TO DO: Link to backend method logout
+        localStorage.removeItem("user");
+        localStorage.removeItem("project");
+        sessionStorage.removeItem("trend")
+        navigate("/login");
     }
 
 
@@ -61,15 +66,15 @@ function NavBarWelcome(props) {
                         <Nav className="me-auto">
                             <Nav.Link onClick={() => navigate("/welcome")}>Projects</Nav.Link>
                             <Nav.Link onClick={() => navigate("/trend")} disabled={true}>Trends</Nav.Link>
-                            <Nav.Link onClick={handleRefNav} disabled={true}>References</Nav.Link>
-                            <Nav.Link onClick={handleUnCNav} disabled={true}>User & Customer Benefits</Nav.Link>
+                            <Nav.Link onClick={handleRefNav} disabled={true}>References & Benefits</Nav.Link>
+                            <Nav.Link onClick={handleUnCNav} disabled={true}>Benefits & Strategy</Nav.Link>
 
                         </Nav>
                         <Nav className="ms-auto">
                             <NavDropdown title={username} id="collasible-nav-dropdown">
                                 <NavDropdown.Item onClick={handleShowUA}>User Info</NavDropdown.Item>
                                 <NavDropdown.Divider/>
-                                <NavDropdown.Item onClick={handleLogOut}>
+                                <NavDropdown.Item onClick={logout}>
                                     Log Out
                                 </NavDropdown.Item>
                             </NavDropdown>
@@ -98,7 +103,7 @@ function NavBarWelcome(props) {
                     </span>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-secondary" onClick={handleLogOut}>
+                    <button className="btn btn-secondary" onClick={logout}>
                         Log Out
                     </button>
 

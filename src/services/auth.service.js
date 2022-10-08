@@ -55,6 +55,8 @@
 // export default AuthService;
 
 import http2 from "../http-common-auth";
+import {useNavigate} from "react-router-dom";
+
 
 //User can sign up
 const register = (username, email, password) => {
@@ -84,8 +86,8 @@ const logout = (navigate) => {
 
     //TO DO: Link to backend method logout
     localStorage.removeItem("user");
+    sessionStorage.removeItem("trend")
     navigate("/login");
-    window.location.reload();
 
 }
 

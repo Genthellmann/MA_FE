@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {Modal} from "react-bootstrap";
 
-function Actions({Trend, RS, BM, UB, SP}) {
+function Actions({Trend, RB, BS}) {
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
@@ -36,6 +36,7 @@ function Actions({Trend, RS, BM, UB, SP}) {
             flexDirection: "column",
             justifyContent: "flex-end",
             marginTop: '2rem',
+            padding: 0
         }}>
             <h4>Actions</h4>
             {Trend ? (
@@ -46,42 +47,23 @@ function Actions({Trend, RS, BM, UB, SP}) {
                     >TrendRadar <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
                     </div>
                 </button>) : (<div></div>)}
-            {RS ? (
+            {RB ? (
                 <button className="btn btn-lg btn-outline-secondary"
                         onClick={handleRefNav}
                         style={styles.actionBtn}>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
-                    >Reference System <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
+                    >References & Benchmarks <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
                     </div>
                 </button>) : (<div></div>)}
-            {BM ? (
-                <button className="btn btn-lg btn-outline-secondary"
-                        onClick={handleRefNav}
-                        style={styles.actionBtn}>
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
-                    >Benchmarking <AiOutlineArrowRight size='1.75rem' style={{marginLeft: '0.5rem'}}/>
-                    </div>
-                </button>) : (<div></div>)}
-            {UB ? (
+            {BS ? (
                 <button className="btn btn-lg btn-outline-secondary"
                         onClick={handleUnCNav}
                         style={styles.actionBtn}>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
-                    >User Benefit <AiOutlineArrowRight size='1.75rem'
-                                                       style={{
-                                                           marginLeft: '0.5rem',
-                                                       }}/>
-                    </div>
-                </button>) : (<div></div>)}
-            {SP ? (
-                <button className="btn btn-lg btn-outline-secondary"
-                        onClick={handleUnCNav}
-                        style={styles.actionBtn}>
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}
-                    >Strategic Positioning <AiOutlineArrowRight size='1.75rem'
-                                                                style={{
-                                                                    marginLeft: '0.5rem',
-                                                                }}/>
+                    >Benefits & Strategy<AiOutlineArrowRight size='1.75rem'
+                                                             style={{
+                                                                 marginLeft: '0.5rem',
+                                                             }}/>
                     </div>
                 </button>) : (<div></div>)}
             <Modal show={show} onHide={handleClose}>
@@ -98,7 +80,7 @@ export default Actions;
 
 const styles = {
     actionBtn: {
-        width: '18rem',
+        width: '22rem',
         display: "flex",
         justifyContent: "center",
         marginBottom: '1rem'

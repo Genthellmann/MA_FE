@@ -19,6 +19,9 @@ const TrendAdd = () => {
 
     const currentProject = React.useContext(ProjectContext);
 
+    const promptContext = useContext(PromptContext);
+
+
     const initialTrendState = {
         id: null,
         title: "",
@@ -76,6 +79,8 @@ const TrendAdd = () => {
 
 
     const saveTrend = () => {
+        promptContext.setShowExitPrompt(false);
+
         TrendDataService.create(trend, currentProject.project)
             .then(response => {
                 setTrend({
@@ -115,12 +120,8 @@ const TrendAdd = () => {
     //======================
     //prompt page reload
     //======================
-    const promptContext = useContext(PromptContext);
-
     useEffect(() => {
-        return () => {
-            promptContext.setShowExitPrompt(true);
-        }
+        promptContext.setShowExitPrompt(true);
     }, [])
 
     //======================
@@ -138,8 +139,9 @@ const TrendAdd = () => {
                 <div style={styles.FormContainer}>
                     {submitted ? (
                         <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                            <h5 style={{width: '100%'}}>Trend created successfully!</h5>
-                            <div style={{width: '50%', marginTop: '2rem', display: "flex"}}>
+                            <h3 style={{width: '100%'}}>Add Trend - Step 2/2</h3>
+                            <h6 style={{width: '100%', marginTop: '2rem'}}>Choose Trend Picture</h6>
+                            <div style={{width: '70%', display: "flex"}}>
                                 <FileUpload trendID={trend.id} refID={""} dest={"trendpicture"}
                                             navigateTo="../../trend"></FileUpload>
                                 <div style={{marginLeft: '2rem'}}>
@@ -151,7 +153,8 @@ const TrendAdd = () => {
                                 </div>
                             </div>
                         </div>
-                    ) : (
+                    ) : (<div style={{display: 'flex', width: '70%', flexDirection: 'column'}}>
+                        <h3 style={{width: '100%'}}>Add Trend - Step 1/2 </h3>
                         <Form style={{width: '100%'}}>
                             <Form.Group className="mb-3">
                                 <Form.Label>
@@ -345,7 +348,7 @@ const TrendAdd = () => {
                                 </div>
                             )}
                         </Form>
-                    )}
+                    </div>)}
                 </div>
             </div>
         </div>

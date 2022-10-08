@@ -42,10 +42,13 @@ function NavBar2(props) {
     const handleCloseUA = () => setShowUA(false);
     const handleShowUA = () => setShowUA(true);
 
-    //User Logout
-    const handleLogOut = () => {
-        localStorage.clear()
-        navigate("../../")
+    const logout = () => {
+        //TO DO: Link to backend method logout
+        localStorage.removeItem("user");
+        localStorage.removeItem("project");
+        sessionStorage.removeItem("trend")
+        navigate("/login");
+
     }
 
 
@@ -62,15 +65,15 @@ function NavBar2(props) {
                         <Nav className="me-auto">
                             <Nav.Link onClick={() => navigate("/welcome")}>Projects</Nav.Link>
                             <Nav.Link onClick={() => navigate("/trend")}>Trends</Nav.Link>
-                            <Nav.Link onClick={handleRefNav}>References</Nav.Link>
-                            <Nav.Link onClick={handleUnCNav}>User & Customer Benefits</Nav.Link>
+                            <Nav.Link onClick={handleRefNav}>References & Benchmarks</Nav.Link>
+                            <Nav.Link onClick={handleUnCNav}>Benefits & Strategy</Nav.Link>
 
                         </Nav>
                         <Nav className="ms-auto">
                             <NavDropdown title={username} id="collasible-nav-dropdown">
                                 <NavDropdown.Item onClick={handleShowUA}>User Info</NavDropdown.Item>
                                 <NavDropdown.Divider/>
-                                <NavDropdown.Item onClick={handleLogOut}>
+                                <NavDropdown.Item onClick={logout}>
                                     Log Out
                                 </NavDropdown.Item>
                             </NavDropdown>
@@ -99,7 +102,7 @@ function NavBar2(props) {
                     </span>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-secondary" onClick={handleLogOut}>
+                    <button className="btn btn-secondary" onClick={logout}>
                         Log Out
                     </button>
 

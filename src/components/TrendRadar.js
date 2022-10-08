@@ -5,7 +5,15 @@ import SeparatingLines from "./SeparatingLines";
 import Button from "react-bootstrap/Button";
 import TrendDataService from "../services/trend_service";
 import {useNavigate, useParams} from "react-router-dom";
-import {ButtonGroup, Overlay, OverlayTrigger, ToggleButton, ToggleButtonGroup, Tooltip as tp} from "react-bootstrap";
+import {
+    ButtonGroup,
+    Image,
+    Overlay,
+    OverlayTrigger,
+    ToggleButton,
+    ToggleButtonGroup,
+    Tooltip as tp
+} from "react-bootstrap";
 import styles from '../views/trend.styles.css'
 import LoginError from "../services/LoginError";
 import * as PropTypes from "prop-types";
@@ -26,7 +34,7 @@ function TrendCircleOverlay({
     return (
         <Tooltip title={trend.title} placement={"top"}
         >
-            <button className="btn btn-primary"
+            <button className="btn btn-info"
 
                     onMouseOver={(e) => {
                         setShow(true)
@@ -46,7 +54,7 @@ function TrendCircleOverlay({
                         "position": "absolute",
                         // 'zIndex':`${zIndex_trend[trend.maturity]}+100`,
                         zIndex: 101,
-                        boxShadow: trend.id == id ? "0 0 0 .3rem rgba(238, 243, 253, 0.5)" : "",
+                        boxShadow: trend.id == id ? "0 0 0 .5rem rgba(0, 255, 255, 1)" : "",
                         "marginLeft": `${trend.xpos}%`,
                         "marginBottom": `${trend.ypos}%`,
                         "width": `${radiusTrend[trend.maturity]}%`,
@@ -92,7 +100,7 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
 
     let radius = {radius1: 90, radius2: 60, radius3: 30}
     //radius of trend depending on maturity
-    let radius_trend = {low: radius.radius1 / 24, medium: radius.radius1 / 18, high: radius.radius1 / 12}
+    let radius_trend = {low: radius.radius1 / 26, medium: radius.radius1 / 22, high: radius.radius1 / 18}
     //zIndex depending on maturity
     let zIndex_trend = {low: 3, medium: 2, high: 1}
     //color depending on impact
@@ -166,13 +174,18 @@ export default function TrendRadar({trends, setTrends, currentTrend, filteredTre
                 aspectRatio: 1
             }}
         >
-            <TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>
-            <TrendCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>
-            <TrendCircle radius={radius.radius3} color={"#999797"} position={2}/>
-            <SimpleArc/>
-            <SeparatingLines length={radius.radius1 / 2} angle={90}/>
-            <SeparatingLines length={radius.radius1 / 2} angle={210}/>
-            <SeparatingLines length={radius.radius1 / 2} angle={330}/>
+
+            <Image src={require("../images/TrendRadarImg.png")} style={{width: "100%", padding: 0}}
+            ></Image>
+
+            {/*<TrendCircle radius={radius.radius1} color={"#d2d2d5"} position={0}/>*/}
+            {/*<TrendCircle radius={radius.radius2} color={"#b8b8b8"} position={1}/>*/}
+            {/*<TrendCircle radius={radius.radius3} color={"#999797"} position={2}/>*/}
+            {/*<SimpleArc/>*/}
+            {/*<SeparatingLines length={radius.radius1 / 2} angle={90}/>*/}
+            {/*<SeparatingLines length={radius.radius1 / 2} angle={210}/>*/}
+            {/*<SeparatingLines length={radius.radius1 / 2} angle={330}/>*/}
+
 
             {/*<div id={'targetDiv'}*/}
             {/*     onDragOver={(e) => onDragOver(e)}*/}

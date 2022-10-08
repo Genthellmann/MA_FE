@@ -71,7 +71,7 @@ function StrategicPositioning({unsavedChangesSP, setUnsavedChangesSP}) {
                                   name="content"
                                   value={stratPos.content}
                                   onChange={handleInputChange}
-                                  style={{borderRadius: '1.078rem', height: '20vh', marginBottom: '1rem'}}
+                                  style={{borderRadius: '1.078rem', height: '15rem', marginBottom: '1rem'}}
                     ></Form.Control>
                 </Form.Group>
             </Form>
